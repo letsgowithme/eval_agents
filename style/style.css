@@ -1,0 +1,10 @@
+.body_home,
+.body_page {
+  /* background-color: rgb(156, 155, 155); */
+  background: url("../img/abstract-1846853_1280.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+}
+.truc {
+  color: #01013d;
+}
