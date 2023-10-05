@@ -4,7 +4,7 @@ if(!empty($_POST)){
   if(isset($_POST["title"]) &&!empty($_POST["title"])){
 $title = strip_tags($_POST["title"]);
 
-require_once "includes/DB.php";
+require_once "../../includes/DB.php";
 
 $sql = "INSERT INTO `nationality`(`title`) 
 VALUES(:title)";
