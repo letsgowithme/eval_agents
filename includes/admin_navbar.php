@@ -21,6 +21,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="#">Mission</a></li>
+            <li><a class="dropdown-item" href="new/user_new.php">Utilisateur</a></li>
+            <li><a class="dropdown-item" href="new/code_name_new.php">Code nom</a></li>
+            <li><a class="dropdown-item" href="new/speciality_new.php">Spécialité</a></li>
             <li><a class="dropdown-item" href="new/nationality_new.php">Nationalité</a></li>
             <li><a class="dropdown-item" href="new/user_new.php">Utilisateur</a></li>
             <li><hr class="dropdown-divider"></li>
