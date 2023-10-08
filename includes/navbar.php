@@ -14,22 +14,19 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Missions</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Connexion
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="connection.php">Se connecter</a></li>
-            <li><a class="dropdown-item" href="#">Se déconnecter</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="admin/admin_index.php">Admin</a>
         </li>
+        <?php if(!isset($_SESSION["user"])):?>
+        <li class="nav-item">
+          <a class="nav-link" href="connection.php">Se connecter</a></li>
+        
+        <?php else:?>
+          <li>Bonjour <?php echo $_SESSION["user"]["firstname"], $_SESSION["user"]["lastname"];?></li>
+        <li class="nav-item">
+          <a class="nav-link" href="deconnection.php">Se déconnecter</a></li>
+          <?php endif;?>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>

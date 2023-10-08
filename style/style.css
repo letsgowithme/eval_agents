@@ -8,3 +8,6 @@
 .truc {
   color: #01013d;
 }
+.hidden{
+  display: none;
+}

@@ -1,7 +1,8 @@
 <?php
+//on demarre la session php
+session_start();
 $titre = "Accueil";
 include_once "includes/header.php";
-
 include_once "includes/navbar.php";
 
 ?>

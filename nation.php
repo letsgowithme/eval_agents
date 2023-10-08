@@ -1,4 +1,6 @@
 <?php 
+//on demarre la session php
+session_start();
 //on verifie s'il ya un id
 if (!isset($_GET["id"]) || empty($_GET["id"])){
   header("Location: nationality.php");
@@ -26,7 +28,7 @@ include_once "includes/header.php";
 include_once "includes/navbar.php";
 
 ?>
-
+</head>
 <body class="body_page">
   <div class="container">
 <h2>Nationalité</h2>
