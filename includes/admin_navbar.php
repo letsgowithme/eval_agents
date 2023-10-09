@@ -12,7 +12,7 @@
           <a class="nav-link active" aria-current="page" href="../../index.php" id="up">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Missions</a>
+          <a class="nav-link" href="../../missions.php">Missions</a>
         </li>
       
         <li class="nav-item dropdown">
@@ -20,7 +20,7 @@
             Créer: 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Mission</a></li>
+            <li><a class="dropdown-item" href="new/mission_new.php">Mission</a></li>
             <li><a class="dropdown-item" href="new/user_new.php">Utilisateur</a></li>
             <li><a class="dropdown-item" href="new/code_name_new.php">Code nom</a></li>
             <li><a class="dropdown-item" href="new/speciality_new.php">Spécialité</a></li>

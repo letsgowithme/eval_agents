@@ -12,8 +12,8 @@
           <a class="nav-link active" aria-current="page" href="index.php" id="up">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Missions</a>
-        </li>
+          <a class="nav-link" href="missions.php">Missions</a>
+        </li> 
         <li class="nav-item">
           <a class="nav-link" href="admin/admin_index.php">Admin</a>
         </li>

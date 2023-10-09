@@ -19,7 +19,8 @@ codeName VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE user_admin(
-admin_user_id INT NOT NULL
+admin_user_id INT NOT NULL,
+createdAt DATETIME NOT NULL
 ) engine=InnoDB;
 
 
@@ -50,8 +51,8 @@ title VARCHAR(100) NOT NULL
 
 CREATE TABLE hideout(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-code INT NOT NULL,
-hideoutAddress TEXT NOT NULL,
+hideoutCode VARCHAR(100) NOT NULL,
+hideoutAddress TEXT(255) NOT NULL,
 hideoutType VARCHAR(100) NOT NULL,
 country VARCHAR(100) NOT NULL
 ) engine=InnoDB;
@@ -61,31 +62,41 @@ CREATE TABLE mission(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 description TEXT NOT NULL,
-start_date DATETIME NOT NULL,
-end_date DATETIME NOT NULL,
+startDate DATETIME NOT NULL,
+endDate DATETIME NOT NULL,
 country VARCHAR(100) NOT NULL,
-status VARCHAR(50) NOT NULL
+missionStatus VARCHAR(50) NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_code_name(
-mission_code_name_id INT NOT NULL
+missionCN_mission_id INT NOT NULL,
+missionCN_code_name_id INT NOT NULL
+) engine=InnoDB;
+
+CREATE TABLE mission_mType(
+missionType_mission_id INT NOT NULL,
+missionType_mType_id INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_agent(
-mission_agent_id INT NOT NULL
+missionAgent_mission_id INT NOT NULL,
+missionAgent_agent_id INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_contact(
+mission_id INT NOT NULL,
 mission_contact_id INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_target(
+mission_id INT NOT NULL,
 mission_target_id INT NOT NULL
 ) engine=InnoDB;
 
 
+
 CREATE TABLE mission_hideout(
-mission_refuge_id INT NOT NULL
+mission_hideout_id INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_speciality(
