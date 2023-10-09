@@ -33,14 +33,14 @@ exit;
 
 include_once "../../includes/admin_header.php";
 include_once "../../includes/admin_navbar.php";
-$titre = "Spécialité";
+$titre = "Type de mission";
 ?>
 </head>
 <body class="body_page">
   <div class="container">
 <form class="form" action="mission_type_new.php" method="post">
   <div class="mb-3">
-    <label for="title" class="form-label fw-bold my-4 fs-2" style="color: #01013d;">Spécialité</label>
+    <label for="title" class="form-label fw-bold my-4 fs-2" style="color: #01013d;">Type de mission</label>
     <input type="text" class="form-control w-50" name="title" value="">
   <button type="submit" class="btn btn-primary my-4 fs-4 fw-bold" name="Submit">Créer</button>
 </form>

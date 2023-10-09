@@ -25,7 +25,6 @@ echo "<p>Nationalité ajoutée sous le numéro ". $id."</p>";
 echo "<a href='nationality_new.php'>Retour</a>";
 exit;
 
-
   }else{
     die("Le formulaire est incomplet");
   }
@@ -38,14 +37,13 @@ $titre = "Nationalités";
 </head>
 <body class="body_page">
   <div class="container">
-<form class="form" action="nationality_new.php" method="post">
-  <div class="mb-3">
-    <label for="title" class="form-label fw-bold my-4 fs-2" style="color: #01013d;">Nationalité</label>
-    <input type="text" class="form-control w-50" name="title" value="">
-  <button type="submit" class="btn btn-primary my-4 fs-4 fw-bold" name="Submit">Créer</button>
-</form>
-
-<div>
+    <form class="form" action="nationality_new.php" method="post">
+      <div class="mb-3">
+        <label for="title" class="form-label fw-bold my-4 fs-2" style="color: #01013d;">Nationalité</label>
+        <input type="text" class="form-control w-50" name="title" value="">
+      <button type="submit" class="btn btn-primary my-4 fs-4 fw-bold" name="Submit">Créer</button>
+    </form>
+  <div>
 <button type="button" class="login my-4 fs-4 fw-bold" data-toggle="tooltip" data-placement="top">
   <a href="../admin_index.php">Admin</a>
 </button>

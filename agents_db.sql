@@ -15,7 +15,7 @@ roles JSON NOT NULL
 
 CREATE TABLE code_name(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(100) NOT NULL
+codeName VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE user_admin(
@@ -43,21 +43,16 @@ agent_user_id INT NOT NULL,
 agent_code_ident INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_type(
+CREATE TABLE missionType(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE status(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(100) NOT NULL
-) engine=InnoDB;
-
-CREATE TABLE refuge(
+CREATE TABLE hideout(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 code INT NOT NULL,
-address TEXT NOT NULL,
-type VARCHAR(100) NOT NULL,
+hideoutAddress TEXT NOT NULL,
+hideoutType VARCHAR(100) NOT NULL,
 country VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
@@ -68,25 +63,16 @@ title VARCHAR(100) NOT NULL,
 description TEXT NOT NULL,
 start_date DATETIME NOT NULL,
 end_date DATETIME NOT NULL,
-country VARCHAR(100) NOT NULL
+country VARCHAR(100) NOT NULL,
+status VARCHAR(50) NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_code_name(
 mission_code_name_id INT NOT NULL
 ) engine=InnoDB;
 
-
-CREATE TABLE mission_type(
-mission_type_id INT NOT NULL
-) engine=InnoDB;
-
 CREATE TABLE mission_agent(
 mission_agent_id INT NOT NULL
-) engine=InnoDB;
-
-
-CREATE TABLE mission_status(
-mission_status_id INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_contact(
@@ -98,7 +84,7 @@ mission_target_id INT NOT NULL
 ) engine=InnoDB;
 
 
-CREATE TABLE mission_refuge(
+CREATE TABLE mission_hideout(
 mission_refuge_id INT NOT NULL
 ) engine=InnoDB;
 

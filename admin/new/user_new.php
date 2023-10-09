@@ -5,7 +5,7 @@ session_start();
 // header("Location: profil.php");
 // }
 if(!empty($_POST)){
-  if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["password"])
+  if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["password"], $_POST["nationality"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["password"]) &&!empty($_POST["nationality"])
   ){
    
 //le form est complet
@@ -109,6 +109,7 @@ include_once "../../includes/admin_navbar.php";
     <label for="password">Mot de passe</label>
     <input type="password" name="password" id="password">
    </div>
+
    <div>
     <label for="nationality">Nationalité</label>
     <?php include_once "../../nationalities_list.php"; ?>
@@ -119,11 +120,8 @@ include_once "../../includes/admin_navbar.php";
   }
     ?>
     </select>
-    <?php
-    
-    
-    ?>
    </div>
+
    <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Créer</button>
 </form>
 <div>
