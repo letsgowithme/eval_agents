@@ -20,12 +20,18 @@ if(!$query->execute()){
 }
 $id = $dbConnect->lastInsertId();
 
-// header("Location: speciality_new.php");
-echo "<p>Spécialité ajoutée sous le numéro ". $id."</p>";
-echo "<a href='speciality_new.php'>Retour</a>";
-exit;
+echo "<p style=\"background: red;\" class=\"text-center p-2\">Spécialité ajoutée sous le numéro ". $id."</p>";
+echo "<p style=\"background: red;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='speciality_new.php'>Retour</a></p>";
+ 
+?>
+<script>
+  function backToPage() {
+    window.location.href = "speciality_new.php";
+  }
+setTimeout(backToPage, 5000);
+  </script>
 
-
+<?php
   }else{
     die("Le formulaire est incomplet");
   }

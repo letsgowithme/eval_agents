@@ -5,7 +5,7 @@ session_start();
 // header("Location: profil.php");
 // }
 if(!empty($_POST)){
-  if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["password"], $_POST["nationality"], $_POST["codeName"] , $_POST["userType"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["password"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])  &&!empty($_POST["userType"])
+  if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["password"], $_POST["nationality"], $_POST["codeName"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["password"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])
   ){
    
   
@@ -42,7 +42,7 @@ if($_SESSION["error"] === []){
 $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
 
-$sql = "INSERT INTO `user`(`lastname`, `firstname`, `birthdate`, `email`, `password`, `roles`, `nationality`, `codeName`, `userType`) VALUES(:lastname, :firstname, :birthdate, :email, '$password', '[\"ROLE_USER\"]', :nationality,:codeName, :userType)";
+$sql = "INSERT INTO `user`(`lastname`, `firstname`, `birthdate`, `email`, `password`, `roles`, `nationality`, `codeName`, `userType`) VALUES(:lastname, :firstname, :birthdate, :email, '$password', '[\"ROLE_USER\"]', :nationality,:codeName, :userType,)";
 
 $query = $dbConnect->prepare($sql);
  
@@ -131,7 +131,7 @@ include_once "../../includes/admin_navbar.php";
     <label for="password" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Mot de passe</label>
     <input type="password" name="password" id="password">
    </div>
-   <!-- ******************Nationalité****************** -->
+
    <div class="mb-3">
     <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
     <?php include_once "../../nationalities_list.php"; ?>
@@ -143,50 +143,104 @@ include_once "../../includes/admin_navbar.php";
     ?>
     </select>
    </div>
-   <!-- ******************Codename****************** -->
    <div class="mb-3">
     <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
     <input type="text" name="codeName" id="codeName">
    </div>
-<!-- ******************UserType****************** -->
-<?php 
-$userTypeArray = array("Agent", "Cible", "Contact");
+<!-- userType -->
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="userType" id="agent">
+  <label class="form-check-label" for="agent">
+   Agent
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="userType" id="target">
+  <label class="form-check-label" for="target">
+   Cible
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="userType" id="contact" checked>
+  <label class="form-check-label" for="contact">
+    Contact
+  </label>
+</div>
 
-foreach ($userTypeArray as $userType) {
-  ?>
-    <input type="radio" name="userType" value="<?php echo $userType ?>" class="choices"><?php echo $userType ?>
-  <?php
-}
-?>
- 
- <!-- **************Specialities***************** -->
+<!-- <div class="form-check" name="userType">
+  <input class="form-check-input" type="radio" name="agent" id="agent" checked>
+  <label class="form-check-label" for="agent">
+    Agent
+  </label>
+</div>
+<div class="form-check" name="userType">
+  <input class="form-check-input" type="radio" name="target" id="target">
+  <label class="form-check-label" for="target">
+    Cible
+  </label>
+</div>
+<div class="form-check" name="userType">
+  <input class="form-check-input" type="radio" name="contact" id="contact">
+  <label class="form-check-label" for="contact">
+    Contact
+  </label>
+</div> -->
+
+
+
+
+<!-- <div class="form-check">
+  <input class="form-check-input" type="radio" name="<?= $userType ?>" id="userType">
+  <label class="form-check-label" for="userType">
+  <?php echo $userType ?>
+  </label>
+</div> -->
+
+<!-- <div class="mb-3" id="userType">
+<h5 class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type</h5>
+<button type="button" class="btn btn-dark border" value="Agent" name="userType" id="agent_btn">Agent</button>
+<button type="button" class="btn btn-dark btn_simple" value="Target" name="userType" id="target_btn">Cible</button>
+<button type="button" class="btn btn-dark btn_simple" value="Contact" name="userType" id="contact_btn">Contact</button>
+</div> -->
+<!-- ************************************ -->
+
+
+   <!-- 
+    <label for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type</label>
+    <select name="userType" id="userType">
+      <option value="Choisir">Choisir: </option>
+      <option value="Agent" name="agent" id="agent">Agent</option>
+      <option value="Target" name="target">Cible</option>
+      <option value="Contact" name="contact">Contact</option>
+    </select>
+   </div> -->
+   <!-- Specialities -->
   <div class="mb-3 d-flex" id="agent_speciality" style="display: none;">
-   <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; display: none;" id="speciality_title">Spécialité d'agent</h5>
+   <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;">Spécialité d'agent</h5>
 <div class="specialities_list" id="specialities_list" style="display: none;">
    <?php include_once('../../specialities_chbox.php'); ?>
 </div>
 </div>
    <script>
-let agent = document.getElementById("agent");
+let show_btn = document.getElementById("show_btn");
 let list = document.getElementById("specialities_list");
-let speciality_title = document.getElementById("speciality_title");
+let agent_btn = document.getElementById("agent_btn");
 let agent_speciality = document.getElementById("agent_speciality");
-let target = document.getElementById("target");
-let contact = document.getElementById("contact");
-
-agent.addEventListener("click", function () {
+let target_btn = document.getElementById("target_btn");
+let contact_btn = document.getElementById("contact_btn");
+agent_btn.addEventListener("click", function () {
+  agent_btn.style.backgroundColor = "#300345";
   agent_speciality.style.display = "block";
-  speciality_title.style.display = "block";
   list.style.display = "block";
 });
 
-target.addEventListener("click", function () {
-  speciality_title.style.display = "none";
+target_btn.addEventListener("click", function () {
+  target_btn.style.backgroundColor = "red";
   agent_speciality.style.display = "none";
   list.style.display = "none";
 });
-contact.addEventListener("click", function () {
-  speciality_title.style.display = "none";
+contact_btn.addEventListener("click", function () {
+  contact_btn.style.backgroundColor = "red";
   agent_speciality.style.display = "none";
   list.style.display = "none";
 });

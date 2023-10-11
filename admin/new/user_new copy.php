@@ -5,7 +5,7 @@ session_start();
 // header("Location: profil.php");
 // }
 if(!empty($_POST)){
-  if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["password"], $_POST["nationality"], $_POST["codeName"] , $_POST["userType"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["password"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])  &&!empty($_POST["userType"])
+  if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["password"], $_POST["nationality"], $_POST["codeName"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["password"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])
   ){
    
   
@@ -17,7 +17,7 @@ $birthdate = strip_tags($_POST["birthdate"]);
 $nationality = strip_tags($_POST["nationality"]);
 $codeName = strip_tags($_POST["codeName"]);
 $userType = strip_tags($_POST["userType"]);
-// $speciality = strip_tags($_POST["speciality"]);
+$speciality = strip_tags($_POST["speciality"]);
 
 require_once "../../includes/DB.php";
 
@@ -42,7 +42,7 @@ if($_SESSION["error"] === []){
 $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
 
-$sql = "INSERT INTO `user`(`lastname`, `firstname`, `birthdate`, `email`, `password`, `roles`, `nationality`, `codeName`, `userType`) VALUES(:lastname, :firstname, :birthdate, :email, '$password', '[\"ROLE_USER\"]', :nationality,:codeName, :userType)";
+$sql = "INSERT INTO `user`(`lastname`, `firstname`, `birthdate`, `email`, `password`, `roles`, `nationality`, `codeName`, `userType`, `speciality`) VALUES(:lastname, :firstname, :birthdate, :email, '$password', '[\"ROLE_USER\"]', :nationality,:codeName, :userType, :speciality)";
 
 $query = $dbConnect->prepare($sql);
  
@@ -53,7 +53,7 @@ $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
 $query->bindValue(":nationality", $nationality, PDO::PARAM_STR);
 $query->bindValue(":codeName", $codeName, PDO::PARAM_STR);
 $query->bindValue(":userType", $userType, PDO::PARAM_STR);
-// $query->bindValue(":speciality", $speciality, PDO::PARAM_STR);
+$query->bindValue(":speciality", $speciality, PDO::PARAM_STR);
 $query->execute();
 //on recup id de nouvel utilisateur
 $id = $dbConnect->lastInsertId();
@@ -70,7 +70,7 @@ $id = $dbConnect->lastInsertId();
   "codeName" => $codeName,
   "roles" => ["ROLE_USER"],
   "userType" => $userType,
-  // "speciality" => $speciality,
+  "speciality" => $speciality,
  ];
  echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-3 text-light\">Personne ajoutée sous le numéro ". $id."</p>";
 // echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-5 text-light\">Retour à la page de création dans 5 seconds.<br> Sinon appuyez sur le lien : <a href='user_new.php' class=\"text-info fs-4 fw-4\"> Retour</a></p>";
@@ -131,7 +131,7 @@ include_once "../../includes/admin_navbar.php";
     <label for="password" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Mot de passe</label>
     <input type="password" name="password" id="password">
    </div>
-   <!-- ******************Nationalité****************** -->
+
    <div class="mb-3">
     <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
     <?php include_once "../../nationalities_list.php"; ?>
@@ -143,56 +143,24 @@ include_once "../../includes/admin_navbar.php";
     ?>
     </select>
    </div>
-   <!-- ******************Codename****************** -->
    <div class="mb-3">
     <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
     <input type="text" name="codeName" id="codeName">
    </div>
-<!-- ******************UserType****************** -->
-<?php 
-$userTypeArray = array("Agent", "Cible", "Contact");
 
-foreach ($userTypeArray as $userType) {
-  ?>
-    <input type="radio" name="userType" value="<?php echo $userType ?>" class="choices"><?php echo $userType ?>
-  <?php
-}
-?>
- 
- <!-- **************Specialities***************** -->
-  <div class="mb-3 d-flex" id="agent_speciality" style="display: none;">
-   <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; display: none;" id="speciality_title">Spécialité d'agent</h5>
-<div class="specialities_list" id="specialities_list" style="display: none;">
+   <div class="mb-3">
+    <label for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type</label>
+    <select name="userType" id="userType">
+      <option value="Choisir">Choisir: </option>
+      <option value="Agent" name="agent" id="agent">Agent</option>
+      <option value="Target" name="target">Cible</option>
+      <option value="Contact" name="contact">Contact</option>
+    </select>
+   </div>
+      
    <?php include_once('../../specialities_chbox.php'); ?>
-</div>
-</div>
-   <script>
-let agent = document.getElementById("agent");
-let list = document.getElementById("specialities_list");
-let speciality_title = document.getElementById("speciality_title");
-let agent_speciality = document.getElementById("agent_speciality");
-let target = document.getElementById("target");
-let contact = document.getElementById("contact");
-
-agent.addEventListener("click", function () {
-  agent_speciality.style.display = "block";
-  speciality_title.style.display = "block";
-  list.style.display = "block";
-});
-
-target.addEventListener("click", function () {
-  speciality_title.style.display = "none";
-  agent_speciality.style.display = "none";
-  list.style.display = "none";
-});
-contact.addEventListener("click", function () {
-  speciality_title.style.display = "none";
-  agent_speciality.style.display = "none";
-  list.style.display = "none";
-});
-
-  </script>
-
+   
+   
    <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Créer</button>
 </form>
 <div>

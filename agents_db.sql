@@ -10,12 +10,9 @@ birthdate DATE NOT NULL,
 email VARCHAR(50) NOT NULL,
 password VARCHAR(255) NOT NULL,
 nationality VARCHAR(100) NOT NULL,
-roles JSON NOT NULL
-) engine=InnoDB;
-
-CREATE TABLE code_name(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-codeName VARCHAR(100) NOT NULL
+codeName VARCHAR(100) NOT NULL,
+roles JSON NOT NULL,
+userType VARCHAR(100)
 ) engine=InnoDB;
 
 CREATE TABLE user_admin(
@@ -23,6 +20,10 @@ admin_user_id INT NOT NULL,
 createdAt DATETIME NOT NULL
 ) engine=InnoDB;
 
+CREATE TABLE user_agent(
+agent_user_id INT NOT NULL,
+agent_code_ident INT NOT NULL
+) engine=InnoDB;
 
 CREATE TABLE user_target(
 target_user_id INT NOT NULL,
@@ -39,10 +40,6 @@ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE user_agent(
-agent_user_id INT NOT NULL,
-agent_code_ident INT NOT NULL
-) engine=InnoDB;
 
 CREATE TABLE missionType(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -65,12 +62,8 @@ description TEXT NOT NULL,
 startDate DATETIME NOT NULL,
 endDate DATETIME NOT NULL,
 country VARCHAR(100) NOT NULL,
-missionStatus VARCHAR(50) NOT NULL
-) engine=InnoDB;
-
-CREATE TABLE mission_code_name(
-missionCN_mission_id INT NOT NULL,
-missionCN_code_name_id INT NOT NULL
+missionStatus VARCHAR(50) NOT NULL,
+codeName VARCHAR(50) NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE mission_mType(
@@ -92,8 +85,6 @@ CREATE TABLE mission_target(
 mission_id INT NOT NULL,
 mission_target_id INT NOT NULL
 ) engine=InnoDB;
-
-
 
 CREATE TABLE mission_hideout(
 mission_hideout_id INT NOT NULL

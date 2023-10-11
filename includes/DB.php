@@ -9,12 +9,8 @@ try {
   $dbConnect = new PDO($DSN, DB_USER, DB_PASSWORD);
   $dbConnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $dbConnect->exec("SET NAMES utf8");
-  echo '<p class="text-light m-4">Connexion réussie à la DB</p>';
-  // echo "<h2>Nationalités</h2><ol>"; 
-  // foreach($dbConnect->query("SELECT title FROM $table") as $row) {
-  //   echo "<li>" . $row['title'] . "</li>";
-  // }
-  // echo "</ol>";
+  echo '<p class="text-light m-4 d-none">Connexion réussie à la DB</p>';
+  
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";
     die();

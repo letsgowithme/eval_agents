@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .body_home,
 .body_page {
   /* background-color: rgb(156, 155, 155); */
@@ -8,9 +12,13 @@
 .truc {
   color: #1c1c22;
   color: #b2b2b5;
+  color: #300345;
 }
 .hidden{
   display: none;
+}
+.visible{
+  display: block;
 }
 td,
 th {

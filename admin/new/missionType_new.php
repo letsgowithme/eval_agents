@@ -22,7 +22,7 @@ $id = $dbConnect->lastInsertId();
 
 // header("Location: mission_type_new.php");
 echo "<p>Spécialité ajoutée sous le numéro ". $id."</p>";
-echo "<a href='mission_type_new.php'>Retour</a>";
+echo "<a href='missionType_new.php'>Retour</a>";
 exit;
 
 
@@ -38,7 +38,7 @@ $titre = "Type de mission";
 </head>
 <body class="body_page">
   <div class="container">
-<form class="form" action="mission_type_new.php" method="post">
+<form class="form" action="missionType_new.php" method="post">
   <div class="mb-3">
     <label for="title" class="form-label fw-bold my-4 fs-2" style="color: #01013d;">Type de mission</label>
     <input type="text" class="form-control w-50" name="title" value="">
