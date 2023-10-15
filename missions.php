@@ -1,14 +1,33 @@
 <?php 
 require_once "includes/DB.php";
-
+session_start();
 include_once "includes/header.php";
-include_once "includes/navbar.php";
+// include_once "includes/navbar.php";
 $titre = "Missions";
+
 ?>
 </head>
 <body class="body_page">
 <div class="container w-75">
-    <h1>Liste des missions</h1>
+<div class="d-flex justify-content-between mt-3 mb-3 mx-2">
+<div><h1>Liste de missions</h1></div> 
+<div>
+<?php if(isset($_SESSION["user"])):
+  if($_SESSION["user"]["roles"] < 4 ):
+  ?>
+ <button class="btn border" style="background: lightgray;"><a 
+class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
+aria-current="page" href="index.php" id="up">Accueil</a></button>
+<?php else:?>
+  <button class="btn border" style="background: lightgray;"><a 
+class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
+aria-current="page" href="admin/admin_index.php" id="up_admin">Admin</a></button>      
+<?php endif;
+    endif;
+?>
+
+</div>
+</div>
 <table class="table table-striped table-hover text-center" width="1000" style="border: 5px solid black; background: lightgray;">
 
 <tr>

@@ -10,13 +10,17 @@ session_start();
 if(!empty($_POST)){
   if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"] , $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])  &&!empty($_POST["userType"]) &&!empty($_POST["password"])
   ){
-   if($_POST["specialities"]){
+    if($_POST["specialities"] && $_POST["userType"] == "agent"){
     $specialitiesArr = [];
     for($i =0; $i < count($_POST['specialities']);$i++){
       $speciality = $_POST['specialities'][$i];
       $specialitiesArr[] = $speciality;
     }
     $specialities = implode(",", $specialitiesArr);
+   }else{
+    $specialitiesArr[] = "";
+  
+  $specialities = implode(",", $specialitiesArr);
    }
   
 //le form est complet
@@ -68,35 +72,19 @@ $query->bindValue(":userType", $userType, PDO::PARAM_STR);
 //on recup id de nouvel utilisateur
 $id = $dbConnect->lastInsertId();
 
-
- //on socke dans $_Session les info de user masi pas mdp
-//  $_SESSION["user"] = [
-//   "id" => $id,
-//   "lastname" => $lastname,
-//   "firstname" => $firstname,
-//   "birthdate" => $birthdate,
-//   "email" => $_POST["email"],
-//   "nationality" => $nationality,
-//   "codeName" => $codeName,
-//   "userType" => $userType,
-//   "specialities" => $speciality,
-//   "roles" => ["ROLE_USER"],
-//   "createdAt" => $createdAt,
-  
-//  ];
- echo "<p style=\"background: blue;\" id=\"message\" class=\"text-center  p-2 fw-4 fs-4 text-light\">Personne ajoutée sous le numéro ". $id."</p>";
+echo "<p style=\"background: blue;\" id=\"message\" class=\"text-center  p-2 fw-4 fs-4 text-light\">Utilisateur ajouté sous le numéro ". $id."</p>";
 echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-5 text-light\"><a href='user_new.php' class=\"text-info fs-4 fw-4\"> Retour à la page de la création</a></p>";
 // header("Location: usersAll.php");
  
 ?>
-<script>
+<!-- <script>
   function backToPage() {
     let message =document.getElementById('message');
     message.style.display = 'none';
    window.location.href = "../lists/usersAll.php";
   }
-setTimeout(backToPage, 4000);
-  </script>
+setTimeout(backToPage, 8000);
+  </script> -->
  <?php
 }
 }else{
@@ -105,8 +93,8 @@ setTimeout(backToPage, 4000);
   
  }
 $titre = "Inscription";
-include_once "../../includes/admin_header.php";
-include_once "../../includes/admin_navbar.php";
+include_once "../includes/admin_header.php";
+// include_once "../includes/admin_navbar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
@@ -115,7 +103,7 @@ include_once "../../includes/admin_navbar.php";
 <body class="body_home body_page">
 <div class="container">
 <div class="d-flex justify-content-between mt-4">
-<h1>Ajouter une personne</h1>    
+<h1>Ajouter un Utilisateur</h1>    
 <button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
 </div> 
 <?php
@@ -228,5 +216,5 @@ include_once "btn_create.php";
     });
   </script>
 <?php
-include_once "../../includes/admin_footer.php";
+include_once "../includes/admin_footer.php";
 ?>

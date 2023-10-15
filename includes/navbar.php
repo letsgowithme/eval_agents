@@ -14,15 +14,19 @@
         <li class="nav-item">
           <a class="nav-link" href="missions.php">Missions</a>
         </li> 
-        <li class="nav-item">
+        <?php if(isset($_SESSION["user"])):
+  if($_SESSION["user"]["roles"] < 4 ):
+  ?>
+<li class="nav-item">
           <a class="nav-link" href="admin/admin_index.php">Admin</a>
         </li>
+<?php endif;
+    endif; ?>
         <?php if(!isset($_SESSION["user"])):?>
-        <li class="nav-item">
+        <li class="nav-item me-4">
           <a class="nav-link" href="connection.php">Se connecter</a></li>
-        
         <?php else:?>
-          <li>Bonjour <?php echo $_SESSION["user"]["firstname"], $_SESSION["user"]["lastname"];?></li>
+          <li class="mt-2">Bonjour <?php echo $_SESSION["user"]["lastname"];?></li>
         <li class="nav-item">
           <a class="nav-link" href="deconnection.php">Se déconnecter</a></li>
           <?php endif;?>

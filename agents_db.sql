@@ -21,25 +21,7 @@ CREATE TABLE speciality(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL
 ) engine=InnoDB;
- 
-CREATE TABLE user_speciality(
-userSpec_user_id INT NOT NULL,
-userSpec_speciality  VARCHAR(255) NOT NULL
-) engine=InnoDB;
 
-CREATE TABLE user_speciality(
-userSpec_user_id INT NOT NULL,
-userSpec_speciality JSON NOT NULL
-) engine=InnoDB;
-
-CREATE TABLE chosen_speciality(
-userSpec_speciality JSON NOT NULL
-) engine=InnoDB;
-
-CREATE TABLE user_spec(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-speciality JSON 
-) engine=InnoDB;
 
 CREATE TABLE user_admin(
 admin_user_id INT NOT NULL,

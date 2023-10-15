@@ -31,8 +31,8 @@ exit;
   }
 }
 
-include_once "../../includes/admin_header.php";
-include_once "../../includes/admin_navbar.php";
+include_once "../includes/admin_header.php";
+// include_once "../includes/admin_navbar.php";
 $titre = "Type de mission";
 ?>
 </head>
@@ -55,5 +55,5 @@ include_once "btn_create.php";
 
 </div>
 <?php
-include_once "../../includes/admin_footer.php";
+include_once "../includes/admin_footer.php";
 ?>

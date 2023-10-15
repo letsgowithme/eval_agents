@@ -4,6 +4,7 @@ session_start();
 if(isset($_SESSION["user"])){
 header("Location: profil.php");
 }
+
 if(!empty($_POST)){
   if(isset($_POST["email"], $_POST["password"]) && !empty($_POST["email"]) &&!empty($_POST["password"])
   ){
@@ -41,7 +42,12 @@ if(!empty($_POST)){
   "roles" => $user["roles"]
  ];
  //on redirige vers la page de profil
- header("Location: profil.php");
+ if($_SESSION["user"]["roles"] > 4){
+  header("Location: admin/admin_index.php");
+ }else{
+  header("Location: profil.php");
+ }
+ 
  
   }
 }
@@ -52,11 +58,7 @@ include_once "includes/navbar.php";
 ?>
 </head>
 <body class="body_page">
-<?php
-  echo "<pre>";
-var_dump($_SESSION);
-echo "</pre>";
-?>   
+  
 <form method="post">
 <div class="m-4 w-100 fw-bold">
    <div class=" ms-4">

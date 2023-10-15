@@ -8,8 +8,8 @@ $titre = "Users";
 </head>
 <body class="body_page">
   <div class=" mx-4">
-  <div class="d-flex justify-content-between mt-3 mb-3 mx-2">
-<div><h1>Agents</h1></div> 
+<div class="d-flex justify-content-between mt-3 mb-3 mx-2">
+<div><h1>Cibles</h1></div> 
 <div>
 <button class="btn border" style="background: lightgray;"><a 
 class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
@@ -20,7 +20,7 @@ class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: non
 aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
 </div>
 </div>
-   
+
 <table class="table table-striped table-hover" 
 width="1000" style="border: 5px solid black; background: lightgray;">
 
@@ -39,7 +39,7 @@ width="1000" style="border: 5px solid black; background: lightgray;">
 </tr>
 <?php 
 global $dbConnect;
-$sql = "SELECT * FROM `user` WHERE `userType` = 'agent'";
+$sql = "SELECT * FROM `user` WHERE `userType` = 'cible'";
 $query = $dbConnect->query($sql);
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 $id = $row["id"];

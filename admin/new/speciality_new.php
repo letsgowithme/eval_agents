@@ -20,15 +20,15 @@ if(!$query->execute()){
 }
 $id = $dbConnect->lastInsertId();
 
-echo "<p style=\"background: red;\" class=\"text-center p-2\">Spécialité ajoutée sous le numéro ". $id."</p>";
-echo "<p style=\"background: red;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='speciality_new.php'>Retour</a></p>";
+echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Spécialité ajoutée sous le numéro ". $id."</p>";
+echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='speciality_new.php'>Retour</a></p>";
  
 ?>
 <script>
   function backToPage() {
     window.location.href = "speciality_new.php";
   }
-setTimeout(backToPage, 5000);
+setTimeout(backToPage, 8000);
   </script>
 
 <?php
@@ -37,8 +37,8 @@ setTimeout(backToPage, 5000);
   }
 }
 
-include_once "../../includes/admin_header.php";
-include_once "../../includes/admin_navbar.php";
+include_once "../includes/admin_header.php";
+// include_once "../includes/admin_navbar.php";
 $titre = "Spécialité";
 ?>
 </head>
@@ -61,5 +61,5 @@ include_once "btn_create.php";
 
 </div>
 <?php
-include_once "../../includes/admin_footer.php";
+include_once "../includes/admin_footer.php";
 ?>
