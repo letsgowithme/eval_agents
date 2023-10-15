@@ -8,11 +8,37 @@ lastname VARCHAR(100) NOT NULL,
 firstname VARCHAR(100) NOT NULL,
 birthdate DATE NOT NULL,
 email VARCHAR(50) NOT NULL,
-password VARCHAR(255) NOT NULL,
 nationality VARCHAR(100) NOT NULL,
 codeName VARCHAR(100) NOT NULL,
+userType VARCHAR(100) NOT NULL,
+specialities VARCHAR(255),
 roles JSON NOT NULL,
-userType VARCHAR(100)
+password VARCHAR(255) NOT NULL,
+createdAt DATE NOT NULL 
+) engine=InnoDB;
+
+CREATE TABLE speciality(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(100) NOT NULL
+) engine=InnoDB;
+ 
+CREATE TABLE user_speciality(
+userSpec_user_id INT NOT NULL,
+userSpec_speciality  VARCHAR(255) NOT NULL
+) engine=InnoDB;
+
+CREATE TABLE user_speciality(
+userSpec_user_id INT NOT NULL,
+userSpec_speciality JSON NOT NULL
+) engine=InnoDB;
+
+CREATE TABLE chosen_speciality(
+userSpec_speciality JSON NOT NULL
+) engine=InnoDB;
+
+CREATE TABLE user_spec(
+id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+speciality JSON 
 ) engine=InnoDB;
 
 CREATE TABLE user_admin(
@@ -21,24 +47,20 @@ createdAt DATETIME NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE user_agent(
-agent_user_id INT NOT NULL,
+userAg_user_id INT NOT NULL,
 agent_code_ident INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE user_target(
-target_user_id INT NOT NULL,
-target_code_name_id INT NOT NULL
+userTarg_user_id INT NOT NULL,
+userTarg_code_name_id INT NOT NULL
 ) engine=InnoDB;
 
 CREATE TABLE user_contact(
-contact_user_id INT NOT NULL,
-contact_code_name_id INT NOT NULL
+userCont_user_id INT NOT NULL,
+userCont_code_name_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE speciality(
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-title VARCHAR(100) NOT NULL
-) engine=InnoDB;
 
 
 CREATE TABLE missionType(

@@ -1,5 +1,7 @@
 
-<?php require_once "includes/DB.php"; ?>
+<?php 
+require_once "../../includes/DB.php";
+?>
 <div class="mb-3">
           <label for="missionType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type de mission</label><br>
 <select name="missionType" id="missionType">

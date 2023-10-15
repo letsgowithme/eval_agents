@@ -38,17 +38,21 @@ $titre = "Type de mission";
 </head>
 <body class="body_page">
   <div class="container">
+  <  <div class="d-flex justify-content-between mt-4">
+<h1>Ajouter un type de mission</h1>    
+<button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
+</div>
 <form class="form" action="missionType_new.php" method="post">
   <div class="mb-3">
     <label for="title" class="form-label fw-bold my-4 fs-2" style="color: #01013d;">Type de mission</label>
     <input type="text" class="form-control w-50" name="title" value="">
-  <button type="submit" class="btn btn-primary my-4 fs-4 fw-bold" name="Submit">Créer</button>
+    <?php
+include_once "btn_create.php";
+?>
 </form>
 
 <div>
-<button type="button" class="login my-4 fs-4 fw-bold" data-toggle="tooltip" data-placement="top">
-  <a href="../admin_index.php">Admin</a>
-</button>
+
 </div>
 <?php
 include_once "../../includes/admin_footer.php";

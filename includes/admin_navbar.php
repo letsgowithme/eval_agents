@@ -11,19 +11,20 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="../../index.php" id="up">Accueil</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="../../missions.php">Missions</a>
-        </li>
+        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Listes: 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="../../missions.php">Missions</a></li>
-            <li><a class="dropdown-item" href="../../agents.php">Agents</a></li>
-            <li><a class="dropdown-item" href="../../missions.php">Cibles</a></li>
-            <li><a class="dropdown-item" href="../../missions.php">Contacts</a></li>
-            <li><a class="dropdown-item" href="../../missions.php">Planques</a></li>
+            <li><a class="dropdown-item" href="../missions.php">Missions</a></li>
+            <li><a class="dropdown-item" href="lists/usersAll.php">Personnes</a></li>
+            <li><a class="dropdown-item" href="lists/agents.php">Agents</a></li>
+            <li><a class="dropdown-item" href="../missions.php">Cibles</a></li>
+            <li><a class="dropdown-item" href="../missions.php">Contacts</a></li>
+            <li><a class="dropdown-item" href="../hideout_new.php">Planques</a></li>
             <!-- <li><a class="dropdown-item" href="nationality_new.php">Nationalité</a></li> -->
             
             <li><hr class="dropdown-divider"></li>
@@ -47,10 +48,7 @@
           </ul>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+    
     </div>
   </div>
 </nav>
