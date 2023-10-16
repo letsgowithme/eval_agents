@@ -31,7 +31,7 @@ if(isset($_POST["submit"])){
 }
 
 $titre = "Inscription";
-include_once "../../includes/admin_header.php";
+include_once "../includes/admin_header.php";
 // include_once "../../includes/admin_navbar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
@@ -105,6 +105,7 @@ aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
 
  </div>
  <!-- **************Specialities***************** -->
+ <div class="mb-3">
    <?php
    if($user_specialities){
     ?>
@@ -129,6 +130,7 @@ aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
 </form>
 
 </div>
+
 <script>
 function myFunction() {
   var specialities_list = document.getElementById("specialities_list");
@@ -182,5 +184,5 @@ function myFunction() {
     });
   </script>
 <?php
-include_once "../../includes/admin_footer.php";
+include_once "../includes/admin_footer.php";
 ?>

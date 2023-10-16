@@ -75,26 +75,30 @@ missionType_mission_id INT NOT NULL,
 missionType_mType_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_agent(
+CREATE TABLE mission_agents(
 missionAgent_mission_id INT NOT NULL,
 missionAgent_agent_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_contact(
+CREATE TABLE mission_contacts(
 mission_id INT NOT NULL,
 mission_contact_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_target(
+CREATE TABLE mission_targets(
 mission_id INT NOT NULL,
 mission_target_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_hideout(
+CREATE TABLE mission_hideouts(
 mission_hideout_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_speciality(
+CREATE TABLE mission_specialities(
 mission_speciality_id INT NOT NULL
 ) engine=InnoDB;
+
+
+
+
 

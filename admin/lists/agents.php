@@ -50,7 +50,9 @@ $email = $row["email"];
 $codeName = $row["codeName"];
 $nationality = $row["nationality"];
 $userType = $row["userType"];
-$specialities = $row["specialities"];
+$user_specialities = $row["specialities"];
+
+
 ?>
 <tr>
    <td><?php echo $id ?></td>
@@ -61,7 +63,7 @@ $specialities = $row["specialities"];
   <td><?php echo $nationality ?></td>
   <td><?php echo $codeName ?></td>
   <td><?php echo $userType ?></td>
-  <td class="text-center"><?php echo $specialities ? $specialities : '-' ?></td>
+  <td class="text-center"><?php echo $user_specialities ? $user_specialities : '-' ?></td>
   <td><a href="../update/user_update.php?id=<?php echo $id?>">Modifier</a></td>
   <td><a href="../update/user_delete.php?id=<?php echo $id?>">Supprimer</a></td>
 </tr>

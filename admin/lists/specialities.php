@@ -1,6 +1,6 @@
 <?php require_once "../../includes/DB.php"; ?>
 <div class="mb-3 d-flex mt-4">
-          <label for="speciality" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;">Spécialité d'agent</label>
+          <label for="speciality" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;">Spécialité</label>
 <select name="speciality[]" id="speciality" multiple="multiple">
     <!-- <option>Choisir:</option> -->
 <?php 

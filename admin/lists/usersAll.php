@@ -1,8 +1,5 @@
 <?php 
 require_once "../../includes/DB.php";
-
-
-
 include_once "../includes/admin_header.php";
 // include_once "../includes/admin_navbar.php";
 $titre = "Users";
@@ -13,17 +10,11 @@ $titre = "Users";
 <div class="d-flex justify-content-between mt-3 mb-3 mx-2">
 <h1>Liste d'Utilisateurs</h1>
 <div class="d-flex flex-row mt-2">
-<h5>Filtrer par type: </h5>
-<div>
-<a class="fs-6 mx-2" style="font-weight: bold; color:black; text-decoration: none;" 
-aria-current="page" href="../lists/agents.php">Agents</a>
-<a class="fs-6 mx-2" style="font-weight: bold; color:black; text-decoration: none;" 
-aria-current="page" href="../lists/targets.php">Cibles</a>
-<a class="fs-6 mx-2" style="font-weight: bold; color:black; text-decoration: none;" 
-aria-current="page" href="../lists/contacts.php">Contacts</a> 
+<button class="btn border" style="background: lightgray;"><a 
+class="fs-5" style="font-weight: bold; color:darkblue; text-decoration: none;" 
+aria-current="page" href="usersSearch.php">Rechercher par type</a></button>
 </div>
-
-
+</div>
 </div>
 <button class="btn border" style="background: lightgray;"><a 
 class="fs-5" style="font-weight: bold; color:darkblue; text-decoration: none;" 
@@ -35,8 +26,8 @@ width="1000" style="border: 5px solid black; background: lightgray;">
 
 <tr>
   <th>Id</th>
-  <th>Nom</th>
   <th>Prénom</th>
+  <th>Nom</th>
   <th>Date de naissance</th>
   <th>Email</th>
   <th>Nationality</th>
@@ -64,8 +55,8 @@ $specialities = $row["specialities"];
 
 <tr>
    <td><?php echo $id ?></td>
+   <td><?php echo $firstname ?></td>
   <td><?php echo  $lastname ?></td>
-  <td><?php echo $firstname ?></td>
   <td><?php echo $birthdate ?></td>
   <td><?php echo $email ?></td>
   <td><?php echo $nationality ?></td>

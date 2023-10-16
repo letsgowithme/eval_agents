@@ -8,17 +8,19 @@ $up_id = $_GET["id"];
 // }
 if(isset($_POST["submit"])){
  
-  if($_POST["specialities"]){
+  if(isset($_POST["specialities"])){
+   
     $specialitiesArr = [];
-    for($i =0; $i < count($_POST['specialities']);$i++){
-      $speciality = $_POST['specialities'][$i];
-      $specialitiesArr[] = $speciality;
-    }
+    for($i =0; $i < count($_POST['specialities']); $i++){
+      $user_speciality = $_POST['specialities'][$i];
+      $specialitiesArr[] = $user_speciality;
+    }   
     $specialities = implode(",", $specialitiesArr);
-   } else{
-    $specialitiesArr[] = "";
-    }
+   
+  }else{
+    $specialitiesArr = [];
     $specialities = implode(",", $specialitiesArr);
+  }
 
 
     $lastname = strip_tags($_POST["lastname"]);
@@ -42,7 +44,7 @@ if(isset($_POST["submit"])){
 }
 
 $titre = "Inscription";
-include_once "../../includes/admin_header.php";
+include_once "../includes/admin_header.php";
 // include_once "../../includes/admin_navbar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
@@ -65,7 +67,8 @@ while($row = $query->fetch()){
   $user_nationality = $row["nationality"];
   $codeName = $row["codeName"];
   $user_userType = $row["userType"];
-  $user_specialities = $row["specialities"];
+  // pour recuperer spec de user
+  $specialities = $row["specialities"];
 }
 
   ?>
@@ -128,15 +131,15 @@ foreach ($userTypeArray as $userType) {
 }
 ?>
  </div>
- <!-- **************Specialities***************** -->
+ <!-- ********************Specialities*********************** -->
   <div class="mb-3 mt-3 d-flex" id="agent_speciality">
    <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;" id="speciality_title">Spécialité</h5>
-    <!-- afficher les specialités de l'Utilisateur -->
    <div class="d-flex flex-column bg-light"> 
+    <!-- afficher les specialités de l'Utilisateur -->
    <?php
-  $user_specialities = explode(",", $user_specialities); 
-  for($i = 0; $i < count($user_specialities); $i++)
-echo '<option value="' . $user_specialities[$i] . '" class="user_specialities">' . $user_specialities[$i] . '</option>';
+  $specialities = explode(",", $specialities); 
+  for($i = 0; $i < count($specialities); $i++)
+echo '<option name="user_specialities[]" value="' . $specialities[$i] . '" class="user_specialities">' . $specialities[$i] . '</option>';
 ?>
 </div>
 <div class="d-flex flex-row">
@@ -144,16 +147,21 @@ echo '<option value="' . $user_specialities[$i] . '" class="user_specialities">'
 </div>
 <!-- afficher la liste de specialités -->
 </div> 
+
 <div class="specialities_list mb-4" id="specialities_list" style="display: none;">
    <?php include_once('../lists/specialities_chbox.php');
-   
+   $specialitiesArray[] = $speciality;
+   $specialities = implode(',', $specialitiesArray);
+
    ?> 
  </div>
 
 
 </div>
+<div id="warning_messages">
 <div><span style="color: red; font-weight: bold; font-size: 1.2em;">Attention, les anciennes spécialités seront remplacées par de nouvelles!</span></div>
 <div><span style="color: gdarkgray; font-weight: bold; font-size: 1em;">Si vous souhaitez conserver les anciennes spécialités, merci de cocher à nouveau les cases!</span></div>
+</div>
    <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Enregistrer</button>
 </form>
 <div>
@@ -202,11 +210,12 @@ function myFunction() {
     let agent_speciality = document.getElementById("agent_speciality");
     let target = document.getElementById("cible");
     let contact = document.getElementById("contact");
-   
+    let warning_messages = document.getElementById("warning_messages");
     if(userType.value == "cible" || userType.value == "contact"){
       specialities_list.style.display = "none";
       change_speciality.style.display = "none";
       speciality_title.style.display = "none";
+      warning_messages.style.display = "none";
     }
     agent.addEventListener("click", function () {
       agent_speciality.style.display = "block";
@@ -226,5 +235,5 @@ function myFunction() {
     });
   </script>
 <?php
-include_once "../../includes/admin_footer.php";
+include_once "../includes/admin_footer.php";
 ?>

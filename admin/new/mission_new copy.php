@@ -12,17 +12,14 @@ $country = strip_tags($_POST["country"]);
 $missionStatus = strip_tags($_POST["missionStatus"]);
 $codeName = strip_tags($_POST["codeName"]);
 
-if(isset($_POST["agents"])){ 
-  $agentsArr = [];
-  for($i =0; $i < count($_POST['agents']);$i++){
-    $agent = $_POST['agents'][$i];
-    $agentsArr[] = $agent;
-  }   
-
-  $agents = implode(",", $agentsArr);
- 
 
 require_once "../../includes/DB.php";
+
+// $sql = "SELECT * FROM `code_name`";
+// $requete = $dbConnect->query($sql);
+// $requete->execute();
+// $codeNames = $requete->fetchALL(PDO::FETCH_ASSOC);
+
 
 $sql = "INSERT INTO `mission`(`title`, `description`, `startDate`, `endDate`, `country`, `missionStatus`, `codeName`) 
 VALUES(:title, :description, :startDate, :endDate, :country, :missionStatus, :codeName)";
@@ -42,17 +39,6 @@ if(!$query->execute()){
 }
 $id = $dbConnect->lastInsertId();
 
-// Remplir table mission_agents
-$mA_mission_id = $dbConnect->lastInsertId();
-
-$sql2 = "INSERT INTO `mission_agents` (`mA_mission_id`, `agents` VALUES('$mA_mission_id', :agents)";
-$query = $dbConnect->prepare($sql2);
-
-$query->bindValue(':mA_mission_id', $mA_mission_id, PDO::PARAM_INT);
-$query->bindValue(':agents', $agents, PDO::PARAM_STR);
-if(!$query->execute()){
-  die("Failed to insert INTO `mission_agents`");
-}
 // header("Location: missions.php");
 echo "<p>La mission ajoutée sous le numéro ". $id."</p>";
 echo "<a href='mission_new.php'>Retour</a>";
@@ -62,9 +48,8 @@ exit;
     die("Le formulaire est incomplet");
   }
 }
-}
 
-include_once "../includes/admin_header.php";
+include_once "../../includes/admin_header.php";
 // include_once "../../includes/admin_navbar.php";
 $titre = "Mission";
 ?>
@@ -90,11 +75,11 @@ $titre = "Mission";
 
           <div class="mb-3">
             <label for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label>
-            <input type="date" class="form-control w-25" name="startDate" id="startDate" value="">
+            <input type="date" class="form-control w-50" name="startDate" id="startDate" value="">
           </div>
           <div class="mb-3">
             <label for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de la fin</label>
-            <input type="date" class="form-control w-25" name="endDate" id="endDate" value="">
+            <input type="date" class="form-control w-50" name="endDate" id="endDate" value="">
           </div>
 
          <?php include_once "../lists/countries.php"; ?>
@@ -102,20 +87,16 @@ $titre = "Mission";
          
           <div class="mb-3">
             <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nome de code</label>
-            <input type="text" class="form-control w-50 fs-6" name="codeName" id="codeName" value="">
+            <input type="text" class="form-control w-50" name="codeName" id="codeName" value="">
           </div>
          
             <?php include_once('../lists/missionTypes.php');?>
            
             <?php include_once('../lists/specialities.php');?>
-
-            <?php include_once('../lists/agents_list.php');?>
-            <?php include_once('../lists/contacts_list.php');?>
-            <?php include_once('../lists/targets_list.php');?>
        
           <?php
-                  include_once "btn_create.php";
-                  ?>
+include_once "btn_create.php";
+?>
         </form>
         <div>
         <button type="button" class="login my-4 fs-4 fw-bold" data-toggle="tooltip" data-placement="top">
