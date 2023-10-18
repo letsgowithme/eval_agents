@@ -1,0 +1,469 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+	<link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.min.css') }}">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.css" integrity="sha512-T3VL1q6jMUIzGLRB9z86oJg9PgF7A55eC2XkB93zyWSqQw3Ju+6IEJZYBfT7E9wOHM7HCMCOZSpcssxnUn6AeQ==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{% endblock %}
+{% block title %}Reservation
+{% endblock %}
+{% block stylesheet %}{% endblock %}
+{% block javascripts %}{% endblock %}
+
+{% block body %}
+	<div
+		class="container mt-4 text-center mb-4" style="min-height: 80vh;">
+     {# <div  id="today_date" class="hidden"></div>  #}
+
+		<h1 class="h5-page text-light reserve_title my-4 fs-1">Page de la réservation</h1>
+		<p class="text-center text-light fs-4 reserve_text">Merce d'avance de précisier en commaintaire le nombre d'enfants présent à table (s'il y en a)!
+			<br>
+			Pour tout retard de plus de 20 min votre table sera donnée à d'autre client!!
+		</p>
+		  <div id="lunchAvailPlacesInfo" class="hidden text-light fs-4"></div>
+			<div id="dinnerAvailPlacesInfo" class="hidden text-light fs-4"></div>
+			<div id="availPlacesError" class="hidden fs-3" style="font-weight: bold;">
+			<span style="color: red;">Pas de places disponible pour cette date et cette heure. </span>
+			<br>
+			<span style="color: green;" class="hidden" id="anotherDateMessage">Veuillez choisir une autre date.</span>
+			<br>
+			<span style="color: green;" id="redirectMessage" class="hidden">Rédirection sur la page de la réservation </span></div>
+		{{ form_start(form) }}
+
+{# ***************************** #}
+ <table id="table" 
+ class="hidden"
+ >
+        <thead>
+            <tr class="text-light fs-4">   
+						{# <th class="px-4">Nom</th>      #}
+                <th class="px-4">Places</th>
+                <th class="px-4">Date</th>
+                <th class="px-4">Heure</th>
+								
+							
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations_by_order %}
+          <tr classe="reserve_line">
+				   	{# <td class="fullName">{{ reservation.fullName }}</td> #}
+            <td class="nbPeople">{{ reservation.nbPeople }}</td>
+            <td class="reserve_date">{{ reservation.date ? reservation.date|date('Y-m-d') : '' }}</td>
+            <td class="hour">{{  reservation.lunchHours ? reservation.lunchHours : reservation.dinnerHours}}<td>
+            
+          </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+		{# *********************************************** #}
+		<div class="row form-row mt-4">
+
+			<div class="form-group col-md-6 nbPeople_date" required>
+				{{ form_label(form.nbPeople) }}
+				<div class="nbPeople" required>{{ form_widget(form.nbPeople) }}</div>
+				<div class="form-error">
+					{{ form_errors(form.nbPeople) }}
+				</div>
+				
+			</div>
+
+
+			<div class="form-group col-md-6 mb-4 nbPeople_date">
+				<input type="text" name="date_debut" autocomplete="off" class="form-select fs-4" id="js-datepicker" placeholder="Choisir la date">
+
+			</div>
+		</div>
+		<div><p class="hidden mt-4" style="color: red; font-size: 2em; font-weight: bold;" id="alert_nbPeople">"Veuillez choisir le nombre de couverts. <br><span style="color: green;"  id="nbPeople_redirection">Rédirection sur la page de réservation."</span></p>
+</div>
+
+		<div class="fs-2 mt-4 mb-4 hidden" id="message_closed" style="color: white; border: 2px solid white; padding-top: 15px;">Désole,<br> le restaurant est fermé les Mercredis</div>
+	
+		<br>
+		<br>
+		{# *************************************** #}
+		
+		<div class="all_slots">
+		
+      <div id="lunch_places_avail"  style="color: red;" class="fs-2 fw-4 bg-light">
+			</div>
+			<div class="row d-flex flex-wrap lunch_slots mb-4" id="lunch_slots_block">
+				<div class="form-group text-light bold text-start day_slot
+									hidden
+									">
+					{{ form_label(form.lunchHours) }}
+					<br>
+					<div class="choiceList-wrapper" style="border: none;">
+						{% for field in form.lunchHours %}
+							<div class="btn btn_slot lunch_slot_btn  d-flex text-center slot mt-4" type="button" style="min-width: 15%; background-color: red;margin-right: 20px; color: white; margin-bottom: 10px; box-shadow: 1px 5px 7px; cursor: pointer;">
+								<div class="lunch_slot_btn wbtn_lu">{{ form_widget(field) }}</div>
+								<div class="lunch_slot_btn lbtn_lu ac_btn">{{ form_label(field) }}</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+				<p class="hidden alert_res_time mt-4 fs-3 text-center" >Veuillez choisir l'heure d'arrivée</p>
+		</div>
+<div id="dinner_places_avail" class="fs-2 fw-4 bg-light"></div>
+	<div class="row d-flex flex-wrap dinner_slots " id="dinner_slots_block">
+		<div class="form-group text-light bold text-start evening_slot
+							hidden
+							">
+			{{ form_label(form.dinnerHours) }}
+			<br>
+			<div class="choiceList-wrapper" style="border: none;">
+				{% for field in form.dinnerHours %}
+					<button class="btn btn_slot dinner_slot_btn d-flex text-center slot d-flex" type="button" style="min-width: 15%; background-color: red; margin-right: 20px; color: white; margin-bottom: 10px; box-shadow: 1px 5px 7px; cursor: pointer;" id="dinnerTime">
+						<div class="dinner_slot_btn wbtn_di">{{ form_widget(field) }}</div>
+						<div class="dinner_slot_btn lbtn_di ac_btn">{{ form_label(field) }}</div>
+					</button>
+				{% endfor %}
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div class="form-group text-light info
+	hidden 
+	">
+<div class="label fs-2 fw-bolder">{{ form_label(form.allergies) }}</div>
+<br>
+<div class="choiceList-wrapper d-flex flex-column text-start" 
+style="border: none;  transform: translateX(40%);">
+	{% for field in form.allergies %}
+		<div style="min-width: 15%; padding: 0 10px" class="fs-4">
+			{{ form_widget(field) }}
+			{{ form_label(field) }}
+		</div>
+	{% endfor %}
+</div></div><div class="form-group text-start info
+				hidden
+				">
+<div class="form-group col-sm-12 col-6  mb-4">
+	{{ form_label(form.fullName) }}
+	{{ form_widget(form.fullName) }}
+	<div class="form-error">
+		{{ form_errors(form.fullName) }}
+	</div>
+</div></div><div class="form-group col-sm-12 col-6 mb-4 info
+	hidden
+	">
+{{ form_label(form.nbChildren) }}
+<div class="nbChildren">
+	{{ form_widget(form.nbChildren) }}
+</div>
+<div class="form-error">
+	{{ form_errors(form.nbChildren) }}
+</div>
+<div class="form-group mb-4 info p-4 d-1 text-bold submit_btn">
+	{{ form_row(form.submit) }}
+</div>
+
+{{ form_end(form) }}
+
+
+</div>
+<div class="text-center">
+<button type="button" class="btn btn-info mt-4  hidden" style="width: 50%;"  id="btn_reload" onclick="reload();">Reinitialiser</button></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js">
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" 
+integrity="sha512-ztxZscxb55lKL+xmWGZEbBHekIzy+1qYKHGZTWZYH1GUwxy0hiA18lW6ORIMj4DHRgvmP/qGcvqwEyFFV7OYVQ==" 
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>{# <script src="jquery.js"></script> 
+				<script src="jquery-ui.min.js"></script> 
+					 <script src="jquery.modal.min.jss"></script>  #}{# <script src="assets/scripts/popper.min.js"></script>
+					 {# <script src="assets/scripts/bootstrap.min.js"></script>  #}
+<script>
+
+$(document).ready(function () {
+$("#btn_reload").click(function () {
+location.reload(true);
+});
+});
+</script>
+ <script>
+$("js-datepicker").click(function () {
+
+});
+
+var fullDate = new Date(); 
+var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+var today = fullDate.getFullYear() + "-" + twoDigitMonth + "-" + fullDate.getDate();
+
+var dateShow = $("#today_date").append(today).show();
+console.log("Aujourd\'hui: " + today);
+
+
+
+var reserve_nbPeople = $(".nb_people");
+var reserve_line = $(".reserve_line");
+var reserve_ids = $(".reserve_ids");
+var reserve_date = document.getElementsByClassName(".reserve_date");
+
+var today_date = $("#today_date");
+var hour = $(".hour");
+
+
+var today_month = today_date.text().split("-")[1];
+var today_day = today_date.text().split("-")[2];
+
+console.log(today_month);
+console.log(today_day);
+
+
+{# affiche les réservations à partir de la date courante #}
+	$(".reserve_date").each(function( index ) {
+		var reserve_month =  $( this ).text().split("-")[1];
+		var reserve_day =  $( this ).text().split("-")[2];
+
+ 		 	if (reserve_month <= today_month && reserve_day < today_day) {
+        $(this).parent().remove();
+				reserve_line.addClass("hidden");
+				console.log("Reserved");
+	}
+	
+});
+
+  $(document).ready(function(){
+		$( ".lunch_slot_btn" ).first().remove();
+		$( ".dinner_slot_btn" ).first().remove();
+		$(".btn_slot" ).css({cursor : 'default'});
+		$("input[type=radio]").css({cursor : 'pointer'});		
+         });   
+
+  
+	
+</script>
+
+<script>
+	$(function () {
+
+			
+
+			$("#js-datepicker").datepicker({
+			dateFormat: "D d MM",
+			dayNamesShort: ['Dim.','Lun.','Mar.','Mer.','Jeu.','Ven.','Sam.'
+			],
+			dayNamesMin: ['Di','Lu','Ma','Me','Je','Ve','Sa'
+			],
+			firstDay: 1,
+			minDate: 0,
+			maxDate: "+2M +10D",
+			autoclose: true,
+			monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'
+			],
+    
+
+			onSelect: function (date, value) {
+			if (date != "") {
+			$('#reservation_date').datepicker({dateFormat: "yy-mm-dd"}).val();
+			var myDate = $('#js-datepicker').datepicker('getDate');
+			var newDate = $('#reservation_date').datepicker('setDate', myDate);
+			var newDateVal = newDate.val();
+			console.log('Chosen date: ' + '"' + newDateVal + '"');
+
+      if(date !== value.lastVal){
+				 $(this).change();
+			}
+			
+		
+			if ($("#reservation_nbPeople").val() != "") {
+					$("#reservation_nbPeople").prop('disabled', true);
+					$("#btn_reload").removeClass("info").removeClass("hidden");
+					
+					}
+				
+
+      var nbPeople_total_lunch = [];
+			var nbPeople_total_dinner = [];
+	    var placesTotal = 44;
+			var placesAvailableLunch = 0;
+		  var placesAvailableDinner = 0;
+			var nbPeople_total_lunch_sum = 0;
+			var nbPeople_total_dinner_sum = 0;
+			var fullName = $(".fullName");
+			var input_fullName = $("#reservation_fullName").val();
+			var chosenNbPeople = $("#reservation_nbPeople").val();
+	      console.log("Chosen qn of people " + chosenNbPeople); 
+				console.log(""); 
+				console.log("Réservations: "); 
+
+			$(".reserve_date").each(function(index) {
+			    var $this = $( this ); 
+					if($this.text() == newDateVal) {
+							var nbPeople = $this.prev().text(); 
+							var res_time = $this.next().text();
+							var res_time_hour = res_time.slice(0, 2);
+             
+							var res_time_dinner_hour;
+							var res_time_lunch_hour;
+					
+					}
+					
+					
+
+					if(res_time_hour > 12){
+							res_time_dinner_hour = res_time_hour;
+							nbPeople_total_dinner.push(parseInt(nbPeople));
+							nbPeople_total_dinner_sum = nbPeople_total_dinner.reduce(function(a, b){
+							return a + b;
+							});
+					}	
+									
+					if(res_time_hour == 12){
+							res_time_lunch_hour = res_time_hour;
+							nbPeople_total_lunch.push(parseInt(nbPeople));
+							nbPeople_total_lunch_sum = nbPeople_total_lunch.reduce(function(a, b){
+							return a + b;
+							}); 
+							
+					}
+
+					placesAvailableLunch = placesTotal - nbPeople_total_lunch_sum;
+					
+					$("#lunchAvailPlacesInfo").text("Places disponibles midi: " + placesAvailableLunch.toString()); 
+					$("#lunchAvailPlacesInfo").removeClass("hidden");
+					$("#lunchAvailPlacesInfo").addClass("visible");
+					
+
+					placesAvailableDinner = placesTotal - nbPeople_total_dinner_sum;
+					
+					$("#dinnerAvailPlacesInfo").text("Places disponibles soir: " + placesAvailableDinner.toString()); 
+					$("#dinnerAvailPlacesInfo").removeClass("hidden");
+					$("#dinnerAvailPlacesInfo").addClass("visible");
+										
+			});
+
+   
+		
+
+if ($("#reservation_nbPeople").val() == "") {
+$("#alert_nbPeople").removeClass("hidden");
+$("#nbPeople_redirection").removeClass("hidden");
+$('.all_slots').addClass('hidden');
+window.setTimeout(function() {
+	location.reload();
+}, 2500);
+};
+
+
+
+var myDay = myDate.getDay();
+if (myDay == 3) {
+$('.all_slots').addClass('hidden');
+$('.nbPeople_date').addClass('hidden');
+$('#message_closed').removeClass('hidden');
+$("#lunchAvailPlacesInfo").addClass('hidden').removeClass('visible');
+$("#dinnerAvailPlacesInfo").addClass('hidden').removeClass('visible');
+$("#btn_reload").text("Choisir une autre date.");
+$('#other_date_choose').click(function () {
+location.reload(true);
+$('.all_slots').addClass('visible');
+$('.nbPeople_date').addClass('visible');
+$('.info').addClass('visible');
+$('#message_closed').addClass('hidden');
+$("#other_date_choose").addClass('hidden');
+console.log('C\'est Mercredi');
+})
+} else if (myDay == 6) {
+$('.day_slot').addClass('hidden');
+$('.lunch_slot_btn').addClass('hidden');
+$('.evening_slot').removeClass('hidden');
+$('.dinner_slot_btn').removeClass('hidden');
+$("#lunchAvailPlacesInfo").removeClass('visible');
+$("#lunchAvailPlacesInfo").addClass('hidden');
+console.log('C\'est Samedi');
+
+} else if (myDay == 0) {
+$('.day_slot').removeClass('hidden');
+$('.lunch_slot_btn').removeClass('hidden');
+$('.evening_slot').addClass('hidden');
+$('.dinner_slot_btn').addClass('hidden');
+$("#dinnerAvailPlacesInfo").removeClass('visible');
+$("#dinnerAvailPlacesInfo").addClass('hidden');
+
+console.log('C\'est Dimanche');
+
+} else {
+$('.lunch_slot_btn').removeClass('hidden');
+$('.day_slot').removeClass('hidden');
+$('.dinner_slot_btn').removeClass('hidden');
+$('.evening_slot').removeClass('hidden');
+$("reservation_dinnerTime_10").addClass('hidden');
+$( ".dinner_slot_btn:nth-child(10)" ).remove();
+$( ".dinner_slot_btn:nth-child(10n)" ).remove();
+$( ".dinner_slot_btn:nth-child(10n)" ).remove();
+$( ".dinner_slot_btn:nth-child(10n)" ).remove();
+
+console.log('C\'est le jour de la semaine');
+}
+function nbPlacesAvailable() {
+if(chosenNbPeople <= placesAvailableLunch){
+		console.log("res possible pour midi");  
+}else{
+		$("#lunch_places_avail").text("Désolé, pas de places pour midi.");
+	  $(".nbPeople_date").prop("disabled", true);
+		$('.day_slot').addClass('hidden');
+    $('.lunch_slot_btn').addClass('hidden');		
+		$("#btn_reload").text("Choisir une autre date.");			
+		}
+if(chosenNbPeople <= placesAvailableDinner) {
+            console.log("res possible pour soir"); 
+}else{
+		$("#dinner_places_avail").text("Désolé, pas de places pour le soir")
+		$("#dinner_slots_block").removeClass('visible');
+		$("#dinner_slots_block").addClass('info');   
+		$("#btn_reload").text("Choisir une autre date.");				
+       
+	  }
+		return chosenNbPeople;
+ }
+nbPlacesAvailable();
+
+}
+}
+});
+});
+
+{# Be sure to choose the time   #}
+	$(".lunch_slot_btn").click(function () {
+		
+		$(".alert_res_time").removeClass('hidden');
+		});
+	$(".dinner_slot_btn").click(function () {
+		$(".alert_res_time").removeClass('hidden');
+	});
+
+	{# Show lunch only or dinner only   #}
+	$(".wbtn_lu input[type=radio]").click(function () {
+	  $('.evening_slot').addClass('hidden');
+		$('.dinner_slot_btn').addClass('hidden');
+		$('.dinner_slots').addClass('hidden');
+		$('.info').removeClass('hidden');
+		$(".alert_res_time").css('opacity', 0);	
+	  $(".wbtn_di input[type=radio]").prop("checked", false)
+		});
+		
+  $(".wbtn_di input[type=radio]").click(function () {
+		$('.day_slot').addClass('hidden');
+    $('.lunch_slot_btn').addClass('hidden');
+	  $('.lunch_slots').addClass('hidden');
+		$('.info').removeClass('hidden');
+		$(".alert_res_time").css('opacity', 0);	
+    $(".wbtn_lu input[type=radio]").prop("checked", false)
+		});
+		
+		$(".submit_btn").click(function() {
+		$("#reservation_nbPeople").prop('disabled', false);
+		});
+</script>
+
+
+
+{% endblock %}

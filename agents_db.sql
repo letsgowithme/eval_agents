@@ -70,15 +70,17 @@ missionStatus VARCHAR(50) NOT NULL,
 codeName VARCHAR(50) NOT NULL
 ) engine=InnoDB;
 
+CREATE TABLE mission_agents(
+mA_mission_id INT NOT NULL,
+agents INT NOT NULL
+) engine=InnoDB;
+
+
 CREATE TABLE mission_mType(
 missionType_mission_id INT NOT NULL,
 missionType_mType_id INT NOT NULL
 ) engine=InnoDB;
 
-CREATE TABLE mission_agents(
-missionAgent_mission_id INT NOT NULL,
-missionAgent_agent_id INT NOT NULL
-) engine=InnoDB;
 
 CREATE TABLE mission_contacts(
 mission_id INT NOT NULL,

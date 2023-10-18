@@ -51,7 +51,7 @@ $titre = "Planques";
     
   <button class="btn border" style="background: lightgray;"><a 
   class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-  aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
+  aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
   </div>
   </div>  
         <form class="form" action="hideout_new.php" method="post">

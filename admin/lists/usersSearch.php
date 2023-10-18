@@ -13,15 +13,43 @@ $titre = "Search users";
     <div class="">
       <fieldset>
         <form action="usersSearch.php" method="GET">
-        <input type="text" name="search" value="" style="width: 240px;" placeholder="Par type: agent, cible, contact">
+        <input type="text" name="search" value="" style="width: 240px;" id="search"placeholder="Par type: agent, cible, contact">
         <input type="submit" name="searchBtn" value="Rechercher">
         </form>
       </fieldset>
     </div>
 </div>
+
+<?php
+
+if(isset($_GET['searchBtn'])){
+  $specialities = [];
+  global $dbConnect;
+  $search = $_GET['search'];
+
+  $sql = "SELECT * FROM `user` WHERE userType=:searcH || specialities=:searcH";
+  $query = $dbConnect->prepare($sql);
+  $query->bindValue(':searcH',$search);
+  $query->execute();
+  
+  
+  while($row = $query->fetch()) {
+    $id = $row["id"];
+    $lastname = $row["lastname"];
+    $firstname = $row["firstname"];
+    $birthdate = $row["birthdate"];
+    $email = $row["email"];
+    $codeName = $row["codeName"];
+    $nationality = $row["nationality"];
+    $userType = $row["userType"];
+    $specialities = $row["specialities"];
+
+    $specialities = explode(",", $specialities);
+ 
+?>
+<!-- table avec resultats de recherche -->
 <table class="table table-striped table-hover" 
     width="1000" style="border: 5px solid black; background: lightgray;">
-
 <tr>
   <th>Id</th>
   <th>Prénom</th>
@@ -33,29 +61,6 @@ $titre = "Search users";
   <th>Type</th>
   <th>Specialités</th>
 </tr>
-<?php
-
-if(isset($_GET['searchBtn'])){
-  global $dbConnect;
-  $search = $_GET['search'];
-  $sql = "SELECT * FROM `user` WHERE userType=:searcH";
-  $query = $dbConnect->prepare($sql);
-  $query->bindValue(':searcH',$search);
-  $query->execute();
- 
-  while($row = $query->fetch()) {
-    $id = $row["id"];
-    $lastname = $row["lastname"];
-    $firstname = $row["firstname"];
-    $birthdate = $row["birthdate"];
-    $email = $row["email"];
-    $codeName = $row["codeName"];
-    $nationality = $row["nationality"];
-    $userType = $row["userType"];
-    $specialities = $row["specialities"];
-?>
-<!-- table avec resultats de recherche -->
-
 <tr>
   <td><?php echo $id ?></td>
   <td><?php echo $firstname ?></td>
@@ -65,18 +70,19 @@ if(isset($_GET['searchBtn'])){
   <td><?php echo $nationality ?></td>
   <td><?php echo $codeName ?></td>
   <td><?php echo $userType ?></td>
-  <td class="text-center"><?php echo $specialities ? $specialities : '-' ?></td>
+  <td class="text-center" id="specialities">  <?php
+ 
+for($i = 0; $i < count($specialities); $i++){
+  echo '<option name="user_specialities[]" value="' . $specialities[$i] . '" class="user_specialities">' . $specialities[$i] . '</option>';
+}
+?></td>
 </tr>
-
 <?php
   }
 }
 ?>
 </table>
-
 </div>
 </div>
 <div style="position: fixed; bottom: 0;">
 <?php include_once "../../includes/footer.php";?>
-
-

@@ -45,15 +45,15 @@ $id = $dbConnect->lastInsertId();
 // Remplir table mission_agents
 $mA_mission_id = $dbConnect->lastInsertId();
 
-$sql2 = "INSERT INTO `mission_agents` (`mA_mission_id`, `agents` VALUES('$mA_mission_id', :agents)";
-$query = $dbConnect->prepare($sql2);
+// $sql2 = "INSERT INTO `mission_agents` (`mA_mission_id`, `agents` VALUES('$mA_mission_id', :agents)";
+// $query = $dbConnect->prepare($sql2);
 
-$query->bindValue(':mA_mission_id', $mA_mission_id, PDO::PARAM_INT);
-$query->bindValue(':agents', $agents, PDO::PARAM_STR);
-if(!$query->execute()){
-  die("Failed to insert INTO `mission_agents`");
-}
-// header("Location: missions.php");
+// $query->bindValue(':mA_mission_id', $mA_mission_id, PDO::PARAM_INT);
+// $query->bindValue(':agents', $agents, PDO::PARAM_STR);
+// if(!$query->execute()){
+//   die("Failed to insert INTO `mission_agents`");
+// }
+header("Location: ../../missions.php");
 echo "<p>La mission ajoutée sous le numéro ". $id."</p>";
 echo "<a href='mission_new.php'>Retour</a>";
 exit;
@@ -73,7 +73,8 @@ $titre = "Mission";
   <div class="container">
 
   <div class="d-flex justify-content-between mt-4">
-<h1>Ajouter une mission</h1>    
+<h1>Ajouter une mission</h1>  
+ 
 <button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
 </div>
         <form class="form" action="mission_new.php" method="post">
@@ -119,7 +120,7 @@ $titre = "Mission";
         </form>
         <div>
         <button type="button" class="login my-4 fs-4 fw-bold" data-toggle="tooltip" data-placement="top">
-          <a href="../admin_index.php">Admin</a>
+          <a href="../admin_index.php">Tableau de bord</a>
         </button>
         </div>
                                 </div>

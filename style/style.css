@@ -8,12 +8,15 @@
   background: url("../img/abstract-1846853_1280.jpg");
   background-size: cover;
   background-attachment: fixed;
+  overflow-x: hidden;
 }
 .truc {
   color: #1c1c22;
   color: #b2b2b5;
   color: #300345;
   color: darkslategrey;
+  left: 50%;
+transform: translateX(-50%);
 }
 .hidden{
   display: none;
@@ -25,4 +28,15 @@ td,
 th {
   border: 1px solid gray;
 
+}
+input[type="search"]{
+  background-color: white!important;
+}
+#footer_line{
+position: relative!important; 
+bottom: 0;  left: 50%;
+transform: translateX(-50%);
+}
+.body_list {
+  background-color: rgb(226, 226, 226);
 }

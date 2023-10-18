@@ -54,7 +54,7 @@ aria-current="page" href="../lists/hideouts.php" id="up">Planques</a></button>
    
 <button class="btn border" style="background: lightgray;"><a 
 class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
+aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
 </div>
 </div>    
 <form method="post" action="hideout_update.php?id=<?php echo $up_id; ?>">

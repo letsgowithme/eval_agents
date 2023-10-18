@@ -1,5 +1,6 @@
 <?php
 //on demarre la session php
+$connect=true;
 session_start();
 if(isset($_SESSION["user"])){
 header("Location: profil.php");
@@ -58,6 +59,7 @@ include_once "includes/navbar.php";
 ?>
 </head>
 <body class="body_page">
+  <div  style="height: 85vh;">
   
 <form method="post">
 <div class="m-4 w-100 fw-bold">
@@ -74,6 +76,7 @@ include_once "includes/navbar.php";
    </div>
 </div>
   </form>
+</div>
 <?php
 include_once "includes/footer.php";
 ?>

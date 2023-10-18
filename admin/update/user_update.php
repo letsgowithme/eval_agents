@@ -6,44 +6,48 @@ $up_id = $_GET["id"];
 //   header("Location: user_update.php");
 //   exit;
 // }
-if(isset($_POST["submit"])){
- 
-  if(isset($_POST["specialities"])){
+if(!empty($_GET["id"])){
+  global $dbConnect;
+  // require_once "../../includes/DB.php";
+  $sql = "SELECT * FROM `user` WHERE `id` = '$up_id'";
+  $query = $dbConnect->query($sql);
+  while($row = $query->fetch()):
+  // if(!empty($_GET["specialities"])){
    
-    $specialitiesArr = [];
-    for($i =0; $i < count($_POST['specialities']); $i++){
-      $user_speciality = $_POST['specialities'][$i];
-      $specialitiesArr[] = $user_speciality;
-    }   
-    $specialities = implode(",", $specialitiesArr);
+  //   $specialitiesArr = [];
+  //   for($i =0; $i < count($_POST['specialities']); $i++){
+  //     $user_speciality = $_POST['specialities'][$i];
+  //     $specialitiesArr[] = $user_speciality;
+  //   }   
+  //   $specialities = implode(",", $specialitiesArr);
    
-  }else{
-    $specialitiesArr = [];
-    $specialities = implode(",", $specialitiesArr);
-  }
+  // }else{
+  //   $specialitiesArr = [];
+  //   $specialities = implode(",", $specialitiesArr);
+  // }
 
 
-    $lastname = strip_tags($_POST["lastname"]);
-    $firstname = strip_tags($_POST["firstname"]);
-    $birthdate = strip_tags($_POST["birthdate"]);
-    $email = strip_tags($_POST["email"]);
-    $nationality = strip_tags($_POST["nationality"]);
-    $codeName = strip_tags($_POST["codeName"]);
-    $userType = strip_tags($_POST["userType"]);
+    // $lastname = strip_tags($_POST["lastname"]);
+    // $firstname = strip_tags($_POST["firstname"]);
+    // $birthdate = strip_tags($_POST["birthdate"]);
+    // $email = strip_tags($_POST["email"]);
+    // $nationality = strip_tags($_POST["nationality"]);
+    // $codeName = strip_tags($_POST["codeName"]);
+    // $userType = strip_tags($_POST["userType"]);
     
 
 
-    $sql = "UPDATE `user` SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email',  nationality='$nationality', codeName='$codeName', userType='$userType',  specialities='$specialities'  WHERE id='$up_id'";
+    // $sql = "UPDATE `user` SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email',  nationality='$nationality', codeName='$codeName', userType='$userType',  specialities='$specialities'  WHERE id='$up_id'";
 
-    $query = $dbConnect->query($sql); 
-    $Execute = $query->execute();
-    if($Execute){
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Utilisateur modifié sous le numéro ". $up_id."</p>";
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='../lists/usersAll.php'>Retour</a></p>";
-    }
-}
+    // $query = $dbConnect->query($sql); 
+    // $Execute = $query->execute();
+    // if($Execute){
+    //   echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Utilisateur modifié sous le numéro ". $up_id."</p>";
+    //   echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='../lists/usersAll.php'>Retour</a></p>";
+    // }
+// }
 
-$titre = "Inscription";
+$titre = "Modifier l'utilisateur";
 include_once "../includes/admin_header.php";
 // include_once "../../includes/admin_navbar.php";
 ?>
@@ -53,12 +57,8 @@ include_once "../includes/admin_header.php";
 <body class="body_home body_page">
 
   <?php 
-global $dbConnect;
-// require_once "../../includes/DB.php";
-$sql = "SELECT * FROM `user` WHERE `id` = '$up_id'";
-$query = $dbConnect->query($sql);
 
-while($row = $query->fetch()){
+while($row = $query->fetch()):
   $id = $row["id"];
   $lastname = $row["lastname"];
   $firstname = $row["firstname"];
@@ -69,7 +69,7 @@ while($row = $query->fetch()){
   $user_userType = $row["userType"];
   // pour recuperer spec de user
   $specialities = $row["specialities"];
-}
+
 
   ?>
 <div class="container">
@@ -82,7 +82,7 @@ aria-current="page" href="../lists/usersAll.php" id="up">Utilisateurs</a></butto
    
 <button class="btn border" style="background: lightgray;"><a 
 class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
+aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
 </div>
 </div>    
 <form method="post" action="user_update.php?id=<?php echo $up_id; ?>">
@@ -138,8 +138,10 @@ foreach ($userTypeArray as $userType) {
     <!-- afficher les specialités de l'Utilisateur -->
    <?php
   $specialities = explode(",", $specialities); 
-  for($i = 0; $i < count($specialities); $i++)
-echo '<option name="user_specialities[]" value="' . $specialities[$i] . '" class="user_specialities">' . $specialities[$i] . '</option>';
+  for($i = 0; $i < count($specialities); $i++){
+    echo '<option name="user_specialities[]" value="' . $specialities[$i] . '" class="user_specialities">' . $specialities[$i] . '</option>';
+  }
+
 ?>
 </div>
 <div class="d-flex flex-row">
@@ -165,11 +167,16 @@ echo '<option name="user_specialities[]" value="' . $specialities[$i] . '" class
    <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Enregistrer</button>
 </form>
 <div>
+  <?php 
+  endwhile;
+
+?>
 <button type="button" class="login my-4 fs-4 fw-bold" data-toggle="tooltip" data-placement="top">
   <a href="../admin_index.php">Admin</a>
 </button>
 </div>
 </div>
+
 <script>
 function myFunction() {
   var specialities_list = document.getElementById("specialities_list");

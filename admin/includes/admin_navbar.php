@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="index.php">
-      <img src="../logo.png" id="up" alt="logo" width="30" class="bg-light">
+      <img src="../../logo.png" id="up" alt="logo" width="30" class="bg-light">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -30,7 +30,7 @@
             Créer: 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="new/mission_new.php">Mission</a></li>
+            <li><a class="dropdown-item" href="../../mission_new.php">Mission</a></li>
             <li><a class="dropdown-item" href="new/user_new.php">Utilisateur</a></li>
             <li><a class="dropdown-item" href="new/speciality_new.php">Spécialité</a></li>
             <li><a class="dropdown-item" href="new/missionType_new.php">Type de mission</a></li>

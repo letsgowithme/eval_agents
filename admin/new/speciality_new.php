@@ -46,7 +46,7 @@ $titre = "Spécialité";
   <div class="container">
   <div class="d-flex justify-content-between mt-4">
 <h1>Ajouter une spécialité</h1>    
-<button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
+<button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
 </div>
 <form class="form" action="speciality_new.php" method="post">
   <div class="mb-3">

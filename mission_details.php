@@ -1,4 +1,5 @@
 <?php 
+$mission_details=true;
 //on demarre la session php
 session_start();
 //on verifie s'il ya un id
@@ -10,10 +11,10 @@ if (!isset($_GET["id"]) || empty($_GET["id"])){
 $id = $_GET["id"];
 require_once "includes/DB.php";
 $sql = "SELECT * FROM `mission` WHERE id = :id";
-$requete = $dbConnect->prepare($sql);
-$requete->bindValue(":id", $id, PDO::PARAM_INT);
-$requete->execute();
-$mission = $requete->fetch();
+$query = $dbConnect->prepare($sql);
+$query->bindValue(":id", $id, PDO::PARAM_INT);
+$query->execute();
+$mission = $query->fetch();
 
 if(!$mission) {
     http_response_code(404);
@@ -31,7 +32,11 @@ include_once "includes/navbar.php";
 </head>
 <body class="body_page">
   <div class="container">
-<h1 style="color: #1c1c22;">Mission numéro  <?= strip_tags($mission['id']) ?></h1>
+    <div class="d-flex justify-content-between">
+<h1 style="color: #1c1c22;">Mission numéro  <?= strip_tags($mission['id']) ?></h1><button class="btn border" style="background: lightgray;"><a 
+class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
+aria-current="page" href="missions.php" id="up">Missions</a></button>
+</div>
 <table width="100%" border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4">
 <tr>
 <td class="w-25">Titre</td>
@@ -56,6 +61,10 @@ include_once "includes/navbar.php";
 <tr>
 <td>Status</td>
 <td><?= strip_tags($mission['missionStatus']) ?></td>
+</tr>
+<tr>
+<td>Nome de code</td>
+<td><?= strip_tags($mission['codeName']) ?></td>
 </tr>
 </table>
 

@@ -2,6 +2,7 @@
   require_once "../../includes/DB.php";
 
 $up_id = $_GET["id"];
+var_dump($_GET["id"]);
 if(isset($_POST["submit"])){ 
   if($_POST["specialities"]){
     $specialitiesArr = [];

@@ -1,12 +1,6 @@
 <?php
 //on demarre la session php
 session_start();
-// if(isset($_SESSION["user"])){
-// header("Location: profil.php");
-// }
-
-
-
 if(!empty($_POST)){
   if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"] , $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])  &&!empty($_POST["userType"]) &&!empty($_POST["password"])
   ){
@@ -68,13 +62,14 @@ $query->bindValue(":userType", $userType, PDO::PARAM_STR);
  $query->bindValue(":createdAt", $createdAt, PDO::PARAM_STR);
 
  $query->execute();
+ $query->closeCursor();
 
 //on recup id de nouvel utilisateur
 $id = $dbConnect->lastInsertId();
 
 echo "<p style=\"background: blue;\" id=\"message\" class=\"text-center  p-2 fw-4 fs-4 text-light\">Utilisateur ajouté sous le numéro ". $id."</p>";
 echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-5 text-light\"><a href='user_new.php' class=\"text-info fs-4 fw-4\"> Retour à la page de la création</a></p>";
-// header("Location: usersAll.php");
+header("Location: ../lists/usersAll.php");
  
 ?>
 <!-- <script>
@@ -94,17 +89,17 @@ setTimeout(backToPage, 8000);
  }
 $titre = "Inscription";
 include_once "../includes/admin_header.php";
-// include_once "../includes/admin_navbar.php";
+include_once "../includes/admin_navbar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
 
 
-<body class="body_home body_page">
+<body class="body_home body_page" id="userNew">
 <div class="container">
 <div class="d-flex justify-content-between mt-4">
 <h1>Ajouter un Utilisateur</h1>    
-<button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
+<button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
 </div> 
 <?php
  if(isset($_SESSION["error"])){
@@ -120,19 +115,19 @@ include_once "../includes/admin_header.php";
 <form method="post">
 <div class="mb-3">
 <label for="lastname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom</label>
-    <input type="text" name="lastname" id="lastname">
+    <input type="text" name="lastname" id="lastname" required>
    </div>
    <div class="mb-3">
     <label for="firstname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Prénom</label>
-    <input type="text" name="firstname" id="firstname">
+    <input type="text" name="firstname" id="firstname" required>
    </div>
    <div class="mb-3">
     <label for="birthdate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de naissance</label>
-    <input type="date" name="birthdate" id="birthdate" placeholder="YYYY-MM-DD">
+    <input type="date" name="birthdate" id="birthdate" placeholder="YYYY-MM-DD" required>
    </div>
    <div class="mb-3">
     <label for="email" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Email</label>
-    <input type="email" name="email" id="email" >
+    <input type="email" name="email" id="email" required>
    </div>
    <!-- ******************Nationalité****************** -->
    <div class="mb-3">
@@ -149,7 +144,7 @@ include_once "../includes/admin_header.php";
    <!-- ******************Codename****************** -->
    <div class="mb-3">
     <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
-    <input type="text" name="codeName" id="codeName">
+    <input type="text" name="codeName" id="codeName" required>
    </div>
 <!-- ******************UserType****************** -->
 <label for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type: </label>
