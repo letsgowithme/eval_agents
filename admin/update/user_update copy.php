@@ -2,13 +2,22 @@
   require_once "../../includes/DB.php";
 
 $up_id = $_GET["id"];
-if(isset($_POST["submit"])){
-
-  //   if($_GET["specialities"]){
+// if (!isset($_GET["id"]) || empty($_GET["id"])){
+//   header("Location: user_update.php");
+//   exit;
+// }
+if(!empty($_GET["id"])){
+  global $dbConnect;
+  // require_once "../../includes/DB.php";
+  $sql = "SELECT * FROM `user` WHERE `id` = '$up_id'";
+  $query = $dbConnect->query($sql);
+  while($row = $query->fetch()):
+  // if(!empty($_GET["specialities"])){
+   
   //   $specialitiesArr = [];
-  //   for($i =0; $i < count($_GET['specialities']);$i++){
-  //     $speciality = $_POST['specialities'][$i];
-  //     $specialitiesArr[] = $speciality;
+  //   for($i =0; $i < count($_POST['specialities']); $i++){
+  //     $user_speciality = $_POST['specialities'][$i];
+  //     $specialitiesArr[] = $user_speciality;
   //   }   
   //   $specialities = implode(",", $specialitiesArr);
    
@@ -17,28 +26,30 @@ if(isset($_POST["submit"])){
   //   $specialities = implode(",", $specialitiesArr);
   // }
 
-  $lastname = $_POST["lastname"];
-  $firstname = $_POST["firstname"];
-  $birthdate = $_POST["birthdate"];
-  $email = $_POST["email"];
-  $nationality = $_POST["nationality"];
-  $codeName = $_POST["codeName"];
-  $userType = $_POST["userType"];
-  $specialities = $_POST["specialities"];
 
-    $sql = "UPDATE `user` SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email', nationality='$nationality', codeName='$codeName', userType='$userType', specialities='$specialities' WHERE id='$up_id'";
+    // $lastname = strip_tags($_POST["lastname"]);
+    // $firstname = strip_tags($_POST["firstname"]);
+    // $birthdate = strip_tags($_POST["birthdate"]);
+    // $email = strip_tags($_POST["email"]);
+    // $nationality = strip_tags($_POST["nationality"]);
+    // $codeName = strip_tags($_POST["codeName"]);
+    // $userType = strip_tags($_POST["userType"]);
+    
 
-    $query = $dbConnect->query($sql); 
-    $Execute = $query->execute();
-    if($Execute){
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Utilisateur modifié sous le numéro ". $up_id."</p>";
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='../lists/usersAll.php'>Retour</a></p>";
-    }
-}
 
-$titre = "Modifier l'utilisateur'";
+    // $sql = "UPDATE `user` SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email',  nationality='$nationality', codeName='$codeName', userType='$userType',  specialities='$specialities'  WHERE id='$up_id'";
+
+    // $query = $dbConnect->query($sql); 
+    // $Execute = $query->execute();
+    // if($Execute){
+    //   echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Utilisateur modifié sous le numéro ". $up_id."</p>";
+    //   echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='../lists/usersAll.php'>Retour</a></p>";
+    // }
+// }
+
+$titre = "Modifier l'utilisateur";
 include_once "../includes/admin_header.php";
-// include_once "../includes/admin_navbar.php";
+// include_once "../../includes/admin_navbar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
@@ -46,12 +57,8 @@ include_once "../includes/admin_header.php";
 <body class="body_home body_page">
 
   <?php 
-global $dbConnect;
-// require_once "../../includes/DB.php";
-$sql = "SELECT * FROM `user` WHERE `id` = '$up_id'";
-$query = $dbConnect->query($sql);
 
-while($row = $query->fetch()){
+while($row = $query->fetch()):
   $id = $row["id"];
   $lastname = $row["lastname"];
   $firstname = $row["firstname"];
@@ -59,18 +66,19 @@ while($row = $query->fetch()){
   $email = $row["email"];
   $user_nationality = $row["nationality"];
   $codeName = $row["codeName"];
-  $userType = $row["userType"];
+  $user_userType = $row["userType"];
+  // pour recuperer spec de user
   $specialities = $row["specialities"];
-}
- 
+
+
   ?>
 <div class="container">
 <div class="d-flex justify-content-between mt-3 mb-3 mx-2">
-<div><h1>Modifier l'utilisateur</h1></div> 
+<div><h1>Modifier l'Utilisateur</h1></div> 
 <div>
 <button class="btn border" style="background: lightgray;"><a 
 class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../../usersAll.php" id="up">Utilisateurs</a></button>
+aria-current="page" href="../lists/usersAll.php" id="up">Utilisateurs</a></button>
    
 <button class="btn border" style="background: lightgray;"><a 
 class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
@@ -79,55 +87,38 @@ aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></butto
 </div>    
 <form method="post" action="user_update.php?id=<?php echo $up_id; ?>">
 <div class="mb-3">
-  <!-- ***************lastname***************** -->
-  <div class="mb-3">
-            <label for="lastname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom</label>
-            <input type="text" class="form-control w-50" name="lastname" id="lastname" value="<?php echo $lastname ?>">
-          </div>
-   <!-- ***************firstname***************** -->
-   <div class="mb-3 d-flex" style="align-items: start;" >
-    <label for="firstname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Prénom</label>
-    <input type="text" class="form-control w-50" name="firstname" id="firstname" value="<?php echo $firstname ?>">
+<label for="lastname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom</label>
+    <input type="text" name="lastname" id="lastname" value="<?php echo $lastname ?>">
    </div>
-   <!-- ***************birthdate***************** -->
-   <div class="mb-3 d-flex">
-   <label for="birthdate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de naissance</label> 
-  <input type="text" disabled name="birthdate" id="birthdate" placeholder="<?php echo $birthdate ?>" value="<?php echo $birthdate ?>">
-  <input type="date" class="hidden" name="birthdate" id="birthdate" placeholder="<?php echo $birthdate ?>" value="<?php echo $birthdate ?>">
- 
-    </div>
-       <!-- ***************email***************** -->
-       <div class="mb-3 d-flex" style="align-items: start;" >
-    <label for="email" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Email</label>
-    <input type="email" class="form-control w-50" name="email" id="email" value="<?php echo $email ?>">
-   </div>
-   <!-- ***************nationality**************** -->
    <div class="mb-3">
-    <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
-    <input type="text" name="nationality" id="nationality" value="<?php echo $user_nationality ?>"><button type="button" id="change_nationality_btn" onclick="change_nationality()">Changer</button>
+    <label for="firstname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Prénom</label>
+    <input type="text" name="firstname" id="firstname" value="<?php echo $firstname ?>">
    </div>
-   <div id="nationalities_list" style="display: none;">
-       <?php include_once "../lists/nationalities_list.php"; ?>
-    <select name="nationalities_list" id="nationalities_list" class="fs-5">
-      <?php
-    foreach ($nationalities as $nationality) {
-      echo '<option value="'.$nationality["name"].'" name="<?= $country["name"] ?>'.$nationality["name"].'</option>';
-  }
-    ?>
-    </select>
+   <div class="mb-3">
+    <label for="birthdate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de naissance</label>
+    <input type="date" name="birthdate" id="birthdate" placeholder="YYYY-MM-DD" value="<?php echo $birthdate ?>">
    </div>
-   <!-- ***************Codename****************** -->
+   <div class="mb-3">
+    <label for="email" class="form-label fw-bold my-2 fs-5" style="color: #01013d;" autocomplete="on">Email</label>
+    <input type="email" name="email" id="email" value="<?php echo $email ?>">
+   </div>
+   <!-- ******************Nationalité****************** -->
+   <div class="mb-3">
+   <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label> 
+  <input type="text" name="nationality" id="nationality" placeholder="YYYY-MM-DD" value="<?php echo $user_nationality ?>">
+    </div>
+  
+   <!-- ******************Codename****************** -->
    <div class="mb-3">
     <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
     <input type="text" name="codeName" id="codeName" value="<?php echo $codeName ?>">
    </div>
-   
-<!-- ****************UserType*********************** -->
+<!-- ******************UserType de user****************** -->
 <label for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type: </label>
-<input type="text" name="userType" id="userType" value="<?php echo $userType ?>">
+<input type="text" name="userType" id="userType" value="<?php echo $user_userType ?>">
 <button type="button" id="change_userType">Changer</button>
 <div id="userTypeList" style="display: none;">
-<!------- afficher les type de l'Utilisateur ------>
+<!-- afficher les type de l'Utilisateur -->
 <?php 
 $userTypeArray = array("agent", "cible", "contact");
 
@@ -141,7 +132,7 @@ foreach ($userTypeArray as $userType) {
 ?>
  </div>
  <!-- ********************Specialities*********************** -->
- <div class="mb-3 mt-3 d-flex" id="agent_speciality">
+  <div class="mb-3 mt-3 d-flex" id="agent_speciality">
    <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;" id="speciality_title">Spécialité</h5>
    <div class="d-flex flex-column bg-light"> 
     <!-- afficher les specialités de l'Utilisateur -->
@@ -167,44 +158,39 @@ foreach ($userTypeArray as $userType) {
    ?> 
  </div>
 
+
 </div>
 <div id="warning_messages">
 <div><span style="color: red; font-weight: bold; font-size: 1.2em;">Attention, les anciennes spécialités seront remplacées par de nouvelles!</span></div>
 <div><span style="color: gdarkgray; font-weight: bold; font-size: 1em;">Si vous souhaitez conserver les anciennes spécialités, merci de cocher à nouveau les cases!</span></div>
 </div>
-
-
    <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Enregistrer</button>
 </form>
 <div>
+  <?php 
+  endwhile;
+
+?>
 <button type="button" class="login my-4 fs-4 fw-bold" data-toggle="tooltip" data-placement="top">
-  <a href="../admin_index.php">Tableau de bord</a>
+  <a href="../admin_index.php">Admin</a>
 </button>
 </div>
 </div>
+
 <script>
-  function toggleList() {
-  var change_country_btn = document.getElementById("change_country_btn"); 
-  var countries_list = document.getElementById("countries_list");
-  if (countries_list.style.display === "none") {
-    countries_list.style.display = "block";
-  } else if(countries_list.style.display === "block") {
-    countries_list.style.display = "none";
+function myFunction() {
+  var specialities_list = document.getElementById("specialities_list");
+  var change_speciality = document.getElementById("change_speciality");
+  var agent_speciality = document.getElementById("agent_speciality");
+ 
+  if (specialities_list.style.display === "none") {
+    specialities_list.style.display = "block";
+  } else if(specialities_list.style.display === "block") {
+    specialities_list.style.display = "none";
   }
 }
-function change_nationality() {
-  var change_nationality = document.getElementById("change_nationality"); 
-  var nationalities_list = document.getElementById("nationalities_list");
-  if (nationalities_list.style.display === "none") {
-    nationalities_list.style.display = "block";
-  } else if(nationalities_list.style.display === "block") {
-    nationalities_list.style.display = "none";
-  }
-}
-
-
-  </script>
-  <script>
+</script>
+<script>
     let change_userType = document.getElementById("change_userType");
     let userTypeList = document.getElementById("userTypeList");
     let user_userType = document.getElementById("user_userType");

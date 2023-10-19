@@ -1,8 +1,10 @@
+
+</div>
 <div class="text-center">
 <p class="fs-6" id="footer_line">Copyright &copy; Iryna_G2023; All rights reserved.</p>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js" integrity="sha512-VK2zcvntEufaimc+efOYi622VN5ZacdnufnmX7zIhCPmjhKnOi9ZDMtg1/ug5l183f19gG1/cBstPO4D8N/Img==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
-  </div>
-</body> 
+</div>
+
+<script src="https://getbootstrap.com//docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
 </html>

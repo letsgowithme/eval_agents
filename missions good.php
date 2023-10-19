@@ -83,3 +83,4 @@ $title = $row["title"];
 </tbody>   
 </table>
 </div>
+<?php include_once "includes/footer.php";?>

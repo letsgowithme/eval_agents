@@ -18,8 +18,8 @@ if(isset($_POST["submit"])){
     $query = $dbConnect->query($sql); 
     $Execute = $query->execute();
     if($Execute){
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">La planque modifié sous le numéro ". $up_id."</p>";
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='../lists/hideouts.php'>Retour</a></p>";
+      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">La mission modifiée sous le numéro ". $up_id."</p>";
+      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\"><a href='../../missions.php'>Retour</a></p>";
     }
 }
 
@@ -49,11 +49,10 @@ while($row = $query->fetch()){
   $codeName = $row["codeName"];
 
 }
- $startDate2 = $startDate;
- $endDate2 = $endDate;
-// $startDate = date('Y-m-d');
-// $endDate = date('Y-m-d');
-  ?>
+
+ ?>
+
+  
 <div class="container">
 <div class="d-flex justify-content-between mt-3 mb-3 mx-2">
 <div><h1>Modifier la mission</h1></div> 
@@ -82,16 +81,15 @@ aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></butto
    <!-- ******************startDate de La mission****************** -->
    <div class="mb-3 d-flex">
    <label for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label> 
-   <button type="button" class="fs-6 me-4" onclick="startDateBtn()" value="<?php echo $startDate2 ?>" name="btnStartDate" id="btnStartDate"><?php echo $startDate2 ?></button>
-  <input type="date" style="display: none;" name="startDate" id="startDate" placeholder="<?php echo $startDate ?>" value="<?php echo $startDate ?>">
+   <button type="button" class="fs-6 me-4" onclick="startDateBtn()" value="<?php echo $startDate ?>" name="btnStartDate" id="btnStartDate"><?php echo $startDate ?></button>
+  <input type="dateTime" style="display: none;" name="startDate" id="startDate" placeholder="<?php echo $startDate ?>" value="<?php echo $startDate ?>">
  
     </div>
        <!-- ******************endDate de La mission****************** -->
    <div class="mb-3 d-flex">
    <label for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label> 
-  
    <button type="button" class="fs-6 me-4" onclick="endDateBtn()" value="<?php echo $endDate ?>" name="btnStartDate" id="btnStartDate"><?php echo $endDate ?></button>
-  <input type="date" style="display: none;" name="endDate" id="endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
+  <input type="dateTime" style="display: none;" name="endDate" id="endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
   </div>
    <!-- ******************Pays de la mission****************** -->
    <div class="mb-3">
@@ -131,15 +129,32 @@ aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></butto
 </button>
 </div>
 </div>
+
 <script>
-      // let startDateBtn =document.getElementById("startDate");
-      // let startDate =document.getElementById("startDate");
-      // startDateBtn.addEventListener("click",function(){
-      //   startDate.style.display="block";
-      // });
+// var d = new Date();
+// document.getElementById("startDate").valueAsDate=d;
+// document.getElementById("endDate").valueAsDate=d;
 
+  </script>
 
-    </script>
+<!-- <script>
+  let startDate =document.getElementById("startDate");
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+ 
+formatDate(startDate);
+    </script> -->
 <script>
   function toggleList() {
   var change_country_btn = document.getElementById("change_country_btn"); 

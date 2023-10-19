@@ -14,7 +14,7 @@
   color: #1c1c22;
   color: #b2b2b5;
   color: #300345;
-  color: darkslategrey;
+  color: #404144;
   left: 50%;
 transform: translateX(-50%);
 }
@@ -28,10 +28,12 @@ td,
 th {
   border: 1px solid gray;
 
+
 }
-input[type="search"]{
+
+/* input[type="search"]{
   background-color: white!important;
-}
+} */
 #footer_line{
 position: relative!important; 
 bottom: 0;  left: 50%;
@@ -39,4 +41,9 @@ transform: translateX(-50%);
 }
 .body_list {
   background-color: rgb(226, 226, 226);
+}
+
+.nav-pills li a:hover {
+  background-color: blue!important;
+
 }
