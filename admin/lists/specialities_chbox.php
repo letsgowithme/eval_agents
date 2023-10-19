@@ -8,7 +8,7 @@ while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
   $speciality = $row["title"];
   ?>
   <div>
-  <input type="checkbox" name="specialities[]" value="<?php echo $speciality ?>" class="choices" selected=false><?php echo $speciality ?>
+  <input type="checkbox" name="specialities[]" value="<?php echo $speciality ?>" class="choices me-2" selected=false><?php echo $speciality ?>
   <span name="<?= $specialityId ?>" class="hidden" value="<?= $specialityId ?>"></span><br> 
 </div>
  <?php

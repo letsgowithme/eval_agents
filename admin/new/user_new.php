@@ -1,6 +1,5 @@
 <?php
 //on demarre la session php
-session_start();
 if(!empty($_POST)){
   if(isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"] , $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) &&!empty($_POST["nationality"]) &&!empty($_POST["codeName"])  &&!empty($_POST["userType"]) &&!empty($_POST["password"])
   ){
@@ -89,17 +88,17 @@ setTimeout(backToPage, 8000);
  }
 $titre = "Inscription";
 include_once "../includes/admin_header.php";
-include_once "../includes/admin_navbar.php";
+include_once "../includes/admin_sidebar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
 
-
-<body class="body_home body_page" id="userNew">
+  <div class="body_page_new py-4" id="userNew" style="height: auto;">
+ 
 <div class="container">
 <div class="d-flex justify-content-between mt-4">
-<h1>Ajouter un Utilisateur</h1>    
-<button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
+<h1 class="mb-4">Ajouter un Utilisateur</h1>    
+
 </div> 
 <?php
  if(isset($_SESSION["error"])){
@@ -113,27 +112,27 @@ include_once "../includes/admin_navbar.php";
 
 ?>   
 <form method="post">
-<div class="mb-3">
-<label for="lastname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom</label>
-    <input type="text" name="lastname" id="lastname" required>
+<div class="mb-3 mt-4">
+<label for="lastname" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Nom</label>
+    <input type="text" name="lastname" class="fs-5" id="lastname" required>
    </div>
    <div class="mb-3">
-    <label for="firstname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Prénom</label>
+    <label for="firstname" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Prénom</label>
     <input type="text" name="firstname" id="firstname" required>
    </div>
    <div class="mb-3">
-    <label for="birthdate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de naissance</label>
-    <input type="date" name="birthdate" id="birthdate" placeholder="YYYY-MM-DD" required>
+    <label for="birthdate" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Date de naissance</label>
+    <input type="date" name="birthdate" id="birthdate" placeholder="YYYY-MM-DD" required style="height: 2.2em;">
    </div>
    <div class="mb-3">
-    <label for="email" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Email</label>
+    <label for="email" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Email</label>
     <input type="email" name="email" id="email" required>
    </div>
    <!-- ******************Nationalité****************** -->
    <div class="mb-3">
-    <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
+    <label for="nationality" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Nationalité</label>
     <?php include_once "../lists/nationalities_list.php"; ?>
-    <select name="nationality" id="nationality">
+    <select name="nationality" id="nationality"  class="fs-4">
       <?php
     foreach ($nationalities as $nationality) {
       echo '<option value="'.$nationality["name"].'" name="<?= $nationality["name"] ?>'.$nationality["name"].'</option>';
@@ -143,25 +142,25 @@ include_once "../includes/admin_navbar.php";
    </div>
    <!-- ******************Codename****************** -->
    <div class="mb-3">
-    <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
+    <label for="codeName" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Nom de code</label>
     <input type="text" name="codeName" id="codeName" required>
    </div>
 <!-- ******************UserType****************** -->
-<label for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type: </label>
+<label for="userType" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Type: </label>
 <?php 
 $userTypeArray = array("agent", "cible", "contact");
 
 foreach ($userTypeArray as $userType) {
   ?>
-    <input type="radio" name="userType" value="<?php echo $userType ?>" class="choices" style="margin-left: 10px;" id="<?php echo $userType ?>"><span style="font-size: 1.1em; font-weight: bold; padding-left:2px;"><?php echo $userType ?></span>
+    <input type="radio" name="userType" value="<?php echo $userType ?>" class="choices" style="margin-left: 10px;" id="<?php echo $userType ?>"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;"><?php echo $userType ?></span>
   <?php
 }
 ?>
  
  <!-- **************Specialities***************** -->
   <div class="mb-3 d-flex" id="agent_speciality" style="display: none;">
-   <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; display: none;" id="speciality_title">Spécialité</h5>
-<div class="specialities_list" id="specialities_list" style="display: none;">
+   <h5 class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; display: none;" id="speciality_title">Spécialité</h5>
+<div class="specialities_list fs-4" id="specialities_list" style="display: none;">
    <?php include_once('../lists/specialities_chbox.php');  
    ?>
   
@@ -185,7 +184,7 @@ include_once "btn_create.php";
 <div>
 
 </div>
-</div>
+
 <script>
     let agent = document.getElementById("agent");
     let list = document.getElementById("specialities_list");
@@ -211,6 +210,9 @@ include_once "btn_create.php";
       list.style.display = "none";
     });
   </script>
-<?php
+
+  <?php
 include_once "../includes/admin_footer.php";
 ?>
+
+

@@ -43,7 +43,7 @@ include_once "../includes/admin_header.php";
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
 </head>
-<body class="body_home body_page">
+<div class="body_home body_page">
 
   <?php 
 global $dbConnect;

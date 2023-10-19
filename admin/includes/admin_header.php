@@ -15,7 +15,7 @@ session_start(); ?>
   <!-- <link rel="stylesheet" href="../../style/dataTables.min.css"> -->
 
   <link rel="icon" href="..././logo.png">
-  <link href="../../style/style.css" rel="stylesheet" type="text/css">
+
   <script src="https://getbootstrap.com//docs/5.3/assets/js/color-modes.js"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -28,8 +28,7 @@ session_start(); ?>
 <link rel="mask-icon" href="https://getbootstrap.com//docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
 <link rel="icon" href="https://getbootstrap.com//docs/5.3/assets/img/favicons/favicon.ico">
 <meta name="theme-color" content="#712cf9">
-<link rel="stylesheet" href="../../style/style_in_ad.css">
-<link rel="stylesheet" href="../../style/style.css">
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -50,6 +49,6 @@ session_start(); ?>
       }
     });
 });</script>
- </head>
+
  <!-- <main>
   <div class="d-flex"> -->

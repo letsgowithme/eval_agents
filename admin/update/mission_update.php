@@ -25,12 +25,13 @@ if(isset($_POST["submit"])){
 
 $titre = "Modifier la mission";
 include_once "../includes/admin_header.php";
-// include_once "../includes/admin_navbar.php";
+include_once "../includes/admin_sidebar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
+  <link href="../../style/style_in_ad.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
 </head>
-<body class="body_home body_page">
+<div class="body_home body_page">
 
   <?php 
 global $dbConnect;
@@ -53,19 +54,13 @@ while($row = $query->fetch()){
  ?>
 
   
-<div class="container">
-<div class="d-flex justify-content-between mt-3 mb-3 mx-2">
-<div><h1>Modifier la mission</h1></div> 
+<!-- <div class="container">
+<div class="d-flex justify-content-between mt-3 mb-3 mx-2"> -->
+<div class="py-4">
 <div>
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../../missions.php" id="up">Missions</a></button>
-   
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
-</div>
-</div>    
+<h1>Modifier la mission</h1>
+  
+    
 <form method="post" action="mission_update.php?id=<?php echo $up_id; ?>">
 <div class="mb-3">
   <!-- ******************titre de la mission****************** -->

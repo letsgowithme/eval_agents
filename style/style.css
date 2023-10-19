@@ -13,8 +13,11 @@
 .truc {
   color: #1c1c22;
   color: #b2b2b5;
+  color: #7e7e81;
+  color: #5a5a5d;
   color: #300345;
   color: #404144;
+  color: #29292b;
   left: 50%;
 transform: translateX(-50%);
 }
@@ -46,4 +49,7 @@ transform: translateX(-50%);
 .nav-pills li a:hover {
   background-color: blue!important;
 
+}
+.body_page_new {
+  background: #5a5a5d;
 }
