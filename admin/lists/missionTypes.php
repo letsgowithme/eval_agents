@@ -2,8 +2,8 @@
 require_once "../../includes/DB.php";
 ?>
 <div class="mb-3">
-          <label for="missionType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type de mission</label><br>
-<select name="missionType" id="missionType">
+          <label for="missionType" class="form-label fw-bold my-2 fs-4" style="color: #01013d;">Type de mission</label><br>
+<select name="missionType" id="missionType" class="fs-4 w-25">
     <option>Choisir:</option>
 <?php 
 $sql = "SELECT * FROM `missionType`";
