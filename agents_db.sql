@@ -22,6 +22,12 @@ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
+CREATE TABLE user_speciality(
+idUser INT NOT NULL,
+idSpeciality INT NOT NULL
+) engine=InnoDB;
+
+
 
 CREATE TABLE user_admin(
 admin_user_id INT NOT NULL,

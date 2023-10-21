@@ -1,7 +1,7 @@
 <?php
   require_once "../../includes/DB.php";
 
-$up_id = $_GET["id"];
+$user_up_id = $_GET["id"];
 var_dump($_GET["id"]);
 if(isset($_POST["submit"])){ 
   if($_POST["specialities"]){
@@ -20,7 +20,7 @@ if(isset($_POST["submit"])){
     $codeName = strip_tags($_POST["codeName"]);
     $userType = strip_tags($_POST["userType"]);
     
-    $sql = "DELETE FROM `user` WHERE id='$up_id'";
+    $sql = "DELETE FROM `user` WHERE id='$user_up_id'";
 
     $query = $dbConnect->query($sql); 
     $Execute = $query->execute();
@@ -33,7 +33,7 @@ if(isset($_POST["submit"])){
 
 $titre = "Inscription";
 include_once "../includes/admin_header.php";
-// include_once "../../includes/admin_navbar.php";
+include_once "../includes/admin_sidebar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
@@ -43,12 +43,13 @@ input{
 }
     </style>
 </head>
-<body class="body_home body_page">
+<div class="py-4 body_page_new">
+<div>
 
   <?php 
 global $dbConnect;
 // require_once "../../includes/DB.php";
-$sql = "SELECT * FROM `user` WHERE `id` = '$up_id'";
+$sql = "SELECT * FROM `user` WHERE `id` = '$user_up_id'";
 $query = $dbConnect->query($sql);
 
 while($row = $query->fetch()){
@@ -63,15 +64,9 @@ while($row = $query->fetch()){
   $user_specialities = $row["specialities"];
 }
   ?>
-<div class="container">
-<div class="d-flex justify-content-between mt-3">
-<h1>Supprimer l'Utilisateur</h1><div class="message"></div>    
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" 
-aria-current="page" href="../admin_index.php" id="up">Admin</a></button>
-</div>
- 
-<form method="post" action="user_delete.php?id=<?php echo $up_id; ?>">
+
+ <h1>Supprimer l'utilisateur numéro <?php echo $id ?>?</h1>
+<form method="post" action="user_delete.php?id=<?php echo $user_up_id; ?>">
 <div class="mb-3">
 <label for="lastname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom</label>
     <input type="text" disabled name="lastname" id="lastname" value="<?php echo $lastname ?>">

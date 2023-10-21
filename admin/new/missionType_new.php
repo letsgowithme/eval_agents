@@ -1,6 +1,6 @@
 <?php 
 //on demarre la session php
-session_start();
+
 //on traite le formulaire
 if(!empty($_POST)){
   if(isset($_POST["title"]) &&!empty($_POST["title"])){
@@ -21,7 +21,7 @@ if(!$query->execute()){
 $id = $dbConnect->lastInsertId();
 
 // header("Location: mission_type_new.php");
-echo "<p>Spécialité ajoutée sous le numéro ". $id."</p>";
+echo "<p>Type de mission ajouté sous le numéro ". $id."</p>";
 echo "<a href='missionType_new.php'>Retour</a>";
 exit;
 
@@ -30,15 +30,31 @@ exit;
     die("Le formulaire est incomplet");
   }
 }
-
+$titre = "Add mission type";
 include_once "../includes/admin_header.php";
-// include_once "../includes/admin_navbar.php";
-$titre = "Type de mission";
+include_once "../includes/admin_sidebar.php";
+
 ?>
+<link href="../../style/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="../logo.png">
+
+<style>
+  input {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+  }
+
+  label {
+    width: 250px;
+
+    color: #b2b2b5;
+    padding: 5px;
+  }
+</style>
 </head>
-<body class="body_page">
+<body class="body_page_new">
   <div class="container">
-  <  <div class="d-flex justify-content-between mt-4">
+   <div class="d-flex justify-content-between mt-4">
 <h1>Ajouter un type de mission</h1>    
 <button class="btn border" style="background: lightgray;"><a class="fs-4" style="font-weight: bold; color:darkblue; text-decoration: none;" aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
 </div>
@@ -51,7 +67,7 @@ include_once "btn_create.php";
 ?>
 </form>
 
-<div>
+</div>
 
 </div>
 <?php

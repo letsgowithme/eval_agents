@@ -1,6 +1,5 @@
 <?php 
 //on demarre la session php
-session_start();
 //on traite le formulaire
 if(!empty($_POST)){
   if(isset($_POST["hideoutCode"], $_POST["hideoutAddress"], $_POST["hideoutType"], $_POST["country"]) &&!empty($_POST["hideoutCode"]) &&!empty($_POST["hideoutCode"]) &&!empty($_POST["hideoutAddress"]) &&!empty($_POST["hideoutType"]) &&!empty($_POST["country"])){
@@ -34,13 +33,29 @@ exit;
     die("Le formulaire est incomplet");
   }
 }
-
+$titre = "Add hideout";
 include_once "../includes/admin_header.php";
-// include_once "../includes/admin_navbar.php";
-$titre = "Planques";
+include_once "../includes/admin_sidebar.php";
+
 ?>
+<link href="../../style/style.css" rel="stylesheet" type="text/css">
+<link rel="icon" href="../logo.png">
+
+<style>
+  input {
+    font-size: 1.3em;
+    margin-bottom: 10px;
+  }
+
+  label {
+    width: 220px;
+
+    color: #b2b2b5;
+    padding: 5px;
+  }
+</style>
 </head>
-<body class="body_page">
+<div class="body_page_new">
   <div class="container ms-4">
   <div class="d-flex justify-content-between mt-3 mb-3 mx-2">
   <div><h1>Créer une planque</h1></div> 
@@ -84,6 +99,7 @@ include_once "btn_create.php";
 ?>
  
 </form>
+      </div>
 
 <?php
 include_once "../includes/admin_footer.php";

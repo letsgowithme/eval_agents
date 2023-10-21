@@ -2,6 +2,7 @@
   require_once "../../includes/DB.php";
 
 $up_id = $_GET["id"];
+$up_nationality = $_GET["nationality"];
 if(isset($_POST["submit"])){
 
   //   if($_GET["specialities"]){
@@ -31,19 +32,19 @@ if(isset($_POST["submit"])){
     $query = $dbConnect->query($sql); 
     $Execute = $query->execute();
     if($Execute){
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Utilisateur modifié sous le numéro ". $up_id."</p>";
-      echo "<p style=\"background: lightblue;\" class=\"text-center p-2\">Retour à la page de création dans 5 seconds. Sinon appuyez sur le lien : <a href='../lists/usersAll.php'>Retour</a></p>";
+      echo "<p style=\"background: darkgrey;\" class=\"text-center fs-4 text-white p-2 ds-5\">Utilisateur modifié sous le numéro ". $up_id."<a class=\"ms-2 fw-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
+     
     }
 }
 
 $titre = "Modifier l'utilisateur'";
 include_once "../includes/admin_header.php";
-// include_once "../includes/admin_navbar.php";
+include_once "../includes/admin_sidebar.php";
 ?>
   <link href="../../style/style.css" rel="stylesheet" type="text/css">
   <link rel="icon" href="../logo.png">
 </head>
-<div class="body_home body_page">
+<div class="body_page_new py-4">
 
   <?php 
 global $dbConnect;
@@ -57,27 +58,17 @@ while($row = $query->fetch()){
   $firstname = $row["firstname"];
   $birthdate = $row["birthdate"];
   $email = $row["email"];
-  $user_nationality = $row["nationality"];
+  $nationality = $row["nationality"];
   $codeName = $row["codeName"];
   $userType = $row["userType"];
   $specialities = $row["specialities"];
 }
  
   ?>
-<div class="container">
-<div class="d-flex justify-content-between mt-3 mb-3 mx-2">
-<div><h1>Modifier l'utilisateur</h1></div> 
 <div>
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../../usersAll.php" id="up">Utilisateurs</a></button>
-   
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
-</div>
-</div>    
+<h1>Modifier l'utilisateur</h1> 
 <form method="post" action="user_update.php?id=<?php echo $up_id; ?>">
+<input type="hidden" name="up_id" value="<?php echo $row["id"] ?>">
 <div class="mb-3">
   <!-- ***************lastname***************** -->
   <div class="mb-3">
@@ -104,7 +95,7 @@ aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></butto
    <!-- ***************nationality**************** -->
    <div class="mb-3">
     <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
-    <input type="text" name="nationality" id="nationality" value="<?php echo $user_nationality ?>"><button type="button" id="change_nationality_btn" onclick="change_nationality()">Changer</button>
+    <input type="text" name="nationality" id="nationality" value="<?php echo $nationality ?>"><button type="button" id="change_nationality_btn" onclick="change_nationality()">Changer</button>
    </div>
    <div id="nationalities_list" style="display: none;">
        <?php include_once "../lists/nationalities_list.php"; ?>

@@ -44,7 +44,7 @@ if(!empty($_POST)){
  ];
  //on redirige vers la page de profil
  if($_SESSION["user"]["roles"] > 4){
-  header("Location: admin/admin_index.php");
+  header("Location: admin/main/admin_index.php");
  }else{
   header("Location: profil.php");
  }
@@ -57,6 +57,8 @@ include_once "includes/header.php";
 include_once "includes/navbar.php";
 
 ?>
+<link rel="stylesheet" href="style/style_in_ad.css">
+<link rel="stylesheet" href="style/style.css">
 </head>
 <body class="body_page">
   <div  style="height: 85vh;">
@@ -64,15 +66,15 @@ include_once "includes/navbar.php";
 <form method="post">
 <div class="m-4 w-100 fw-bold">
    <div class=" ms-4">
-    <label for="email" class="w-75">Email</label>
-    <input type="email" name="email" id="email" class="d-flex flex-start">
+    <label for="email" class="w-75 fs-4" style="color: #29292b;">Email</label>
+    <input type="email" name="email" id="email" class="d-flex flex-start fs-4">
    </div>
    <div class=" ms-4">
-    <label for="password" class="w-75 mt-2">Mot de passe</label>
-    <input type="password" name="password" id="password" class="d-flex flex-start">
+    <label for="password" class="w-75 mt-2 fs-4"  style="color: #29292b;">Mot de passe</label>
+    <input type="password" name="password" id="password" class="d-flex flex-start fs-4">
    </div>
    <div class=" ms-4">
-   <button type="submit" class="btn-dark my-4 fs-5 fw-bold p-2" name="submit">Se connecter</button>
+   <button type="submit" class="btn btn-dark my-4 fs-4 fw-bold p-2" name="submit">Se connecter</button>
    </div>
 </div>
   </form>

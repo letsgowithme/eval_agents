@@ -30,10 +30,10 @@ include_once "includes/navbar.php";
 
 ?>
 </head>
-<body class="body_page">
+<div class="body_page_new">
   <div class="container">
     <div class="d-flex justify-content-between">
-<h1 style="color: #1c1c22;">Mission numéro  <?= strip_tags($mission['id']) ?></h1><button class="btn border" style="background: lightgray;"><a 
+<h1 class="text-white"">Mission numéro  <?= strip_tags($mission['id']) ?></h1><button class="btn border" style="background: lightgray;"><a 
 class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
 aria-current="page" href="missions.php" id="up">Missions</a></button>
 </div>

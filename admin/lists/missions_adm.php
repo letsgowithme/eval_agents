@@ -9,6 +9,7 @@ $count = 0;
 <link rel="stylesheet" href="../../style/style_in_ad.css">
 <link rel="stylesheet" href="../../style/style.css">
 </head>
+ 
 <?php include_once "../../missions_content.php"; ?>
 
 <?php include_once "../includes/admin_footer.php"; ?>

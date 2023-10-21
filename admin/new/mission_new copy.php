@@ -44,12 +44,7 @@ $id = $dbConnect->lastInsertId();
 
 // Remplir table mission_agents
 $mA_mission_id = $dbConnect->lastInsertId();
-$sql = "SELECT mission.id, missionType.id FROM `mission` INNER JOIN `missionType` ON mission.id = `missionType.id`";
-$query = $dbConnect->prepare($sql);
-$query->execute();
 
-
-// $query->bindValue(':mission_id', $mission_id, PDO::PARAM_INT);
 // $sql2 = "INSERT INTO `mission_agents` (`mA_mission_id`, `agents` VALUES('$mA_mission_id', :agents)";
 // $query = $dbConnect->prepare($sql2);
 
@@ -58,7 +53,7 @@ $query->execute();
 // if(!$query->execute()){
 //   die("Failed to insert INTO `mission_agents`");
 // }
-header("Location: ../lists/missions_adm.php");
+header("Location: ../../missions.php");
 echo "<p>La mission ajoutée sous le numéro ". $id."</p>";
 echo "<a href='mission_new.php'>Retour</a>";
 exit;
@@ -84,9 +79,9 @@ $titre = "Mission";
         <form class="form" action="mission_new.php" method="post">
           <div class="mb-3">
             <label for="title" class="form-label fw-bold my-2 fs-4 text-light">Titre</label>
-            <input type="text" class="form-control w-25" name="title" id="title" value="" required>
+            <input type="text" class="form-control w-25" name="title" id="title" value="">
           </div>
-          
+
           <label for="description" class="form-label fw-bold my-2 fs-4 text-light" >Déscription</label>
           <div class="mb-3">
             <textarea id="description" name="description" rows="5" cols="44">
@@ -95,11 +90,11 @@ $titre = "Mission";
 
           <div class="mb-3">
             <label for="startDate" class="form-label fw-bold my-2 fs-4 text-light">Date de debut</label>
-            <input type="date" class="form-control w-25" name="startDate" id="startDate" value="" required>
+            <input type="date" class="form-control w-25" name="startDate" id="startDate" value="">
           </div>
           <div class="mb-3">
             <label for="endDate" class="form-label fw-bold my-2 fs-4 text-light">Date de la fin</label>
-            <input type="date" class="form-control w-25" name="endDate" id="endDate" value="" required>
+            <input type="date" class="form-control w-25" name="endDate" id="endDate" value="">
           </div>
 
          <?php include_once "../lists/countries.php"; ?>
@@ -107,12 +102,12 @@ $titre = "Mission";
          
           <div class="mb-3">
             <label for="codeName" class="form-label fw-bold my-2 fs-4 text-light">Nome de code</label>
-            <input type="text" class="form-control w-25" name="codeName" id="codeName" value="" required>
+            <input type="text" class="form-control w-25" name="codeName" id="codeName" value="">
           </div>
          
-            <?php include_once('../lists/missionTypes_list.php');?>
+            <?php include_once('../lists/missionTypes.php');?>
            
-            <?php include_once('../lists/specialities_list.php');?>
+            <?php include_once('../lists/specialities.php');?>
 
             <?php include_once('../lists/agents_list.php');?>
             <?php include_once('../lists/contacts_list.php');?>

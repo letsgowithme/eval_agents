@@ -3,7 +3,7 @@
   $titre = "Supprimer la mission";
   include_once "../includes/admin_header.php";
   include_once "../includes/admin_sidebar.php";
-$up_id = $_GET["id"];
+$mission_up_id = $_GET["id"];
 
 if(isset($_POST["submit"])){ 
   
@@ -15,7 +15,7 @@ if(isset($_POST["submit"])){
    $missionStatus = $_POST["missionStatus"];
    $codeName = $_POST["codeName"];
 
-  $sql = "DELETE FROM `mission` WHERE id='$up_id'";
+  $sql = "DELETE FROM `mission` WHERE id='$mission_up_id'";
 
     $query = $dbConnect->query($sql); 
     $Execute = $query->execute();
@@ -28,7 +28,7 @@ if(isset($_POST["submit"])){
 
 global $dbConnect;
 // require_once "../../includes/DB.php";
-$sql = "SELECT * FROM `mission` WHERE `id` = '$up_id'";
+$sql = "SELECT * FROM `mission` WHERE `id` = '$mission_up_id'";
 $query = $dbConnect->query($sql);
 
 while($row = $query->fetch()){
@@ -53,12 +53,12 @@ input{
     </style>
 </head>
 
-<div class="body_home body_page py-4">
+<div class="body_page_new py-4">
 <div>
    
 <h1>Supprimer la mission</h1><div class="message"></div>    
 
-<form method="post" action="mission_delete.php?id=<?php echo $up_id; ?>">
+<form method="post" action="mission_delete.php?id=<?php echo $mission_up_id; ?>">
 
 
 
