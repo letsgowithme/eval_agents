@@ -19,31 +19,31 @@ include_once "admin_header.php"; ?>
           <ul class="nav nav-pills flex-column mt-2">
             <li class="nav-item py-2 py-sm-0">
               <a href="../main/admin_index.php" class="nav-link text-white">
-                 <i class="fs-5 fa fa-gauge"></i><span class="fs-5 d-none ms-3 d-sm-inline">Tableau de bord</span>
+                 <i class="fs-5 fa fa-gauge"></i><span class="fs-5 d-none ms-3 d-sx-inline">Tableau de bord</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/missions_adm.php" class="nav-link text-white <?php echo !empty($missions_adm)?"active":"" ?>">
-              <i class="fs-5 fa fa-briefcase"></i><span class="fs-5 d-none ms-3  d-sm-inline">Missions</span></a>
+              <i class="fs-5 fa fa-briefcase"></i><span class="fs-5 d-none ms-3  d-sx-inline">Missions</span></a>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/usersAll.php" class="nav-link text-white <?php echo !empty($users)?"active":"" ?>">
-              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sm-inline">Utilisateurs</span>
+              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sx-inline">Utilisateurs</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/hideouts.php" class="nav-link text-white <?php echo !empty($hideouts)?"active":"" ?>">
-              <i class="fs-5 fa fa-building"></i><span class="fs-5 ms-3 d-none d-sm-inline">Planques</span>
+              <i class="fs-5 fa fa-building"></i><span class="fs-5 ms-3 d-none d-sx-inline">Planques</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/specialities.php" class="nav-link text-white <?php echo !empty($specialities)?"active":"" ?>">
-              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sm-inline">Spécialités</span>
+              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sx-inline">Spécialités</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/missionTypes.php" class="nav-link text-white <?php echo !empty($missionTypes)?"active":"" ?>">
-              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sm-inline">Type de mission</span>
+              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sx-inline">Type de mission</span>
               </a>
             </li>
      
@@ -51,14 +51,14 @@ include_once "admin_header.php"; ?>
            <ul class="navbar-nav mb-2 mb-lg-0 ms-3">     
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fs-5 fa fa-plus-square"></i>
-          <span class="fs-5 ms-3 d-none d-sm-inline text-white">Créer</span> 
+          <span class="fs-5 ms-3 d-none d-sx-inline text-white">Créer</span> 
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">   <ul class="">
-            <li class="list-unstyled"><a class="dropdown-item py-2 py-sm" href="../new/mission_new.php">Mission</a></li>
-            <li class="list-unstyled"><a class="dropdown-item py-2 py-sm" href="../new/user_new.php">Utilisateur</a></li>
-            <li class="list-unstyled"><a class="dropdown-item py-2 py-sm" href="../new/speciality_new.php">Spécialité</a></li>
-            <li class="list-unstyled"><a class="dropdown-item py-2 py-sm" href="../new/missionType_new.php">Type de mission</a></li>
-            <li class="list-unstyled"><a class="dropdown-item py-2 py-sm" href="../new/hideout_new.php">Planques</a></li>
+            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/mission_new.php">Mission</a></li>
+            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/user_new.php">Utilisateur</a></li>
+            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/speciality_new.php">Spécialité</a></li>
+            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/missionType_new.php">Type de mission</a></li>
+            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/hideout_new.php">Planques</a></li>
            
           </ul> 
           </ul>

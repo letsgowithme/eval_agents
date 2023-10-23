@@ -6,7 +6,7 @@ if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):
                 ?>
 <a href="../new/mission_new.php" class="btn btn-primary my-2">
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
   <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
   <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
 </svg>
@@ -21,7 +21,20 @@ if(isset($_SESSION["user"])):
     <table id="datatable" class="display" style="border: 3px solid black; background: #404144;">
       <thead class="my-4">
          <tr>
-            <th class="hidden">Id</th>
+         <?php if(isset($_SESSION["user"])):
+              if($_SESSION["user"]["roles"] > 4 ):
+                ?>
+            <th class="text-center fs-4" style="min-width: 150px!important;">Id</th>
+            <?php endif; 
+             endif;
+             
+           if(!isset($_SESSION["user"])):
+            ?>
+             <th class="hidden">Id</th>
+             <?php endif;
+             ?>
+           
+ 
             <th class="text-center fs-4" style="min-width: 150px!important;">Titre</th>
             <?php if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):
@@ -46,7 +59,18 @@ $id = $row["id"];
 $title = $row["title"];
 ?>
 <tr>
+<?php if(isset($_SESSION["user"])):
+              if($_SESSION["user"]["roles"] > 4 ):
+                ?>
+<td class="text-center py-3"><?php echo  $id ?></td>
+<?php endif; 
+            endif;
+            ?>
+            <?php if(!isset($_SESSION["user"])):
+            ?>
 <td class="hidden"><?php echo  $id ?></td>
+<?php endif;
+?>
 <td class="text-center py-3"><?php echo  $title ?></td>
 <?php if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):
@@ -72,7 +96,7 @@ $title = $row["title"];
 <?php if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):
                 ?>
-  <td class="text-center"><a href="../../mission_details.php?id=<?php echo $id?>">Details admin</a></td>
+  <td class="text-center"><a href="../details/mission_adm_details.php?id=<?php echo $id?>">Details admin</a></td>
   <?php endif; 
   endif; 
   ?>

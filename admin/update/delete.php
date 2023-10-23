@@ -15,10 +15,14 @@ if(!empty($_GET["id"])){
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Utilisateur supprimé<br><a href="../lists/usersAll.php">Retour vers la Liste d\'utilisateurs</h2>';
 }
 if(!empty($_GET["idMission"])){
-  $sql = "DELETE FROM `mission` WHERE id=:id";
+  $sql =" DELETE FROM mission_missionType WHERE mmt_missionId=:id";
   $query = $dbConnect->prepare($sql); 
   $Execute = $query->execute(["id"=>$_GET["idMission"]]);
-  $query->closeCursor();
+
+ $sql2 = "DELETE FROM `mission` WHERE id=:id";
+  $query2 = $dbConnect->prepare($sql2); 
+  $Execute = $query2->execute(["id"=>$_GET["idMission"]]);
+  $query2->closeCursor();
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Mission supprimée<br><a href="../lists/missions_adm.php">Retour vers la Liste de missions</h2>';
 }
 if(!empty($_GET["idHideout"])){
@@ -35,7 +39,7 @@ if(!empty($_GET["idSpeciality"])){
   $query->closeCursor();
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">La spécialité supprimée<br><a href="../lists/specialities.php">Retour vers la Liste de planques</h2>';
 }
-if(!empty($_GET["isMissionType"])){
+if(!empty($_GET["idMissionType"])){
   $sql = "DELETE FROM `missionType` WHERE id=:id";
   $query = $dbConnect->prepare($sql); 
   $  $Execute = $query->execute(["id"=>$_GET["isMissionType"]]);
