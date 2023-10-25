@@ -91,7 +91,7 @@ $title = $row["title"];
 <?php if(!isset($_SESSION["user"])):
 
 ?>
-<td class="text-center"><a href="mission_details.php?id=<?php echo $id?>">Details</a></td>
+<td class="text-center"><a href="admin/details/mission_adm_details.php?id=<?php echo $id?>">Details</a></td>
 <?php endif; ?>
 <?php if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):

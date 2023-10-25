@@ -2,15 +2,15 @@
 $sql = "SELECT * FROM `speciality` ORDER BY `title` ASC";
 $query = $dbConnect->query($sql);
 $query->execute();
+?>
 
+<?php
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-  $specialityId = $row["id"];
+  // $specialityId = $row["id"];
   $speciality = $row["title"];
   ?>
-  <div>
-  <input type="checkbox" name="specialities[]" value="<?php echo $speciality ?>" class="choices me-2" selected=false><?php echo $speciality ?>
-  <span name="<?= $specialityId ?>" class="hidden" value="<?= $specialityId ?>"></span><br> 
-</div>
+  <input type="checkbox" name="specialities[]" value="<?php echo $speciality ?>" class="choices mx-2" selected=false><?php echo $speciality ?><br>
+
  <?php
 }
 

@@ -4,19 +4,7 @@ if (!empty($_POST)) {
   if (
     isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"], $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) && !empty($_POST["nationality"]) && !empty($_POST["codeName"])  && !empty($_POST["userType"]) && !empty($_POST["password"])
   ) {
-    if (isset($_POST["specialities"])) {
-      if ($_POST["specialities"] && $_POST["userType"] == "agent") {
-        $specialitiesArr = [];
-        for ($i = 0; $i < count($_POST['specialities']); $i++) {
-          $speciality = $_POST['specialities'][$i];
-          $specialitiesArr[] = $speciality;
-        }
-        $specialities = implode(",", $specialitiesArr);
-      }
-    } else {
-      $specialitiesArr = [];
-      $specialities = implode(",", $specialitiesArr);
-    }
+    $specialities = serialize($_POST["specialities"]);
     //le form est complet
 
     $lastname = strip_tags($_POST["lastname"]);

@@ -51,7 +51,7 @@ title VARCHAR(100) NOT NULL
 
 CREATE TABLE user_speciality(
 userId INT NOT NULL,
-idSpeciality INT NOT NULL
+user_specialities VARCHAR (150) NOT NULL
 ) engine=InnoDB;
 
 ALTER TABLE user_speciality ADD CONSTRAINT FK_idUser FOREIGN KEY (idUser) REFERENCES user(id);
@@ -61,7 +61,7 @@ ALTER TABLE user_speciality ADD CONSTRAINT FK_idSpeciality FOREIGN KEY (idSpecia
 
 CREATE TABLE mission_speciality(
 mission_Id INT NOT NULL,
-id_Speciality INT NOT NULL
+mis_spec_id INT NOT NULL
 ) engine=InnoDB;
 
 ALTER TABLE mission_speciality ADD CONSTRAINT FK_mission_Id FOREIGN KEY (mission_Id) REFERENCES mission(id);
