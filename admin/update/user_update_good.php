@@ -154,7 +154,7 @@ foreach ($userTypeArray as $userType) {
  <div class="mb-3 mt-3 d-flex" id="agent_speciality">
    <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;" id="speciality_title">Spécialité</h5>
     <!-- afficher les specialités de l'Utilisateur -->
-   <div class="d-flex flex-column text-light pb-2 pe-3 fs-5" style="max-height: 200px;"> 
+   <div class="d-flex flex-column bg-light text-dark"> 
    
     <?php
   while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) :
@@ -166,14 +166,13 @@ foreach ($userTypeArray as $userType) {
   endwhile;
   ?>
 </div>
-
 <div class="d-flex flex-row">
   <div><button onclick="change_speciality()" class="mx-2" id="change_speciality_btn" type="button">Changer</button>
 </div>
 <!-- afficher la liste de specialités -->
 </div> 
 
-<div class="specialities_list mb-4" id="specialities_list" style="display: none;">
+<div class="specialities_list mb-4" id="specialities_list" style="display: block;">
 <?php
         while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)) {
            $specialityId = $row["id"];

@@ -7,6 +7,7 @@ $nationalities = [
     ["name" => "Allemande"],
     ["name" => "Americaine"],
     ["name" => "Andorrane"],
+    ["name" => "Anglaise"],
     ["name" => "Angolaise"],
     ["name" => "Antiguaise et barbudienne"],
     ["name" => "Argentine"],

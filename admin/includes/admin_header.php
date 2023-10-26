@@ -1,6 +1,8 @@
 <?php 
 $admin=true;
-session_start(); ?>
+session_start(); 
+$titre ="";
+?>
 <!DOCTYPE html>
 <html lang="fr" data-bs-theme="auto">
 <head>

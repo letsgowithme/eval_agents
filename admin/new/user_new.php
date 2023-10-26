@@ -1,10 +1,14 @@
 <?php
 //on demarre la session php
+require_once "../../includes/DB.php"; 
+$sql1 = "SELECT * FROM speciality ORDER BY title ASC";
+$query1 = $dbConnect->query($sql1);
+$query1->execute();
 if (!empty($_POST)) {
   if (
-    isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"], $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) && !empty($_POST["nationality"]) && !empty($_POST["codeName"])  && !empty($_POST["userType"]) && !empty($_POST["password"])
+    isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"], $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) && !empty($_POST["nationality"]) && !empty($_POST["codeName"])  && !empty($_POST["userType"]) && !empty($_POST["password"]) 
   ) {
-    $specialities = serialize($_POST["specialities"]);
+   
     //le form est complet
 
     $lastname = strip_tags($_POST["lastname"]);
@@ -15,6 +19,7 @@ if (!empty($_POST)) {
     $userType = strip_tags($_POST["userType"]);
     $createdAt = strip_tags($_POST["createdAt"]);
 
+    $specialities = serialize($_POST["user_specialities"]);
     require_once "../../includes/DB.php";
 
     $_SESSION["error"] = [];
@@ -35,7 +40,7 @@ if (!empty($_POST)) {
       $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
 
-      $sql = "INSERT INTO `user`(`lastname`, `firstname`, `birthdate`, `email`,  `nationality`, `codeName`, `userType`,  `specialities`, `roles`, `password`, `createdAt`) VALUES(:lastname, :firstname, :birthdate, :email, :nationality,:codeName, :userType, :specialities, '[\"ROLE_USER\"]', '$password', :createdAt)";
+      $sql = "INSERT INTO user (lastname, firstname, birthdate, email,  nationality, codeName, userType, roles, password, createdAt) VALUES(:lastname, :firstname, :birthdate, :email, :nationality,:codeName, :userType, '[\"ROLE_USER\"]', '$password', :createdAt)";
 
       $query = $dbConnect->prepare($sql);
 
@@ -46,14 +51,21 @@ if (!empty($_POST)) {
       $query->bindValue(":nationality", $nationality, PDO::PARAM_STR);
       $query->bindValue(":codeName", $codeName, PDO::PARAM_STR);
       $query->bindValue(":userType", $userType, PDO::PARAM_STR);
-      $query->bindValue(":specialities", $specialities, PDO::PARAM_STR);
+      
       $query->bindValue(":createdAt", $createdAt, PDO::PARAM_STR);
 
       $query->execute();
       $query->closeCursor();
 
+
       //on recup id de nouvel utilisateur
-      $id = $dbConnect->lastInsertId();
+      $user_id = $dbConnect->lastInsertId();
+
+ 
+      $sql2 = "INSERT INTO user_speciality (userId, user_specialities) VALUES('$user_id', '$specialities')";
+      $query2 = $dbConnect->prepare($sql2);
+      $query->bindValue(":user_specialities", $_POST["user_specialities"], PDO::PARAM_STR);
+      $query2->execute();
 
       echo "<p style=\"background: blue;\" id=\"message\" class=\"text-center  p-2 fw-4 fs-4 text-light\">Utilisateur ajouté sous le numéro " . $id . "</p>";
       echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-5 text-light\"><a href='user_new.php' class=\"text-info fs-4 fw-4\"> Retour à la page de la création</a></p>";
@@ -165,9 +177,17 @@ include_once "../includes/admin_sidebar.php";
 
       <!-- **************Specialities***************** -->
       <div class="mb-3 d-flex" id="agent_speciality" style="display: none;">
-        <h5 class="form-label fw-bold mb-2 fs-4 me-2 mt-4" style="display: none;" id="speciality_title">Spécialité</h5>
+        <label for="" class="form-label fw-bold mb-2 fs-4 me-2 mt-4" style="display: none;" id="speciality_title">Spécialité</label>
         <div class="specialities_list fs-4 form-control w-25" id="specialities_list" style="display: none;">
-          <?php include_once('../lists/specialities_chbox.php');
+        <?php
+        while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
+           $specialityId = $row["id"];
+          $speciality = $row["title"];
+          ?>
+          <input type="checkbox" name="user_specialities[]" value="<?php echo $speciality ?>" class="choices mx-2" selected=false><?php echo $speciality ?><br>
+
+        <?php
+        }
           ?>
 
         </div>

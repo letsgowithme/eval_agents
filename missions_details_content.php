@@ -35,24 +35,18 @@ $missionTypeTitle = $missionType[0];
 
 $title = strip_tags($mission["title"]);
 // afficher spécialities
-$sql5 = "SELECT * FROM mission_speciality WHERE mission_Id='$idMission'";
+$sql5 = "SELECT * FROM mission_speciality INNER JOIN speciality ON speciality.id = mission_speciality.mis_spec_id";
 $query5 = $dbConnect->query($sql5);
 $query5->execute();
 while ($row = $query5->fetch(PDO::FETCH_ASSOC)):
   $mission_Id = $row["mission_Id"];
   $mis_spec_id = $row["mis_spec_id"];
+  $specialityTitle = $row["title"];
 endwhile;
-
- $sql6= "SELECT title FROM speciality WHERE id='$mis_spec_id'";
- $query6 = $dbConnect->prepare($sql6);
-$query6->execute();
-$speciality = $query6->fetch();
-$specialityTitle = $speciality[0];
-
-$agentArr  =[];
 $sql7 = "SELECT * FROM mission_agents WHERE mA_mission_id='$idMission'";
 $query7 = $dbConnect->query($sql7);
 $query7->execute();
+
 
 // var_dump($agentArr);
 
@@ -120,29 +114,35 @@ $query7->execute();
 <tr>
 <td>Agents</td>
 <td>
+  <!-- recup les id des agents -->
 <?php 
 while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
   $agents = unserialize($row["agents"]);
-  
-   foreach ($agents as $agent) {
+ 
+  foreach ($agents as $agent):
     $agentId = $agent;
-  
-    $sql8= "SELECT id, lastname, firstname, specialities FROM user WHERE id='$agentId'";
+    // var_dump($agentId);
+    $sql8= "SELECT * FROM user INNER JOIN user_speciality  ON user.id='$agentId' AND user_speciality.userId='$agentId'";
     $query8 = $dbConnect->prepare($sql8);
     $query8->execute();
-    while($row = $query8->fetch(PDO::FETCH_ASSOC)):
-   
-  
-    $ag_id = $row["id"];
-    $ag_lastname = $row["lastname"];
-    $ag_firstname = $row["firstname"];
-    $ag_specialities = $row["specialities"];
-    echo $ag_lastname." ".$ag_firstname.": ".$ag_specialities."<br>";
-  
-  endwhile;
-   }
+    while($row = $query8->fetch(PDO::FETCH_ASSOC)):    
+      $ag_id = $row["id"];
+      $ag_lastname = $row["lastname"];
+      $ag_firstname = $row["firstname"];
+      $specialities = unserialize($row["user_specialities"]);  
+      foreach($specialities as $speciality) :
+       $user_spec = $speciality.", ";
+      
+      echo $ag_firstname." ".$ag_lastname." - ". $user_spec."<br>";
+    endforeach;
+  endwhile; 
  
+    
+  endforeach;
 endwhile;
+?>
+</td>
+<?php
    
       // var_dump($row);
      

@@ -18,6 +18,7 @@
   color: #300345;
   color: #404144;
   color: #29292b;
+  color: #bdbdc2;
   left: 50%;
 transform: translateX(-50%);
 }
@@ -26,6 +27,9 @@ transform: translateX(-50%);
 }
 .visible{
   display: block;
+}
+.red {
+background-color: red;
 }
 td,
 th {

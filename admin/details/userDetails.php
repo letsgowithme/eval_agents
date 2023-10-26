@@ -1,7 +1,7 @@
 <?php 
 $user_details=true;
 //on demarre la session php
-session_start();
+
 //on verifie s'il ya un id
 if (!isset($_GET["id"]) || empty($_GET["id"])){
   header("Location: user_details.php");
@@ -10,42 +10,35 @@ if (!isset($_GET["id"]) || empty($_GET["id"])){
 
 $id = $_GET["id"];
 require_once "../../includes/DB.php";
-$sql = "SELECT * FROM `user` WHERE id = :id";
-$query = $dbConnect->prepare($sql);
-$query->bindValue(":id", $id, PDO::PARAM_INT);
+$sql = "SELECT * FROM user WHERE id = '$id'";
+$query = $dbConnect->query($sql);
 $query->execute();
 $row = $query->fetch();
+$userType = $row['userType'];
 
-if(!$row) {
-    http_response_code(404);
-    echo "Page non trouvée";
-    exit;
-}
+
+$sql1 = "SELECT * FROM user_speciality WHERE userId='$id'";
+$query1 = $dbConnect->query($sql1);
+
 //ici on a la nationalité
 
 
 
-include_once "../../includes/header.php";
-include_once "../../includes/navbar.php";
+include_once "../includes/admin_header.php";
+include_once "../includes/admin_sidebar.php";
 
 ?>
+<link rel="stylesheet" href="../../style/style_in_ad.css">
 <link rel="stylesheet" href="../../style/style.css">
+
 </head>
-<body class="body_page">
-  <div class="container">
-    <div class="d-flex justify-content-between mt-3">
-<h1 style="color: #1c1c22;">Utilisateur numéro  <?= strip_tags($row['id']) ?></h1>
-<div class="mt-2">
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../lists/usersAll.php" id="up">Utilisateurs</a></button>
-   
-<button class="btn border" style="background: lightgray;"><a 
-class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
-</div>
-</div>
-<table width="100%" border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4">
+<div class="body_page_new py-4">
+ 
+<div style="max-width: 70%!important;">
+<h1 style="color: #1c1c22; background: #bdbdc2;">Utilisateur numéro  <?= strip_tags($row['id']) ?></h1>
+
+
+<table width="100%" border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4 fs-5">
 <tr class="text-center">
 <td class="w-50 text-center">Nom</td>
 <td><?= strip_tags($row['lastname']) ?></td>
@@ -73,21 +66,54 @@ aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></butto
 
 <tr class="text-center">
 <td>Type</td>
-<td><?= strip_tags($row['userType']) ?></td>
+<td id="userType" value="<?= $userType ?>"><?= strip_tags($row['userType']) ?></td>
 </tr>
-<tr class="text-center">
+<?php
+if($userType == 'agent'): 
+  ?>
+<tr class="text-center" id="agent_specialities" ">
 <td>Specialitiés</td>
-<td><?= strip_tags($row['specialities']) ?></td>
+  <?php
+ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) :
+ $specialities = unserialize($row["user_specialities"]);
+ ?>
+ <td class="text-center px-4 py-2">
+   <?php
+ foreach($specialities as $speciality) :
+   echo  $speciality."<br/>";
+   endforeach;
+   ?>
+   </td>
+   <?php
+   endwhile;
+   ?>        
+            
 </tr>
-<tr>
+<?php
+endif;
+?>
+
 
 </table>
-
-<div class="text-center fs-4 fw-bold">
-<button type="button" class="login my-4" data-toggle="tooltip" data-placement="top"><a href="index.php">Accueil</button>
 </div>
 </div>
+<!-- <script>
+  $(document).ready(function() {
+    alert($("userType"));
+    var agent_specialities = $("#agent_specialities");
+    if( $("userType").val() == "agent" ) {
+       
+      agent_specialities.removeClass("hidden");
+      agent_specialities.addClass("visible");
+    }
+    agent_specialities.addClass("hidden");
+    
+  });
+  </script> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+<div style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);">
 <?php 
 include_once "../../includes/footer.php"; 
 ?> 
+</div>

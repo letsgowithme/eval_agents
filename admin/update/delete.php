@@ -8,42 +8,53 @@ include_once "../../includes/DB.php";
 include_once "../includes/admin_footer.php";
 
 if(!empty($_GET["id"])){
-  $sql = "DELETE FROM user WHERE id=:id";
-  $query = $dbConnect->prepare($sql); 
-  $Execute = $query->execute(["id"=>$_GET["id"]]);
-  $query->closeCursor();
+  $sql1 =" DELETE FROM user_speciality WHERE userId=:id";
+  $query1 = $dbConnect->prepare($sql1); 
+  $Execute = $query1->execute(["id"=>$_GET["id"]]);
+  $sql1_1 = "DELETE FROM user WHERE id=:id";
+  $query1_1 = $dbConnect->prepare($sql1_1); 
+  $Execute = $query1_1->execute(["id"=>$_GET["id"]]);
+  $query1_1->closeCursor();
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Utilisateur supprimé<br><a href="../lists/usersAll.php">Retour vers la Liste d\'utilisateurs</h2>';
 }
 if(!empty($_GET["idMission"])){
-  $sql =" DELETE FROM mission_missionType WHERE mmt_missionId=:id";
-  $query = $dbConnect->prepare($sql); 
-  $Execute = $query->execute(["id"=>$_GET["idMission"]]);
-
- $sql2 = "DELETE FROM `mission` WHERE id=:id";
+  $sql2 =" DELETE FROM mission_missionType WHERE mmt_missionId=:id";
   $query2 = $dbConnect->prepare($sql2); 
   $Execute = $query2->execute(["id"=>$_GET["idMission"]]);
-  $query2->closeCursor();
+  $sql2_1 = "DELETE FROM `mission` WHERE id=:id";
+  $query2_1 = $dbConnect->prepare($sql2_1); 
+  $Execute = $query2_1->execute(["id"=>$_GET["idMission"]]);
+  $query2_1->closeCursor();
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Mission supprimée<br><a href="../lists/missions_adm.php">Retour vers la Liste de missions</h2>';
 }
 if(!empty($_GET["idHideout"])){
-  $sql = "DELETE FROM `hideout` WHERE id=:id";
-  $query = $dbConnect->prepare($sql); 
-  $  $Execute = $query->execute(["id"=>$_GET["idHideout"]]);
-  $query->closeCursor();
+  $sql3 =" DELETE FROM mission_hideouts WHERE idHideout=:id";
+  $query3 = $dbConnect->prepare($sql3); 
+  $Execute = $query3->execute(["id"=>$_GET["idHideout"]]);
+  $sql3_1 = "DELETE FROM `hideout` WHERE id=:id";
+  $query3_1 = $dbConnect->prepare($sql3_1); 
+  $Execute = $query3_1->execute(["id"=>$_GET["idHideout"]]);
+  $query3_1->closeCursor();
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">La planque supprimée<br><a href="../lists/hideouts.php">Retour vers la Liste de planques</h2>';
 }
 if(!empty($_GET["idSpeciality"])){
-  $sql = "DELETE FROM `speciality` WHERE id=:id";
-  $query = $dbConnect->prepare($sql); 
-  $Execute = $query->execute(["id"=>$_GET["idSpeciality"]]);
-  $query->closeCursor();
-  echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">La spécialité supprimée<br><a href="../lists/specialities.php">Retour vers la Liste de planques</h2>';
+  $sql4 =" DELETE FROM mission_speciality WHERE mis_spec_id=:id";
+  $query4 = $dbConnect->prepare($sql4); 
+  $Execute = $query4->execute(["id"=>$_GET["idSpeciality"]]);
+  $sql4_1 = "DELETE FROM `speciality` WHERE id=:id";
+  $query4_1 = $dbConnect->prepare($sql4_1); 
+  $Execute = $query4_1->execute(["id"=>$_GET["idSpeciality"]]);
+  $query4_1->closeCursor();
+  echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">La spécialité supprimée<br><a href="../lists/specialities.php">Retour vers la Liste de spécialités</h2>';
 }
 if(!empty($_GET["idMissionType"])){
-  $sql = "DELETE FROM `missionType` WHERE id=:id";
-  $query = $dbConnect->prepare($sql); 
-  $  $Execute = $query->execute(["id"=>$_GET["isMissionType"]]);
-  $query->closeCursor();
-  echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Le type de mission supprimée<br><a href="../lists/hideouts.php">Retour vers la Liste de types de mission</h2>';
+  $sql5 =" DELETE FROM mission_missionType WHERE mmt_missionTypeId=:id";
+  $query5 = $dbConnect->prepare($sql5); 
+  $Execute = $query5->execute(["id"=>$_GET["idMissionType"]]);
+  $sql5_1 = "DELETE FROM `missionType` WHERE id=:id";
+  $query5_1 = $dbConnect->prepare($sql5_1); 
+  $Execute = $query5_1->execute(["id"=>$_GET["idMissionType"]]);
+  $query5_1->closeCursor();
+  echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Le type de mission supprimée<br><a href="../lists/missionTypes.php">Retour vers la Liste de types de mission</h2>';
 }
 ?>

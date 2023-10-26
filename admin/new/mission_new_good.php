@@ -4,11 +4,11 @@ $sql_s1 = "SELECT * FROM missionType";
 $query_s1 = $dbConnect->prepare($sql_s1);
 $query_s1->execute();
 
-$sql_s2 = "SELECT * FROM speciality ORDER BY title ASC";
+$sql_s2 = "SELECT * FROM `speciality` ORDER BY `title` ASC";
 $query_s2 = $dbConnect->query($sql_s2);
 $query_s2->execute();
 
-$sql_s3 = "SELECT * FROM user INNER JOIN user_speciality ON user.id=user_speciality.userId  ORDER BY lastname ASC"; 
+$sql_s3 = "SELECT id, firstname, lastname FROM `user` WHERE userType=\"agent\" ORDER BY `lastname` ASC";
 $query_s3 = $dbConnect->query($sql_s3);
 $query_s3->execute();
 
@@ -16,7 +16,7 @@ $query_s3->execute();
 if(!empty($_POST)){
   if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["country"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["country"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"])){
    
-
+    $specialities = serialize($_POST["specialities"]);
 
 $title = strip_tags($_POST["title"]);
 $description = strip_tags($_POST["description"]);
@@ -28,13 +28,13 @@ $codeName = strip_tags($_POST["codeName"]);
 $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
 $specialityId = strip_tags($_POST["speciality"]);
 $agents = serialize($_POST["agents"]);
-// $specialities = serialize($_POST["specialities"]);
+
 // ***************************************************
 
 $sql_i1 = "INSERT INTO `mission`(`title`, `description`, `startDate`, `endDate`, `country`, `missionStatus`, `codeName`) 
 VALUES(:title, :description, :startDate, :endDate, :country, :missionStatus, :codeName)";
 
-$query_i1 = $dbConnect->prepare($sql_i1);
+$query_i1 = $dbConnect->prepare($sql4);
 
 $query_i1->bindValue(':title', $title, PDO::PARAM_STR);
 $query_i1->bindValue(':description', $description, PDO::PARAM_STR);
@@ -85,10 +85,6 @@ $titre = "Mission";
 ?>
 <link rel="stylesheet" href="../../style/style_in_ad.css">
 <link rel="stylesheet" href="../../style/style.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </head>
 <div class="body_page_new py-4">
  <div class="p-4" style="max-width: 1000px;">
@@ -137,17 +133,17 @@ $titre = "Mission";
          ?>      
            </select>
 
-          <!-- ************Speciality list**************** -->
+          <!-- ****************Speciality******************* -->
           <div class="mb-3 d-flex mt-4">
           <label for="speciality" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Spécialité</label>
         
           <select name="speciality" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px;">
-          <option>Choisir</option>
+            
           <?php 
        foreach($query_s2->fetchAll(PDO::FETCH_ASSOC) as $tab){ 
         $specialityId = $tab["id"];
         $mission_speciality = $tab["title"];
-        echo "<option class=\"spec\" value=".$specialityId.">".$mission_speciality."</option>"; }
+        echo "<option value=".$specialityId.">".$mission_speciality."</option>"; }
           ?>
           </select>
           </div>
@@ -156,23 +152,30 @@ $titre = "Mission";
           <label for="agent" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Agents</label>
           <select name="agents[]" multiple="multiple" id="agent" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
-            <!-- recuperer que les agents -->
+            <!-- recuperer tous les agents -->
           <?php 
-       while($row = $query_s3->fetch(PDO::FETCH_ASSOC)):
-        $agentId = $row["id"];
-        $lastname = $row["lastname"];
-        $firstname = $row["firstname"];   
-     
-        $specialities = unserialize($row["user_specialities"]);
-            foreach($specialities as $speciality) :
-            $user_speciality = $speciality." ";     
-            var_dump($user_speciality);     
-          echo "<option class=\"py-1 user_spec\" value=".$agentId.">".$user_speciality." - ".$firstname." ".$lastname."</option><hr>"; 
+       foreach($query_s3->fetchAll(PDO::FETCH_ASSOC) as $tab){ 
+       
+        $agentId = $tab["id"];
+        $lastname = $tab["lastname"];
+        $firstname = $tab["firstname"];
+      //  recuperer les specialités de chaque agent
+
+        $sql_s4 = "SELECT user_specialities FROM user_speciality WHERE userId='$agentId'";
+        $query_s4 = $dbConnect->query($sql_s4);
+        $query_s4->execute();
+        var_dump($query_s4);
+        while ($row = $query_s4->fetch(PDO::FETCH_ASSOC)) :
+          $specialities = unserialize($row["user_specialities"]);
+       
+        foreach($specialities as $speciality) :
+            echo $speciality.", ";
+             
         endforeach;
-      
-      endwhile;
-      
-     
+        endwhile; 
+       
+        echo "<option class=\"py-1\" value=".$agentId.">".$lastname." ". $firstname.": ".$user_speciality."</option><hr>"; 
+      }
           ?>
           </select>
           </div>
@@ -190,92 +193,22 @@ $titre = "Mission";
                   include_once "btn_create.php";
                   ?>
         </form>
-        <button type="button" class="btn btn-primary" id="btn_reload">Réinisialiser</button>
         </div>
-   
+        <script>
+function toggleList() {
+  var toggleBtn = document.getElementById("toggleBtn"); 
+  var specialities_list = document.getElementById("specialities_list");
+  if (specialities_list.style.display === "none") {
+    specialities_list.style.display = "block";
+  } else if(specialities_list.style.display === "block") {
+    specialities_list.style.display = "none";
+  }
+}
+        </script>
         <?php
        
   ?>
 </div>
-<!-- <script type="text/javascript">
-  let agent = document.getElementById("agent");
-let spec = document.getElementsByClassName("spec");
-let user_spec =document.getElementsByClassName("user_spec");
-agent.addEventListener("change", function(){
-  // if(spec == user_spec){
-    alert(user_spec.value());
-  // }else{
-  //   alert(user_spec);
-  // }
-})
-  </script> -->
-
-</script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" 
-integrity="sha512-ztxZscxb55lKL+xmWGZEbBHekIzy+1qYKHGZTWZYH1GUwxy0hiA18lW6ORIMj4DHRgvmP/qGcvqwEyFFV7OYVQ==" 
-crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!-- <script>
-  $(document).ready(function () {
-    var agent = $("agent");
-    console.log(jQuery.type(agent));
-    $("#speciality").on("change", function () {
-    var speciality = $("#speciality").val();
-    var user_spec = $(".user_spec").val();
-    -->
-    // console.log(speciality);
-    // console.log(user_spec);
-  //  if($("#speciality").text() == $(".user_spec").text()) {
-    
-    
-    
-  //  }else{
-  //   $(".user_spec").addClass("visible");
-  //  }
-  
-  //     if(speciality == user_spec){
-  //     console.log(speciality);
-  //     console.log(user_spec);
-  //       $(".user_spec").addClass("visible");   
-  //     } else {
-  //       $(".user_spec").text("Pas de spécialité requise")
-  //     $(".user_spec").addClass("hidden");
-  //     }
-  <!-- });
-      });
-
-  </script>
-
-  <script> -->
-  $(document).ready(function () {
-    $("#speciality").on("change", function (callback) {
-    var speciality = $("#speciality").val();
-    var user_spec = $(".user_spec").val(); 
-    // var agent_info = $(".agent_info");
-      console.log(speciality);
-      console.log(user_spec);
-      // console.log(agent_info);
-      if(speciality != user_spec){
-        $(".user_spec").addClass("hidden");
-        $(".user_spec").text("Pas de spécialité requise")
-        callback;
-        if(speciality == user_spec){
-          $(".user_spec").addClass("visible");
-        }
-      }
-  });
-      });
-
-  </script> -->
-
-<script>
-
-$(document).ready(function () {
-$("#btn_reload").click(function () {
-location.reload(true);
-});
-});
-</script>
-
         <?php
         include_once "../includes/admin_footer.php";
         ?>
