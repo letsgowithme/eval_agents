@@ -15,12 +15,12 @@ $titre ="";
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
   <!-- <link rel="stylesheet" href="../../style/dataTables.min.css"> -->
-
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link rel="icon" href="..././logo.png">
 
   <script src="https://getbootstrap.com//docs/5.3/assets/js/color-modes.js"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+   
 
     <!-- Favicons -->
 <link rel="icon" href="../../logo.png" sizes="32x32" type="image/png">

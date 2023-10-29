@@ -41,9 +41,9 @@ $count = 0;
           <th class="">Id</th>
           <th class="text-center fs-5 px-4 py-2">Nom</th>
           <th class="text-center fs-5 px-4 py-2">Nationalité</th>
+          <th class="text-center fs-5 px-4 py-2">Pays</th>
           <th class="text-center fs-5 px-4 py-2">Type</th>
           
-         
           <th class="text-center fs-5 px-4 py-2">Actions</th>
           <th class="text-center fs-5 px-4 py-2">Détails</th>
 
@@ -65,6 +65,7 @@ $count = 0;
           $lastname = $row["lastname"];
           $nationality = $row["nationality"];
           $userType = $row["userType"];
+          $country = $row["country"];
           
          
         ?>
@@ -72,6 +73,7 @@ $count = 0;
             <td class=""><?php echo  $id ?></td>
             <td class="text-center fs-5 px-4 py-2"><?php echo  $lastname ?></td>
             <td class="text-center px-4 py-2"><?php echo  $nationality ?></td>
+            <td class="text-center px-4 py-2"><?php echo  $country ?></td>
             <td class="text-center px-4 py-2"><?php echo  $userType ?></td>
           
            
@@ -113,7 +115,8 @@ $count = 0;
 </div>
 
 <!-- page users ends -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <?php include_once "../includes/admin_footer.php"; ?>
 <?php
 //  endif;

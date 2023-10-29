@@ -18,6 +18,7 @@ if (!empty($_POST)) {
     $codeName = strip_tags($_POST["codeName"]);
     $userType = strip_tags($_POST["userType"]);
     $createdAt = strip_tags($_POST["createdAt"]);
+    $country = strip_tags($_POST["country"]);
 
     $specialities = serialize($_POST["user_specialities"]);
     require_once "../../includes/DB.php";
@@ -40,7 +41,7 @@ if (!empty($_POST)) {
       $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
 
 
-      $sql = "INSERT INTO user (lastname, firstname, birthdate, email,  nationality, codeName, userType, roles, password, createdAt) VALUES(:lastname, :firstname, :birthdate, :email, :nationality,:codeName, :userType, '[\"ROLE_USER\"]', '$password', :createdAt)";
+      $sql = "INSERT INTO user (lastname, firstname, birthdate, email,  nationality, codeName, userType, roles, password, createdAt, country) VALUES(:lastname, :firstname, :birthdate, :email, :nationality,:codeName, :userType, '[\"ROLE_USER\"]', '$password', :createdAt, :country)";
 
       $query = $dbConnect->prepare($sql);
 
@@ -51,9 +52,8 @@ if (!empty($_POST)) {
       $query->bindValue(":nationality", $nationality, PDO::PARAM_STR);
       $query->bindValue(":codeName", $codeName, PDO::PARAM_STR);
       $query->bindValue(":userType", $userType, PDO::PARAM_STR);
-      
       $query->bindValue(":createdAt", $createdAt, PDO::PARAM_STR);
-
+      $query->bindValue(":country", $country, PDO::PARAM_STR);
       $query->execute();
       $query->closeCursor();
 
@@ -157,6 +157,19 @@ include_once "../includes/admin_sidebar.php";
           ?>
         </select>
       </div>
+      <!-- ******************Pays****************** -->
+      <div class="mb-3">
+        <label for="country" class="form-label fw-bold my-2 fs-4">Pays</label>
+        <br>
+        <?php include_once "../lists/countries_list.php"; ?>
+        <select name="country" id="country" class="fs-4" class="form-control" style="width: 447px;">
+          <?php
+          foreach ($countries as $country) {
+            echo '<option value="' . $country["name"] . '" name="<?= $country["name"] ?>' . $country["name"] . '</option>';
+          }
+          ?>
+        </select>
+      </div>
       <!-- ******************Codename****************** -->
       <div class="mb-3">
         <label for="codeName" class="form-label fw-bold my-2 fs-4">Nom de code</label>
@@ -203,6 +216,7 @@ include_once "../includes/admin_sidebar.php";
         <label for="createdAt" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de réation</label>
         <input type="text" name="createdAt" id="createdAt" value="<?php echo date('Y-m-d'); ?>">
       </div>
+      
       <?php
       include_once "btn_create.php";
       ?>

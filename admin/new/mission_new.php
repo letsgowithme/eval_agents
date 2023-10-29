@@ -1,6 +1,6 @@
 <?php 
 require_once "../../includes/DB.php";
-$sql_s1 = "SELECT * FROM missionType";
+$sql_s1 = "SELECT * FROM missionType ORDER BY title ASC";
 $query_s1 = $dbConnect->prepare($sql_s1);
 $query_s1->execute();
 
@@ -11,6 +11,14 @@ $query_s2->execute();
 $sql_s3 = "SELECT * FROM user INNER JOIN user_speciality ON user.id=user_speciality.userId  ORDER BY lastname ASC"; 
 $query_s3 = $dbConnect->query($sql_s3);
 $query_s3->execute();
+// contacts
+$sql_s4 = "SELECT * FROM user WHERE userType='contact' ORDER BY lastname ASC"; 
+$query_s4 = $dbConnect->query($sql_s4);
+$query_s4->execute();
+// targets
+$sql_s5 = "SELECT * FROM user WHERE userType='cible'  ORDER BY lastname ASC"; 
+$query_s5 = $dbConnect->query($sql_s5);
+$query_s5->execute();
 
 //on traite le formulaire
 if(!empty($_POST)){
@@ -28,7 +36,9 @@ $codeName = strip_tags($_POST["codeName"]);
 $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
 $specialityId = strip_tags($_POST["speciality"]);
 $agents = serialize($_POST["agents"]);
-// $specialities = serialize($_POST["specialities"]);
+$contacts = serialize($_POST["contacts"]);
+$targets = serialize($_POST["targets"]);
+
 // ***************************************************
 
 $sql_i1 = "INSERT INTO `mission`(`title`, `description`, `startDate`, `endDate`, `country`, `missionStatus`, `codeName`) 
@@ -65,12 +75,20 @@ $sql_i4 = "INSERT INTO mission_agents (mA_mission_id, agents) VALUES('$mmt_missi
 $query_i4 = $dbConnect->prepare($sql_i4);
 $query_i4->execute();
 
+$sql_i5 = "INSERT INTO mission_contacts (mc_mission_id, contacts) VALUES('$mmt_missionId', '$contacts');";
+$query_i5 = $dbConnect->prepare($sql_i5);
+$query_i5->execute();
+
+$sql_i6 = "INSERT INTO mission_targets (mt_mission_id, targets) VALUES('$mmt_missionId', '$targets');";
+$query_i6 = $dbConnect->prepare($sql_i6);
+$query_i6->execute();
+
 
 
 
 // header("Location: ../lists/missions_adm.php");
 echo "<p>La mission ajoutée sous le numéro ". $id."</p>";
-echo "<a href='mission_new.php'>Retour</a>";
+echo "<a href='missions_adm.php'>Retour</a>";
 exit;
 
   }else{
@@ -166,26 +184,49 @@ $titre = "Mission";
         $specialities = unserialize($row["user_specialities"]);
             foreach($specialities as $speciality) :
             $user_speciality = $speciality." ";     
-            var_dump($user_speciality);     
+            // var_dump($user_speciality);     
           echo "<option class=\"py-1 user_spec\" value=".$agentId.">".$user_speciality." - ".$firstname." ".$lastname."</option><hr>"; 
         endforeach;
-      
       endwhile;
-      
-     
           ?>
           </select>
           </div>
           <!-- ************************************** -->
-      
+          <!-- ****************Contacts******************* -->
+        <div class="mb-3 d-flex mt-4">
+          <label for="contacts" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Contacts</label>
+          <select name="contacts[]" multiple="multiple" id="contacts" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
+            <!-- recuperer que les agents -->
+          <?php 
+       while($row = $query_s4->fetch(PDO::FETCH_ASSOC)):
+        $contactId = $row["id"];
+        $lastname = $row["lastname"];
+        $firstname = $row["firstname"];   
+        $nation = $row["nationality"];
+        echo "<option class=\"py-1\" value=".$contactId.">".$firstname." ".$lastname." - ".$nation."</option><hr>"; 
+      endwhile;
+          ?>
+          </select>
+          </div>
+          <!-- ****************Targets******************* -->
+        <div class="mb-3 d-flex mt-4">
+          <label for="targets" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Cibles</label>
+          <select name="targets[]" multiple="multiple" id="targets" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
+
+            <!-- recuperer que les agents -->
+          <?php 
+       while($row = $query_s5->fetch(PDO::FETCH_ASSOC)):
+        $targetId = $row["id"];
+        $lastname = $row["lastname"];
+        $firstname = $row["firstname"];   
+        $nation = $row["nationality"];
+         echo "<option class=\"py-1\" value=".$targetId.">".$firstname." ".$lastname." - ".$nation."</option><hr>"; 
+      endwhile;
+          ?>
+          </select>
+          </div>
           
-            <?php 
-            // include_once('../lists/agents_list.php');
-            ?>
-            <?php include_once('../lists/contacts_list.php');?>
-            <?php include_once('../lists/targets_list.php');?>
-       
           <?php
                   include_once "btn_create.php";
                   ?>

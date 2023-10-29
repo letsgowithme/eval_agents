@@ -12,8 +12,6 @@ $query = $dbConnect->query($sql);
 $query->execute();
 $mission = $query->fetch();
 
-
-
 if(!$mission) {
     http_response_code(404);
     echo "Page non trouvée";
@@ -25,7 +23,7 @@ $query2->execute();
 while ($row = $query2->fetch(PDO::FETCH_ASSOC)):
   $mmt_missionId = $row["mmt_missionId"];
   $mmt_missionTypeId = $row["mmt_missionTypeId"];
-endwhile;
+endwhile; 
 
  $sql3= "SELECT title FROM missionType WHERE id='$mmt_missionTypeId'";
  $query3 = $dbConnect->prepare($sql3);
@@ -43,16 +41,10 @@ while ($row = $query5->fetch(PDO::FETCH_ASSOC)):
   $mis_spec_id = $row["mis_spec_id"];
   $specialityTitle = $row["title"];
 endwhile;
-$sql7 = "SELECT * FROM mission_agents WHERE mA_mission_id='$idMission'";
+
+$sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets WHERE mission_agents.mA_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission'";
 $query7 = $dbConnect->query($sql7);
 $query7->execute();
-
-
-// var_dump($agentArr);
-
-// var_dump($query7->fetch(PDO::FETCH_ASSOC));
-
-
  
   ?>
 
@@ -98,10 +90,10 @@ $query7->execute();
 <tr>
 <td>Type de mission</td>
   <!-- ************missionType de La mission************** -->
-
   <td>
     <span class="hidden">
       <?= $mmt_missionTypeId ?>
+      
     </span>
     <?= $missionTypeTitle ?></td>
 </tr>
@@ -118,7 +110,21 @@ $query7->execute();
 <?php 
 while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
   $agents = unserialize($row["agents"]);
- 
+  $contacts = unserialize($row["contacts"]);
+  $targets = unserialize($row["targets"]);
+  foreach($contacts as $contact) :
+    $user_contact = $contact.", ";
+    $sql9 = "SELECT * FROM user WHERE id = '$user_contact'";
+     $query9 = $dbConnect->prepare($sql9);
+    $query9->execute();
+  endforeach;
+   
+  foreach($targets as $target) :
+    $user_target = $target.", ";
+    $sql10 = "SELECT * FROM user WHERE id = '$user_target'";
+    $query10 = $dbConnect->prepare($sql10);
+   $query10->execute();
+  endforeach;
   foreach ($agents as $agent):
     $agentId = $agent;
     // var_dump($agentId);
@@ -132,21 +138,38 @@ while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
       $specialities = unserialize($row["user_specialities"]);  
       foreach($specialities as $speciality) :
        $user_spec = $speciality.", ";
-      
+      endforeach;
       echo $ag_firstname." ".$ag_lastname." - ". $user_spec."<br>";
-    endforeach;
-  endwhile; 
- 
-    
+  endwhile;  
   endforeach;
 endwhile;
 ?>
 </td>
-<?php
-   
-      // var_dump($row);
-     
-?>
+<tr>
+  <td>Contacts</td>
+<td>
+  <?php  while($row = $query9->fetch(PDO::FETCH_ASSOC)):   
+      $cont_id = $row["id"];
+      $cont_lastname = $row["lastname"];
+      $cont_firstname = $row["firstname"];
+    endwhile;
+    echo $cont_lastname." ".$cont_firstname."<br>";
+    ?>
+</td>
+</tr>
+<tr>
+<td>Cibles</td>
+<td>
+<?php  
+     while($row = $query10->fetch(PDO::FETCH_ASSOC)):   
+      $targ_id = $row["id"];
+      $targ_lastname = $row["lastname"];
+      $targ_firstname = $row["firstname"];
+    endwhile;
+    echo $targ_firstname." ".$targ_lastname."<br>";
+    ?>
+</td>
+</tr>
  </td>
 </tr>
 </table>

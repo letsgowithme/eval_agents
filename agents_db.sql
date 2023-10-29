@@ -14,7 +14,8 @@ userType VARCHAR(100) NOT NULL,
 specialities VARCHAR(255),
 roles JSON NOT NULL,
 password VARCHAR(255) NOT NULL,
-createdAt DATE NOT NULL 
+createdAt DATE NOT NULL,
+country VARCHAR(100) 
 ) engine=InnoDB;
 
 CREATE TABLE speciality(
@@ -82,6 +83,21 @@ agents VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
 ALTER TABLE mission_agents ADD CONSTRAINT FK_mA_mission_id FOREIGN KEY (mA_mission_id) REFERENCES mission(id);
+
+CREATE TABLE mission_contacts(
+mc_mission_id INT NOT NULL,
+contacts VARCHAR(100) NOT NULL
+) engine=InnoDB;
+
+ALTER TABLE mission_contacts ADD CONSTRAINT FK_mc_mission_id FOREIGN KEY (mc_mission_id) REFERENCES mission(id);
+
+CREATE TABLE mission_targets(
+mt_mission_id INT NOT NULL,
+targets VARCHAR(100) NOT NULL
+) engine=InnoDB;
+
+ALTER TABLE mission_targets ADD CONSTRAINT FK_mt_mission_id FOREIGN KEY (mt_mission_id) REFERENCES mission(id);
+
 
 ALTER TABLE mission_hideouts ADD CONSTRAINT FK_idHideout FOREIGN KEY (idHideout) REFERENCES hideout(id);
 

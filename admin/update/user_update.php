@@ -2,14 +2,9 @@
   require_once "../../includes/DB.php";
 
 $up_id = $_GET["id"];
-
-
 $sql_s1 = "SELECT * FROM `speciality` ORDER BY `title` ASC";
 $query_s1 = $dbConnect->query($sql_s1);
 $query_s1->execute();
-
-
-
 
 if(isset($_POST["submit"])){
 
@@ -34,17 +29,19 @@ if(isset($_POST["submit"])){
   $birthdate = $_POST["birthdate"];
   $email = $_POST["email"];
   $nationality = $_POST["nationality"];
+  $country = $_POST["country"];
   $codeName = $_POST["codeName"];
   $userType = $_POST["userType"];
  
 
 
-    $sql = "UPDATE user SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email', nationality='$nationality', codeName='$codeName', userType='$userType' WHERE id='$up_id'";
+    $sql = "UPDATE user SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email', nationality='$nationality', codeName='$codeName', userType='$userType',  country='$country' WHERE id='$up_id'";
 
     $query = $dbConnect->prepare($sql); 
     $Execute = $query->execute();
     if($Execute){
       echo "<p style=\"background: darkgrey;\" class=\"text-center fs-4 text-white p-2 ds-5\">Utilisateur modifié sous le numéro ". $up_id."<a class=\"ms-2 fw-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
+      header("Location: ../lists/usersAll.php");
      
     }
    
@@ -75,9 +72,11 @@ while($row = $query_s3->fetch()){
   $firstname = $row["firstname"];
   $birthdate = $row["birthdate"];
   $email = $row["email"];
-  $up_nationality = $row["nationality"];
+
+  $user_nationality = $row["nationality"];
+  $user_country = $row["country"];
   $codeName = $row["codeName"];
-  $userType = $row["userType"];
+  $user_userType = $row["userType"];
 
 }
 
@@ -110,22 +109,49 @@ while($row = $query_s3->fetch()){
     <label for="email" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Email</label>
     <input type="email" class="form-control w-50" name="email" id="email" value="<?php echo $email ?>">
    </div>
-   <!-- ***************nationality**************** -->
+  
+      <!-- **************nationality************* -->
+      <div class="mb-3">
+          <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>
+          <input type="hidden" name="nationality" id="user_nationality" value="<?php echo $user_nationality ?>">
+          <?php include_once "../lists/nationalities_list.php"; ?>
+          <select name="nationality" id="nationality" class="fs-5">
+            <?php
+             foreach ($nationalities as $nationality) {
+              $nationality_title = $nationality['name'];
+              if ($nationality_title == $user_nationality) {
+                $selected = "selected";
+              } else {
+                $selected = "";
+              }
+              echo "<option value=" . $nationality_title . " " . $selected . ">" . $nationality_title . "</option>";
+            }
+
+            ?>
+        </div>
+        </select>
+      </div>
+   <!-- **************Pays************* -->
    <div class="mb-3">
-    <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
-    <input type="text" name="nationality" id="nationality" value="<?php echo $up_nationality ?>">
-    <button type="button" id="change_nationality_btn" onclick="change_nationality()">Changer</button>
-   </div>
-   <div id="nationalities_list" style="display: none;">
-       <?php include_once "../lists/nationalities_list.php"; ?>
-    <select name="nationalities_list" id="nationalities_list" class="fs-5">
-      <?php
-    foreach ($nationalities as $nationality) {
-      echo '<option value="'.$nationality["name"].'" name="<?= $country["name"] ?>'.$nationality["name"].'</option>';
-  }
-    ?>
-    </select>
-   </div>
+          <label for="country" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>
+          <input type="hidden" name="country" id="user_country" value="<?php echo $user_country ?>">
+          <?php include_once "../lists/countries_list.php"; ?>
+          <select name="country" id="country" class="fs-5">
+            <?php
+            foreach ($countries as $country) {
+              $country_title = $country['name'];
+              if ($country_title == $user_country) {
+                $selected = "selected";
+              } else {
+                $selected = "";
+              }
+              echo "<option value=" . $country_title . " " . $selected . ">" . $country_title . "</option>";
+            }
+
+            ?>
+        </div>
+        </select>
+      </div>
    <!-- ***************Codename****************** -->
    <div class="mb-3">
     <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
@@ -134,7 +160,7 @@ while($row = $query_s3->fetch()){
    
 <!-- ****************UserType*********************** -->
 <label for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type: </label>
-<input type="text" name="userType" id="userType" value="<?php echo $userType ?>">
+<input type="text" name="userType" id="userType" value="<?php echo $user_userType ?>">
 <button type="button" id="change_userType">Changer</button>
 <div id="userTypeList" style="display: none;">
 <!------- afficher les type de l'Utilisateur ------>
@@ -151,52 +177,61 @@ foreach ($userTypeArray as $userType) {
 ?>
  </div>
  <!-- ********************Specialities of user*********************** -->
- <div class="mb-3 mt-3 d-flex" id="agent_speciality">
-   <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;" id="speciality_title">Spécialité</h5>
-    <!-- afficher les specialités de l'Utilisateur -->
-   <div class="d-flex flex-column text-light pb-2 pe-3 fs-5" style="max-height: 200px;"> 
-   
-    <?php
-  while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) :
-            $specialities = unserialize($row["user_specialities"]);
-           
-            foreach($specialities as $speciality) :
-              echo $speciality ? $speciality."<br/>" : "";
-              endforeach;
-  endwhile;
+ <?php
+ if($user_userType == "agent"){
   ?>
-</div>
-
-<div class="d-flex flex-row">
-  <div><button onclick="change_speciality()" class="mx-2" id="change_speciality_btn" type="button">Changer</button>
-</div>
-<!-- afficher la liste de specialités -->
-</div> 
-
-<div class="specialities_list mb-4" id="specialities_list" style="display: none;">
-<?php
-        while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)) {
-           $specialityId = $row["id"];
-          $specialityTitle = $row["title"];
-          // $user_specialities = $row["user_specialities"];
-          ?>
-          <input type="checkbox" name="user_specialities[]" value="<?php echo $specialityTitle ?>" class="choices mx-2"><?php echo $specialityTitle ?><br>
-
-        <?php
-        }
-          ?>
+  <div class="mb-3 mt-3 d-flex" id="agent_speciality">
+    <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;" id="speciality_title">Spécialité</h5>
+     <!-- afficher les specialités de l'Utilisateur -->
+    <div class="d-flex flex-column text-light pb-2 pe-3 fs-5" style="max-height: 200px;"> 
+    
+     <?php
+   while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) :
+             $specialities = unserialize($row["user_specialities"]);
+            
+             foreach($specialities as $speciality) :
+               echo $speciality ? $speciality."<br/>" : "";
+               endforeach;
+   endwhile;
+   ?>
+ </div>
+ 
+ <div class="d-flex flex-row">
+   <div><button onclick="change_speciality()" class="mx-2" id="change_speciality_btn" type="button">Changer</button>
+ </div>
+ <!-- afficher la liste de specialités -->
+ </div> 
+ 
+ <div class="specialities_list mb-4" id="specialities_list" style="display: none;">
+ <?php
+         while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)) {
+            $specialityId = $row["id"];
+           $specialityTitle = $row["title"];
+           // $user_specialities = $row["user_specialities"];
+           ?>
+           <input type="checkbox" name="user_specialities[]" value="<?php echo $specialityTitle ?>" class="choices mx-2"><?php echo $specialityTitle ?><br>
+ 
+         <?php
+         }
+           ?>
+  </div>
+ 
+ </div>
+ <div id="warning_messages">
+ <div><span style="color: red; font-weight: bold; font-size: 1.2em;">Attention, les anciennes spécialités seront remplacées par de nouvelles!</span></div>
+ <div><span style="color: gdarkgray; font-weight: bold; font-size: 1em;">Si vous souhaitez conserver les anciennes spécialités, merci de cocher à nouveau les cases!</span></div>
+ </div>
+<?php 
+ }
+?>
+ 
+ </div>
  </div>
 
-</div>
-<div id="warning_messages">
-<div><span style="color: red; font-weight: bold; font-size: 1.2em;">Attention, les anciennes spécialités seront remplacées par de nouvelles!</span></div>
-<div><span style="color: gdarkgray; font-weight: bold; font-size: 1em;">Si vous souhaitez conserver les anciennes spécialités, merci de cocher à nouveau les cases!</span></div>
-</div>
-
-
-   <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Enregistrer</button>
+   <button type="submit" class="my-4 fs-5 fw-bold mx-4" id="btn_submit"  name="submit">Enregistrer</button>
 </form>
-
+</div>
+</div>
 </div>
 <script>
   function toggleList() {

@@ -36,6 +36,7 @@ if(isset($_SESSION["user"])):
            
  
             <th class="text-center fs-4" style="min-width: 150px!important;">Titre</th>
+
             <?php if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):
                 ?>
@@ -91,7 +92,7 @@ $title = $row["title"];
 <?php if(!isset($_SESSION["user"])):
 
 ?>
-<td class="text-center"><a href="admin/details/mission_adm_details.php?id=<?php echo $id?>">Details</a></td>
+<td class="text-center"><a href="mission_details.php?id=<?php echo $id?>">Details</a></td>
 <?php endif; ?>
 <?php if(isset($_SESSION["user"])):
               if($_SESSION["user"]["roles"] > 4 ):
@@ -125,4 +126,4 @@ $title = $row["title"];
 </table>
 </div></div>
 </div>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->

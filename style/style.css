@@ -57,3 +57,6 @@ transform: translateX(-50%);
 .body_page_new {
   background: #5a5a5d;
 }
+#btn_submit {
+  background-color: rgb(14, 14, 52)!important;
+}

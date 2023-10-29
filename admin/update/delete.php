@@ -21,6 +21,23 @@ if(!empty($_GET["idMission"])){
   $sql2 =" DELETE FROM mission_missionType WHERE mmt_missionId=:id";
   $query2 = $dbConnect->prepare($sql2); 
   $Execute = $query2->execute(["id"=>$_GET["idMission"]]);
+
+  $sql2_2 =" DELETE FROM mission_agents WHERE mA_mission_id=:id";
+  $query2_2 = $dbConnect->prepare($sql2_2); 
+  $Execute = $query2_2->execute(["id"=>$_GET["idMission"]]);
+
+  $sql2_3 =" DELETE FROM mission_contacts WHERE mc_mission_id=:id";
+  $query2_3 = $dbConnect->prepare($sql2_3); 
+  $Execute = $query2_3->execute(["id"=>$_GET["idMission"]]);
+
+  $sql2_4 =" DELETE FROM mission_targets WHERE mt_mission_id=:id";
+  $query2_4 = $dbConnect->prepare($sql2_4); 
+  $Execute = $query2_4->execute(["id"=>$_GET["idMission"]]);
+
+  $sql2_5 =" DELETE FROM mission_speciality WHERE mission_Id=:id";
+  $query2_5 = $dbConnect->prepare($sql2_5); 
+  $Execute = $query2_5->execute(["id"=>$_GET["idMission"]]);
+
   $sql2_1 = "DELETE FROM `mission` WHERE id=:id";
   $query2_1 = $dbConnect->prepare($sql2_1); 
   $Execute = $query2_1->execute(["id"=>$_GET["idMission"]]);

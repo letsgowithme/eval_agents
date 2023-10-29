@@ -10,12 +10,12 @@ $sql6 = "SELECT * FROM mission, mission_speciality, mission_agents, mission_cont
 $query6 = $dbConnect->query($sql6);
 $query6->execute();
 
-$sql = "SELECT * FROM missionType ORDER BY title ASC";
+$sql = "SELECT * FROM missionType";
 $query = $dbConnect->prepare($sql);
 $query->execute();
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 
-$sql1_1 = "SELECT * FROM speciality ORDER BY title ASC";
+$sql1_1 = "SELECT * FROM speciality";
 $query1_1 = $dbConnect->prepare($sql1_1);
 $query1_1->execute();
 $result1_1 = $query1_1->fetchAll(PDO::FETCH_ASSOC);
@@ -33,35 +33,52 @@ $sql_s5 = "SELECT * FROM user WHERE userType='cible'  ORDER BY lastname ASC";
 $query_s5 = $dbConnect->query($sql_s5);
 $query_s5->execute();
 
-// $sql1_2 = "SELECT * FROM user WHERE userType='agent'";
-// $query1_2 = $dbConnect->prepare($sql1_2);
-// $query1_2->execute();
-// $result1_2 = $query1_2->fetchAll(PDO::FETCH_ASSOC);
+$sql1_2 = "SELECT * FROM user WHERE userType='agent'";
+$query1_2 = $dbConnect->prepare($sql1_2);
+$query1_2->execute();
+$result1_2 = $query1_2->fetchAll(PDO::FETCH_ASSOC);
 
-$sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets  WHERE mission_agents.mA_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission'";
+// $sql1_3 = "SELECT firstname, lastname, nationality FROM user WHERE userType='contact'";
+// $query1_3 = $dbConnect->prepare($sql1_3);
+// $query1_3->execute();
+// $result1_3 = $query1_3->fetchAll(PDO::FETCH_ASSOC);
+
+// $sql1_4 = "SELECT firstname, lastname, nationality FROM user WHERE userType='cible'";
+// $query1_4 = $dbConnect->prepare($sql1_4);
+// $query1_4->execute();
+// $result1_4 = $query1_4->fetchAll(PDO::FETCH_ASSOC);
+
+
+// $sql2 = "SELECT * FROM mission_missionType WHERE mmt_missionId='$idMission'";
+// $query2 = $dbConnect->prepare($sql2);
+// $query2->execute();
+// while ($row = $query2->fetch(PDO::FETCH_ASSOC)) :
+//   $mmt_missionId = $row["mmt_missionId"];
+//   $mmt_missionTypeId = $row["mmt_missionTypeId"];
+// endwhile;
+
+
+
+$sql7 = "SELECT agents FROM mission_agents WHERE mission_agents.mA_mission_id='$idMission'";
 $query7 = $dbConnect->query($sql7);
 $query7->execute();
 
+
+$sql7_1 = "SELECT contacts FROM  mission_contacts WHERE mission_contacts.mc_mission_id='$idMission'";
+$query7_1 = $dbConnect->query($sql7_1);
+$query7_1->execute();
+ 
+
+$sql7_2 = "SELECT targets FROM  mission_targets WHERE mission_targets.mt_mission_id='$idMission'";
+$query7_2 = $dbConnect->query($sql7_2);
+$query7_2->execute();
+ 
+
 // end missionType
 
-//     echo '<pre>';
-// var_dump($mis_agentId);
-// echo '</pre>';
-            
-if (!empty($_POST["submit"])) {
 
-  // if(isset($_POST["ms_id"])){
-  //   $mis_spec_id = $row($_POST["ms_id"]);
-  //   $sql_u1 = "UPDATE mission_speciality SET mis_spec_id='$ms_id' WHERE mission_Id='$idMission'";
-  //   $query_u1 = $dbConnect->prepare($sql_u1); 
-  //   $query_u1->execute();
-  
-  //   }elseif(isset($_GET["speciality"])){
-  //     $mis_spec_id = $mission_spec_id;
-  //   $sql_u1 = "UPDATE mission_speciality SET mis_spec_id='$mission_spec_id' WHERE mission_Id='$idMission'";
-  //   $query_u1 = $dbConnect->prepare($sql_u1); 
-  //   $query_u1->execute();
-  //   }
+if (isset($_POST["submit"])) {
+
   $title = $_POST["title"];
   $description = $_POST["description"];
   $startDate = $_POST["startDate"];
@@ -70,7 +87,7 @@ if (!empty($_POST["submit"])) {
   $missionStatus = $_POST["missionStatus"];
   $codeName = $_POST["codeName"];
   $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
-  // $mis_spec_id = strip_tags($_POST["mis_spec_id"]);
+  $mis_spec_id = strip_tags($_POST["mis_spec_id"]);
   $agents = serialize($_POST["agents"]);
   $contacts = serialize($_POST["contacts"]);
   $targets = serialize($_POST["targets"]);
@@ -127,16 +144,32 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
   $user_country = $row["country"];
   $missionStatus = $row["missionStatus"];
   $codeName = $row["codeName"];
-  $mis_spec_id = $row["mis_spec_id"];
-  $agents = unserialize($row["agents"]);
+  $mission_speciality = $row["mis_spec_id"];
+  // $mission_agents = unserialize($row["agents"]);
   $mission_contacts = unserialize($row["contacts"]);
   $mission_targets = unserialize($row["targets"]);
+  $mmt_missionId = $row["mmt_missionId"];
   $mmt_missionTypeId = $row["mmt_missionTypeId"];
+ 
 }
+$sql1 = "SELECT * FROM speciality WHERE speciality.id ='$mission_speciality'";
+$query1 = $dbConnect->prepare($sql1);
+$query1->execute();
+$speciality = $query1->fetch(PDO::FETCH_ASSOC);
+$speciality_title = $speciality["title"];
+
+$sql3 = "SELECT title FROM missionType WHERE id='$mmt_missionTypeId'";
+$query3 = $dbConnect->prepare($sql3);
+$query3->execute();
+$missionType = $query3->fetch();
+$missionTypeTitle = $missionType[0];
 ?>
+
 <div class="py-4 body_page_new">
   <div>
     <h1>Modifier la mission</h1>
+
+
     <form method="post" action="mission_update.php?id=<?php echo $idMission; ?>">
       <div class="mb-3">
         <!-- ******************titre de la mission****************** -->
@@ -149,7 +182,7 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
           <label for="description" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Description</label>
           <textarea name="description" id="description" cols="54" rows="10"><?php echo $description ?></textarea>
         </div>
-        <!-- ***********startDate de La mission************** -->
+        <!-- ******************startDate de La mission****************** -->
         <div class="mb-3 d-flex">
           <label for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label>
           <button type="button" class="fs-6 me-4" onclick="startDateBtn()" value="<?php echo $startDate ?>" name="btnStartDate" id="btnStartDate"><?php echo $startDate ?></button>
@@ -157,13 +190,13 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
 
 
         </div>
-        <!-- **************endDate de La mission************ -->
+        <!-- ******************endDate de La mission****************** -->
         <div class="mb-3 d-flex">
           <label for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label>
           <button type="button" class="fs-6 me-4" onclick="endDateBtn()" value="<?php echo $endDate ?>" name="btnStartDate" id="btnStartDate"><?php echo $endDate ?></button>
           <input type="dateTime" style="display: none;" name="endDate" id="endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
         </div>
-        <!-- **************Pays de la mission************* -->
+        <!-- ******************Pays de la mission****************** -->
         <div class="mb-3">
           <label for="country" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>
           <input type="hidden" name="country" id="user_country" value="<?php echo $user_country ?>">
@@ -182,14 +215,22 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
 
             ?>
         </div>
+        <script>
+          let change_country_btn = document.getElementById("change_country_btn");
+          let countries_list = document.getElementById("countries_list");
+          change_country_btn.addEventListener("click", function() {
+            countries_list.style.display = "block";
+          });
+        </script>
+
         </select>
       </div>
-      <!-- **********missionStatus de La mission*********** -->
+      <!-- ******************missionStatus de La mission****************** -->
       <div class="mb-3">
         <label for="missionStatus" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Status</label>
         <input type="text" name="missionStatus" id="missionStatus" value="<?php echo $missionStatus ?>">
       </div>
-      <!-- ***********codeName de La mission************ -->
+      <!-- ****************codeName de La mission****************** -->
       <div class="mb-3">
         <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
         <input type="text" name="codeName" id="codeName" value="<?php echo $codeName ?>">
@@ -223,80 +264,48 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
           foreach ($result1_1 as $tab) {
             $ms_id = $tab['id'];
             $ms_title = $tab['title'];
-            if ($ms_id == $mis_spec_id) {
+            if ($m_id == $mis_spec_id) {
               $selected = "selected";
             } else {
               $selected = "";
             }
-            echo "<option value=".$ms_id." ".$selected.">" . $ms_title . "</option>";
+            echo "<option value=" . $ms_id . " " . $selected . ">" . $ms_title . "</option>";
           }
           ?>
         </select>
       </div>
-      <!-- type=\"hidden\" -->
-       <!-- **************Agents all******************* -->
-       <!-- SELECT * FROM mission_agents, mission_contacts, mission_targets  WHERE mission.. ='$idMission -->
-       <?php 
-          while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
-            $mis_agents = unserialize($row["agents"]);            
-            foreach ($mis_agents as $agent):   
-              $mis_agentId = $agent." ";  
-
-              $sql8s= "SELECT * FROM user INNER JOIN user_speciality  ON user.id='$mis_agentId' AND user_speciality.userId='$mis_agentId'";
-            $query8s = $dbConnect->prepare($sql8s);
-            $query8s->execute();
-            while($row = $query8s->fetch(PDO::FETCH_ASSOC)):
-              $us_miss_id = $row["id"];
-              $specialities = unserialize($row["user_specialities"]);  
-              foreach($specialities as $speciality) :
-              $user_spec = $speciality." ";
-              endforeach;
-                  ?>
-              <input  type="" name="agents" id="agent" value="<?= $us_miss_id ?>"/>
-             
-              <?php
-              endwhile;
-            endforeach;
-      endwhile;
-      ?>
+       <!-- ****************Agents all******************* -->
        <div class="mb-3">
-    
         <label for="agents" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Agents</label>
-    
-       <select class="form-control w-50 fs-5 pb--2 pe-2" multiple="multiple" name="agents[]" id="agents">   
-        <?php
+        <input type="hidden" name="mission_agents" id="mission_agents" value="<?= $mission_agents ?>" />
+        <select class="form-control w-50" name="agents[]" id="agents">
+          <?php
+          $mission_agents = unserialize($row["agents"]);
+          foreach ($mission_agents as $mission_agent):
+              $m_agent = $mission_agent;
+            endforeach;
           foreach($result_s3 as $tab):
             $agent_id = $tab['id'];
             $agent_firstname = $tab['firstname'];
             $agent_lastname = $tab['lastname'];
             $agent_nation = $tab['nationality'];
-           
             $agent_specialities = unserialize($tab['user_specialities']);
                foreach($agent_specialities as $speciality):
                $agent_speciality = $speciality;
-              //  foreach ($mis_agents as $agent):
-              //   $mis_agentId = $agent;  
                
-            if ($agent_id == $us_miss_id) {
-              // if($agent_speciality == $user_spec){
-                $selected = "selected";
-              } else {
-                $selected = "";
-              } 
-              // }
+            if ($agent_id == $m_agent) {
            
-         
-            // echo '<pre>';
-            // var_dump($result_s3);
-            // echo '</pre>';
-            
-           echo "<option class=\"py-1\" value=" .$agent_id." ".$selected.">".$agent_speciality.": ". $agent_firstname." ".$agent_lastname." - ".$agent_nation."- id: ".$agent_id."</option>";
-          //  endforeach;
+              $selected = "selected";
+            } else {
+              $selected = "";
+            }
+            echo "<option value=" .$agent_id." ".$selected .">" .$agent_speciality.": ".  $agent_firstname." ".$agent_lastname." - ".$agent_nation. "</option>";
           endforeach;
-        endforeach;
-          // echo '<pre>';
-          // var_dump($mission_agents);
-          // echo '</pre>';
+          endforeach;
+      
+          echo '<pre>';
+          var_dump($mission_agents);
+          echo '</pre>';
          
           ?>
         </select>
@@ -304,7 +313,7 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
           <!-- ************************************** -->
           <!-- ****************Contacts******************* -->
         <div class="mb-3 d-flex mt-4">
-          <label for="contacts" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Contacts</label>
+          <label for="contacts" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Contacts</label>
           <select name="contacts[]" multiple="multiple" id="contacts" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
             <!-- recuperer que les agents -->
@@ -321,7 +330,7 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
           </div>
           <!-- ****************Targets******************* -->
         <div class="mb-3 d-flex mt-4">
-          <label for="targets" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Cibles</label>
+          <label for="targets" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Cibles</label>
           <select name="targets[]" multiple="multiple" id="targets" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
             <!-- recuperer que les agents -->
