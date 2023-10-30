@@ -8,7 +8,7 @@ include_once "../../includes/DB.php";
 include_once "../includes/admin_footer.php";
 
 if(!empty($_GET["id"])){
-  $sql1 =" DELETE FROM user_speciality WHERE userId=:id";
+  $sql1 =" DELETE FROM user_one_speciality WHERE user_oneSp_Id=:id";
   $query1 = $dbConnect->prepare($sql1); 
   $Execute = $query1->execute(["id"=>$_GET["id"]]);
   $sql1_1 = "DELETE FROM user WHERE id=:id";

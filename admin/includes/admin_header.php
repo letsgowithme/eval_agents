@@ -26,9 +26,12 @@ $titre ="";
 <link rel="icon" href="../../logo.png" sizes="32x32" type="image/png">
 
 
-
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> -->
 
  <!-- <script src="../../js/jquery.min.js" type="text/javascript"></script>
 <script src="../../js/jquery.dataTables.min.js" type="text/javascript"></script> -->

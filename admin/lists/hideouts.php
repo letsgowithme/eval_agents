@@ -45,12 +45,14 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
 <th class="text-center fs-5 px-4 py-2">Id</th>
    <th class="text-center fs-5 px-4 py-2">Code</th>
    <th class="text-center fs-5 px-4 py-2">Adresse</th>
+   <th class="text-center fs-5 px-4 py-2">Ville</th>
    <th class="text-center fs-5 px-4 py-2">Type</th>
    <th class="text-center fs-5 px-4 py-2">Pays</th>
+
   
               <th class="text-center fs-5 px-4 py-2">Actions</th>
          
-          <th class="text-centerfs-5 px-4 py-2">Détails</th>
+     
 
         </tr>
       </thead>
@@ -66,14 +68,18 @@ $code = $row["code"];
 $address = $row["address"];
 $hideoutType = $row["hideoutType"];
 $country = $row["country"];
+$city = $row["city"];
 
 ?>
 <tr>
    <td class="text-center px-4 py-2"><?php echo $id ?></td>
   <td class="text-center px-4 py-2"><?php echo  $code ?></td>
   <td class="text-center px-4 py-2"><?php echo $address ?></td>
-  <td class="text-center px-4 py-2"><?php echo $hideoutType ?></td>
+  <td class="text-center px-4 py-2"><?php echo $city ?></td>
   <td class="text-center px-4 py-2"><?php echo $country ?></td>
+  <td class="text-center px-4 py-2"><?php echo $hideoutType ?></td>
+  
+ 
  
                 <td class="text-center">
                   <a class="btn btn-success" href="../update/hideout_update.php?id=<?php echo $id ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -84,7 +90,7 @@ $country = $row["country"];
                     </svg></button>
                 </td>
           
-            <td class="text-center"><a href="../details/userDetails.php?id=<?php echo $id ?>">Details</a></td>
+        
           </tr>
            <!-- Modal -->
            <div class="modal fade" id="deleteModal<?php echo $count ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -112,5 +118,5 @@ $country = $row["country"];
 </div>
 </div>
 <!-- page hideouts ends -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <?php include_once "../../includes/footer.php"; ?>

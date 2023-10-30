@@ -43,7 +43,7 @@ $count = 0;
           <th class="text-center fs-5 px-4 py-2">Nationalité</th>
           <th class="text-center fs-5 px-4 py-2">Pays</th>
           <th class="text-center fs-5 px-4 py-2">Type</th>
-          
+
           <th class="text-center fs-5 px-4 py-2">Actions</th>
           <th class="text-center fs-5 px-4 py-2">Détails</th>
 
@@ -56,7 +56,7 @@ $count = 0;
      
       
        
-        $sql = "SELECT * FROM `user`";
+        $sql = "SELECT * FROM `user` ORDER BY id ASC";
         $query = $dbConnect->query($sql);
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) :
             $count++;

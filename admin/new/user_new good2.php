@@ -19,21 +19,6 @@ if (!empty($_POST)) {
 
     $lastname = strip_tags($_POST["lastname"]);
     $firstname = strip_tags($_POST["firstname"]);
-    $email = strip_tags($_POST["email"]);
-    // if($email != "") {
-    //   $sql_add = "SELECT * FROM user where email='".$email."'";
-    //   $query_add = $dbConnect->query($sql_add);
-    //   $query_add->execute();
-    //   while($row = $query_add->fetch(PDO::FETCH_ASSOC)) {
-    //     if($row >= 1){
-    //       echo "<h2>Email existe déjà</h2>";
-    //   }else{
-         
-    //     $email = strip_tags($_POST["email"]);
-     
-     
-      
-  
     $birthdate = strip_tags($_POST["birthdate"]);
     $nationality = strip_tags($_POST["nationality"]);
     $codeName = strip_tags($_POST["codeName"]);
@@ -42,28 +27,23 @@ if (!empty($_POST)) {
     $country = strip_tags($_POST["country"]);
     $speciality_us_id = strip_tags($_POST["speciality_us_id"]);
     $speciality_us_id2 = strip_tags($_POST["speciality_us_id2"]);
-        if(isset($_POST["speciality_us_id3"])){
-          $speciality_us_id3 = strip_tags($_POST["speciality_us_id3"]);
-        }else{
-          $speciality_us_id3 = null;
-        }
-      
+    $speciality_us_id3 = strip_tags($_POST["speciality_us_id3"]);
     
     require_once "../../includes/DB.php";
 
     $_SESSION["error"] = [];
 
-        if (strlen($lastname) < 3) {
-          $_SESSION["error"]["lastname"] = "Le nom est trop court";
-        }
-        if (strlen($firstname) < 3) {
-          $_SESSION["error"]["firstname"] = "Le prénom est trop court";
-        }
+    if (strlen($lastname) < 3) {
+      $_SESSION["error"]["lastname"] = "Le nom est trop court";
+    }
+    if (strlen($firstname) < 3) {
+      $_SESSION["error"]["firstname"] = "Le prénom est trop court";
+    }
 
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-          $_SESSION["error"][] = "Veuillez renseigner un email valide";
-        }
-        if ($_SESSION["error"] === []) {
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+      $_SESSION["error"][] = "Veuillez renseigner un email valide";
+    }
+    if ($_SESSION["error"] === []) {
 
       // hasher mdp
       $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
@@ -108,16 +88,21 @@ if (!empty($_POST)) {
       echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-5 text-light\"><a href='user_new.php' class=\"text-info fs-4 fw-4\"> Retour à la page de la création</a></p>";
       header("Location: ../lists/usersAll.php");
 
-
-    
+?>
+      <!-- <script>
+  function backToPage() {
+    let message =document.getElementById('message');
+    message.style.display = 'none';
+   window.location.href = "../lists/usersAll.php";
+  }
+setTimeout(backToPage, 8000);
+  </script> -->
+<?php
+    }
   } else {
     $_SESSION["error"] = ["Veuillez remplir tous les champs"];
   }
 }
-}
-// }
-// }
-// }
 $titre = "Add user";
 include_once "../includes/admin_header.php";
 include_once "../includes/admin_sidebar.php";
@@ -139,27 +124,6 @@ include_once "../includes/admin_sidebar.php";
     padding: 5px;
   }
 </style>
-<script>
-    $(document).ready(function(){
-      $("#nationality").on("click", function(){
-            //  var email = $("#email");
-             var email = $("#email").val();
-             if(nationality){
-                  $.ajax({
-                    type: "POST",
-                    url: "ajaxData.php",
-                    data: 'email='+email,
-                    success:function(response){
-                  //  alert(response);
-                  $("#email").html(response);
-                  }
-                  })
-            
-              
-             }
-      });     
-    });    
-    </script>
 </head>
 <div class="body_page_new py-4" id="userNew" style="height: auto;">
 
@@ -196,7 +160,6 @@ include_once "../includes/admin_sidebar.php";
       <div class="mb-3">
         <label for="email" class="form-label fw-bold my-2 fs-4">Email</label>
         <input type="email" name="email" id="email" required class="form-control w-25">
-        <p id="verif_email"></p>
       </div>
       <!-- ******************Nationalité****************** -->
       <div class="mb-3">
@@ -244,12 +207,11 @@ include_once "../includes/admin_sidebar.php";
 
       <!-- **************Speciality 1***************** -->
       
-      <div class="mb-3 content" id="agent_speciality" style="display: none;">
+      <div class="mb-3" id="agent_speciality" style="display: none;">
       <hr>
       <label for="speciality" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title">Spécialité 1</label><br>
       <select name="speciality_us_id" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;"> 
-      <option value=""></option>
-         <?php 
+          <?php 
        while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
         $specialityId = $row["id"];
         $specialityTitle = $row["title"];
@@ -267,7 +229,7 @@ include_once "../includes/admin_sidebar.php";
       <label for="speciality2" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title2">Spécialité 2</label><br>
         
           <select name="speciality_us_id2" id="speciality2"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;">
-          <option value=""></option>
+          
           <?php 
         while ($row2 = $query1_2->fetch(PDO::FETCH_ASSOC)) {
 
@@ -288,7 +250,7 @@ include_once "../includes/admin_sidebar.php";
       <label for="speciality3" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title3">Spécialité 3</label><br>
         
           <select name="speciality_us_id3" id="speciality3"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;">
-          <option value=""></option>
+          
           <?php 
         while ($row3 = $query1_3->fetch(PDO::FETCH_ASSOC)) {
 

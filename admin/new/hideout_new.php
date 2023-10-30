@@ -2,22 +2,24 @@
 //on demarre la session php
 //on traite le formulaire
 if(!empty($_POST)){
-  if(isset($_POST["hideoutCode"], $_POST["hideoutAddress"], $_POST["hideoutType"], $_POST["country"]) &&!empty($_POST["hideoutCode"]) &&!empty($_POST["hideoutCode"]) &&!empty($_POST["hideoutAddress"]) &&!empty($_POST["hideoutType"]) &&!empty($_POST["country"])){
-$hideoutCode = strip_tags($_POST["hideoutCode"]);
-$hideoutAddress = strip_tags($_POST["hideoutAddress"]);
+  if(isset($_POST["code"], $_POST["address"], $_POST["city"], $_POST["country"], $_POST["hideoutType"]) &&!empty($_POST["code"]) &&!empty($_POST["code"]) &&!empty($_POST["address"]) &&!empty($_POST["city"]) &&!empty($_POST["country"]) &&!empty($_POST["hideoutType"])){
+$code = strip_tags($_POST["code"]);
+$address = strip_tags($_POST["address"]);
 $hideoutType = strip_tags($_POST["hideoutType"]);
 $country = strip_tags($_POST["country"]);
+$city = strip_tags($_POST["city"]);
 
 require_once "../../includes/DB.php";
 
-$sql = "INSERT INTO `hideout`(`hideoutCode`, `hideoutAddress`, `hideoutType`, `country`) VALUES(:hideoutCode, :hideoutAddress, :hideoutType, :country)";
+$sql = "INSERT INTO hideout(code, address, hideoutType, country, city) VALUES(:code, :address, :hideoutType, :country, :city)";
 
 $query = $dbConnect->prepare($sql);
 
-$query->bindValue(':hideoutCode', $hideoutCode, PDO::PARAM_STR);
-$query->bindValue(':hideoutAddress', $hideoutAddress, PDO::PARAM_STR);
+$query->bindValue(':code', $code, PDO::PARAM_STR);
+$query->bindValue(':address', $address, PDO::PARAM_STR);
 $query->bindValue(':hideoutType', $hideoutType, PDO::PARAM_STR);
 $query->bindValue(':country', $country, PDO::PARAM_STR);
+$query->bindValue(':city', $city, PDO::PARAM_STR);
 
 if(!$query->execute()){
   die("Failed to insert INTO `hideout`");
@@ -26,7 +28,7 @@ $id = $dbConnect->lastInsertId();
 
 // header("Location: nationality.php");
 echo "<p>La planque ajoutée sous le numéro ". $id."</p>";
-echo "<a href='hideout_new.php'>Retour</a>";
+echo "<a href='../lists/hideouts.php'>Retour</a>";
 exit;
 
   }else{
@@ -59,24 +61,21 @@ include_once "../includes/admin_sidebar.php";
   <div class="container ms-4">
   <div class="d-flex justify-content-between mt-3 mb-3 mx-2">
   <div><h1>Créer une planque</h1></div> 
-  <div>
-  <button class="btn border" style="background: lightgray;"><a 
-  class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-  aria-current="page" href="../lists/hideouts.php" id="up">Planques</a></button>
-    
-  <button class="btn border" style="background: lightgray;"><a 
-  class="fs-6" style="font-weight: bold; color:darkslategrey; text-decoration: none;" 
-  aria-current="page" href="../admin_index.php" id="up">Tableau de bord</a></button>
-  </div>
+
+ 
   </div>  
         <form class="form" action="hideout_new.php" method="post">
           <div class="mb-2">
-            <label for="hideoutCode" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Code</label>
-            <input type="text" class="form-control w-50" name="hideoutCode" id="hideoutCode" value="">
+            <label for="code" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Code</label>
+            <input type="text" class="form-control w-50" name="code" id="code" value="">
           </div>
           <div class="mb-2">
-            <label for="hideoutAddress" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Adresse</label>
-            <input type="text" class="form-control w-50" name="hideoutAddress" id="hideoutAddress" value="">
+            <label for="address" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Adresse</label>
+            <input type="text" class="form-control w-50" name="address" id="address" value="">
+          </div>
+          <div class="mb-2">
+            <label for="city" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Ville</label>
+            <input type="text" class="form-control w-50" name="city" id="city" value="">
           </div>
           <div class="mb-2">
             <label for="hideoutType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type</label>
@@ -100,7 +99,7 @@ include_once "btn_create.php";
  
 </form>
       </div>
-
+      </div>
 <?php
 include_once "../includes/admin_footer.php";
 ?>

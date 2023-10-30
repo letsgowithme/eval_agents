@@ -1,6 +1,5 @@
 <?php 
 $countries = [
-    ["name" => "Choisir: "],
     ["name" => "Afghanistan"],
     ["name" => "Afrique du Sud"],
     ["name" => "Albanie"],

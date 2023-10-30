@@ -1,8 +1,5 @@
 <?php 
 require_once "../../includes/DB.php";
-include_once "../includes/admin_header.php";
-include_once "../includes/admin_sidebar.php";
-$titre = "Mission";
 $sql_s1 = "SELECT * FROM missionType ORDER BY title ASC";
 $query_s1 = $dbConnect->prepare($sql_s1);
 $query_s1->execute();
@@ -11,10 +8,11 @@ $sql_s2 = "SELECT * FROM speciality ORDER BY title ASC";
 $query_s2 = $dbConnect->query($sql_s2);
 $query_s2->execute();
 
-
-
+$sql_s3 = "SELECT * FROM user INNER JOIN user_speciality ON user.id=user_speciality.userId  ORDER BY lastname ASC"; 
+$query_s3 = $dbConnect->query($sql_s3);
+$query_s3->execute();
 // contacts
-$sql_s4 = "SELECT * FROM user WHERE userType='contact' ORDER BY firstname ASC"; 
+$sql_s4 = "SELECT * FROM user WHERE userType='contact' ORDER BY lastname ASC"; 
 $query_s4 = $dbConnect->query($sql_s4);
 $query_s4->execute();
 // targets
@@ -22,11 +20,9 @@ $sql_s5 = "SELECT * FROM user WHERE userType='cible'  ORDER BY lastname ASC";
 $query_s5 = $dbConnect->query($sql_s5);
 $query_s5->execute();
 
-
-
 //on traite le formulaire
 if(!empty($_POST)){
-  if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["countryList"], $_POST["mis_hideouts"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["countryList"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"])){
+  if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["country"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["country"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"])){
    
 
 
@@ -34,8 +30,7 @@ $title = strip_tags($_POST["title"]);
 $description = strip_tags($_POST["description"]);
 $startDate = strip_tags($_POST["startDate"]);
 $endDate = strip_tags($_POST["endDate"]);
-$country = strip_tags($_POST["countryList"]);
-
+$country = strip_tags($_POST["country"]);
 $missionStatus = strip_tags($_POST["missionStatus"]);
 $codeName = strip_tags($_POST["codeName"]);
 $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
@@ -43,11 +38,10 @@ $specialityId = strip_tags($_POST["speciality"]);
 $agents = serialize($_POST["agents"]);
 $contacts = serialize($_POST["contacts"]);
 $targets = serialize($_POST["targets"]);
-$mis_hideouts = serialize($_POST["mis_hideouts"]);
 
 // ***************************************************
 
-$sql_i1 = "INSERT INTO mission(title, description, startDate, endDate, country, missionStatus, codeName) 
+$sql_i1 = "INSERT INTO `mission`(`title`, `description`, `startDate`, `endDate`, `country`, `missionStatus`, `codeName`) 
 VALUES(:title, :description, :startDate, :endDate, :country, :missionStatus, :codeName)";
 
 $query_i1 = $dbConnect->prepare($sql_i1);
@@ -61,7 +55,7 @@ $query_i1->bindValue(':missionStatus', $missionStatus, PDO::PARAM_STR);
 $query_i1->bindValue(':codeName', $codeName, PDO::PARAM_STR);
 
 if(!$query_i1->execute()){
-  die("Failed to insert INTO mission");
+  die("Failed to insert INTO `mission`");
 }
 $id = $dbConnect->lastInsertId();
 
@@ -89,9 +83,7 @@ $sql_i6 = "INSERT INTO mission_targets (mt_mission_id, targets) VALUES('$mmt_mis
 $query_i6 = $dbConnect->prepare($sql_i6);
 $query_i6->execute();
 
-$sql_i7 = "INSERT INTO mission_hideouts (missionId, mis_hideouts) VALUES('$mmt_missionId', '$mis_hideouts');";
-$query_i7 = $dbConnect->prepare($sql_i7);
-$query_i7->execute();
+
 
 
 // header("Location: ../lists/missions_adm.php");
@@ -105,7 +97,9 @@ exit;
 }
 // }
 
-
+include_once "../includes/admin_header.php";
+include_once "../includes/admin_sidebar.php";
+$titre = "Mission";
 ?>
 <link rel="stylesheet" href="../../style/style_in_ad.css">
 <link rel="stylesheet" href="../../style/style.css">
@@ -113,46 +107,6 @@ exit;
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function(){
-      $("#countryList").on("change", function(){
-             var countryList = $("#countryList").val();
-             var hideout = $("#hideout").val();
-             if(countryList){
-                  $.ajax({
-                    type: "POST",
-                    url: "ajaxData.php",
-                    data: 'countryList='+countryList,
-                    success:function(response){
-                   
-                  $("#hideout").html(response);
-                  }
-                  })
-             }else{
-              $("#hideout").html("<option value=''>Pas de planques dans ce pays></option>");
-             }
-      });     
-    });    
-    
-      //afficher les agents avec specialité choisie
-      $("#speciality").on("change", function(){
-             var speciality = $("#speciality").val();
-             var agents = $("#agents").val();
-             if(speciality){
-                  $.ajax({
-                    type: "POST",
-                    url: "ajaxData.php",
-                    data: 'speciality='+speciality,
-                    success:function(response){
-                   alert(response);
-                  // $("#agents").html(response);
-                  }
-                  })
-             }else{
-              $("#agents").html("<option value=''>Pas d'agents avec la spécialité requise></option>");
-             }
-      });     
-           </script>
 </head>
 <div class="body_page_new py-4">
  <div class="p-4" style="max-width: 1000px;">
@@ -161,87 +115,36 @@ exit;
  
         <form class="form" action="mission_new.php" method="post">
           <div class="mb-3">
-            <!-- **************title************* -->
             <label for="title" class="form-label fw-bold my-2 fs-4 text-light">Titre</label>
-            <input type="text" class="form-control" style="max-width: 400px;"  name="title" id="title" value=""  required=true>
+            <input type="text" class="form-control" style="max-width: 400px;"  name="title" id="title" value="" required>
           </div>
-          <!-- **************description************* -->
+          
           <label for="description" class="form-label fw-bold my-2 fs-4 text-light" >Déscription</label>
           <div class="mb-3">
             <textarea id="description" name="description" rows="5" cols="44">
             </textarea>
           </div>
-          <!-- **************startDate************* -->
 
           <div class="mb-3">
             <label for="startDate" class="form-label fw-bold my-2 fs-4 text-light">Date de debut</label>
             <input type="date" class="form-control" style="max-width: 400px;" name="startDate" id="startDate" value="" required>
           </div>
-          <!-- **************endDate************* -->
-
           <div class="mb-3">
             <label for="endDate" class="form-label fw-bold my-2 fs-4 text-light">Date de la fin</label>
             <input type="date" class="form-control" style="max-width: 400px;" name="endDate" id="endDate" value="" required>
           </div>
 
-           <!--  ***************COUNTRY****************** -->
-
-           <label for="countryList" class="form-label fw-bold my-2 fs-4" id="pays_label">Pays</label>
-          <div class="mb-3">     
-              <?php include_once "../lists/countries_list.php"; ?>
-              
-              <select name="countryList" id="countryList" class="fs-4 w-25">
-                <?php
-              foreach ($countries as $country) {
-                $country_n = $country["name"];
-                ?>
-               <option value="<?php echo $country_n ?>"><?php echo $country_n ?></option>;
-               <?php
-            }
-              ?> 
-              </select> 
-          </div>
-                      <!-- **************hideouts***************** -->
-             <?php
-             $sql_s6 = "SELECT * FROM hideout";
-            $query_s6 = $dbConnect->query($sql_s6);
-            $query_s6->execute();
-           ?>
-             <label for="hideout" class="form-label fw-bold my-2 fs-4">Planques</label>
-          <div class="mb-3">     
-              <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-4 w-50 h-auto">
-                <?php
-                while ($row = $query_s6->fetch(PDO::FETCH_ASSOC)):
-                $hideoutId = $row["id"];
-                $hideoutType = $row["hideoutType"];
-                $hideout_country = $row["country"];
-                $hideout_city = $row["city"];
-                
-              if($country == $hideout_country){
-                $selected="selected";
-                }else{ 
-               $selected=""; 
-               } 
-                echo '<option id="'.$hideout_country.'" value="'.$hideout_country.'" "'.$selected." ".' name="'.$hideoutId.'">'.$hideout_country." - ".$hideout_city." - ".$hideoutType.'</option>';
-                endwhile;
-                var_dump($country);
-              ?>
-              </select>
-          </div>
-         <!-- <*****************status************************** -->
-         <div class="mb-3">
+         <?php include_once "../lists/countries.php"; ?>
          <?php include_once "../lists/statuses.php"; ?>
-              </div>
-         <!-- *************Nom de code******************* -->
+         
           <div class="mb-3">
             <label for="codeName" class="form-label fw-bold my-2 fs-4 text-light">Nome de code</label>
             <input type="text" class="form-control"  style="max-width: 400px;" name="codeName" id="codeName" value="" required>
           </div>
           
-         <!-- *****************missionType************** -->
+         <!-- ************missionType de La mission************** -->
            <label for="missionType" class="form-label fw-bold my-2 fs-4 text-light">Type de mission</label>
            <select class="form-control"  style="max-width: 400px;" name="mmt_missionTypeId" required id="missionType">
-           <option value="Choisir"></option>
            <?php 
            
            while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)) {
@@ -249,52 +152,43 @@ exit;
             $mt_title = $row["title"];
             echo "<option value=".$mt_id."><span>".$mt_title."</span></option>";
           }
-           // echo '<pre>';
-            // var_dump($speciality);
-            // echo '</pre>';
-
          ?>      
            </select>
 
-          <!-- ************Speciality **************** -->
+          <!-- ************Speciality list**************** -->
           <div class="mb-3 d-flex mt-4">
           <label for="speciality" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Spécialité</label>
         
           <select name="speciality" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px;">
-          <!-- <option>Choisir</option> -->
+          <option>Choisir</option>
           <?php 
-       while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) {
-
-        $specialityId = $row["id"];
-        $specialityTitle = $row["title"];
-        echo "<option class=\"spec\"  value=".$specialityId." id=".$specialityTitle.">".$specialityTitle."</option>"; 
-      }
+       foreach($query_s2->fetchAll(PDO::FETCH_ASSOC) as $tab){ 
+        $specialityId = $tab["id"];
+        $mission_speciality = $tab["title"];
+        echo "<option class=\"spec\" value=".$specialityId.">".$mission_speciality."</option>"; }
           ?>
-          
           </select>
           </div>
-        <!-- ****************Agents******************* -->
-        <div><input type="" id="special_chosen" value=""></div>
+ <!-- ****************Agents******************* -->
         <div class="mb-3 d-flex mt-4">
-        
-          <label for="agents" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;" id="agent_label">Agents</label>
-          <select name="agents[]" multiple="multiple" id="agents" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
+          <label for="agent" class="form-label fw-bold mb-2 fs-4 me-2" style="color: #01013d; width: 120px;">Agents</label>
+          <select name="agents[]" multiple="multiple" id="agent" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
             <!-- recuperer que les agents -->
           <?php 
-           $sql_s3 = "SELECT * FROM user, user_one_speciality  WHERE user.id=user_oneSp_Id"; 
-           $query_s3 = $dbConnect->query($sql_s3);
-           $query_s3->execute();
-        while($row = $query_s3->fetch(PDO::FETCH_ASSOC)):
-         $agentId = $row["id"];
-         $lastname = $row["lastname"];
-         $firstname = $row["firstname"];   
-         $user_spec_id = $row["speciality_us_id"];
-         echo "<option class=\"py-1 user_spec\"  value=".$agentId." ".$selected." ".">".$user_spec_id." - ".$firstname." ".$lastname."</option><hr>"; 
-        endwhile;
+       while($row = $query_s3->fetch(PDO::FETCH_ASSOC)):
+        $agentId = $row["id"];
+        $lastname = $row["lastname"];
+        $firstname = $row["firstname"];   
+     
+        $specialities = unserialize($row["user_specialities"]);
+            foreach($specialities as $speciality) :
+            $user_speciality = $speciality." ";     
+            // var_dump($user_speciality);     
+          echo "<option class=\"py-1 user_spec\" value=".$agentId.">".$user_speciality." - ".$firstname." ".$lastname."</option><hr>"; 
+        endforeach;
+      endwhile;
           ?>
-          
-      
           </select>
           </div>
           <!-- ************************************** -->
@@ -344,37 +238,6 @@ exit;
        
   ?>
 </div>
-<!-- <script>
-          $(document).ready(function(){
-            $country = $("#country");
-             $hideout = $("#hideout");
-             $chosen_country =  $("#chosen_country");
-             $("#country").change(function(){
-              $("#pays_label").addClass("btn btn-info");
-              $("#hideout").val($country.val()); 
-             });
-           });
-           
-         </script> -->
-
-          //          <script>
-          // $(document).ready(function(){
-          //   $speciality = $("#speciality");
-          //    $special_chosen = $("#special_chosen");
-          //    $agents = $("#agents");
-           
-          //    $("#speciality").change(function(){
-          //     $("#agent_label").addClass("bg-light");
-          //     // if($("#user_speciality").val() == speciality.val()){
-          //       $("#special_chosen").val($speciality.val()); 
-          //       $("#agents").val($speciality.val()); 
-          //     // }
-              
-          //    });
-          //  });
-           
-         </script>
-
 <!-- <script type="text/javascript">
   let agent = document.getElementById("agent");
 let spec = document.getElementsByClassName("spec");
@@ -388,9 +251,9 @@ agent.addEventListener("change", function(){
 })
   </script> -->
 
-<!-- </script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" 
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" 
 integrity="sha512-ztxZscxb55lKL+xmWGZEbBHekIzy+1qYKHGZTWZYH1GUwxy0hiA18lW6ORIMj4DHRgvmP/qGcvqwEyFFV7OYVQ==" 
-crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!-- <script>
   $(document).ready(function () {

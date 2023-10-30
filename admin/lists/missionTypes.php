@@ -52,7 +52,7 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
 </tr>
 <?php 
 global $dbConnect;
-$sql = "SELECT * FROM `missionType`";
+$sql = "SELECT * FROM missionType ORDER BY title ASC";
 $query = $dbConnect->query($sql);
 while ($row = $query->fetch(PDO::FETCH_ASSOC)):
 $count++;
@@ -98,5 +98,5 @@ $title = $row["title"];
 </div>
 </div>
 <!-- page specialities ends -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <?php include_once "../../includes/footer.php"; ?>

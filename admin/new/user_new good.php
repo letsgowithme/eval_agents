@@ -4,12 +4,6 @@ require_once "../../includes/DB.php";
 $sql1 = "SELECT * FROM speciality ORDER BY title ASC";
 $query1 = $dbConnect->query($sql1);
 $query1->execute();
-$sql1_2 = "SELECT * FROM speciality ORDER BY title ASC";
-$query1_2 = $dbConnect->query($sql1_2);
-$query1_2->execute();
-$sql1_3 = "SELECT * FROM speciality ORDER BY title ASC";
-$query1_3 = $dbConnect->query($sql1_3);
-$query1_3->execute();
 if (!empty($_POST)) {
   if (
     isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["email"], $_POST["nationality"], $_POST["codeName"], $_POST["userType"], $_POST["password"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["email"]) && !empty($_POST["nationality"]) && !empty($_POST["codeName"])  && !empty($_POST["userType"]) && !empty($_POST["password"]) 
@@ -19,51 +13,29 @@ if (!empty($_POST)) {
 
     $lastname = strip_tags($_POST["lastname"]);
     $firstname = strip_tags($_POST["firstname"]);
-    $email = strip_tags($_POST["email"]);
-    // if($email != "") {
-    //   $sql_add = "SELECT * FROM user where email='".$email."'";
-    //   $query_add = $dbConnect->query($sql_add);
-    //   $query_add->execute();
-    //   while($row = $query_add->fetch(PDO::FETCH_ASSOC)) {
-    //     if($row >= 1){
-    //       echo "<h2>Email existe déjà</h2>";
-    //   }else{
-         
-    //     $email = strip_tags($_POST["email"]);
-     
-     
-      
-  
     $birthdate = strip_tags($_POST["birthdate"]);
     $nationality = strip_tags($_POST["nationality"]);
     $codeName = strip_tags($_POST["codeName"]);
     $userType = strip_tags($_POST["userType"]);
     $createdAt = strip_tags($_POST["createdAt"]);
     $country = strip_tags($_POST["country"]);
-    $speciality_us_id = strip_tags($_POST["speciality_us_id"]);
-    $speciality_us_id2 = strip_tags($_POST["speciality_us_id2"]);
-        if(isset($_POST["speciality_us_id3"])){
-          $speciality_us_id3 = strip_tags($_POST["speciality_us_id3"]);
-        }else{
-          $speciality_us_id3 = null;
-        }
-      
-    
+
+    $specialities = serialize($_POST["user_specialities"]);
     require_once "../../includes/DB.php";
 
     $_SESSION["error"] = [];
 
-        if (strlen($lastname) < 3) {
-          $_SESSION["error"]["lastname"] = "Le nom est trop court";
-        }
-        if (strlen($firstname) < 3) {
-          $_SESSION["error"]["firstname"] = "Le prénom est trop court";
-        }
+    if (strlen($lastname) < 3) {
+      $_SESSION["error"]["lastname"] = "Le nom est trop court";
+    }
+    if (strlen($firstname) < 3) {
+      $_SESSION["error"]["firstname"] = "Le prénom est trop court";
+    }
 
-        if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-          $_SESSION["error"][] = "Veuillez renseigner un email valide";
-        }
-        if ($_SESSION["error"] === []) {
+    if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+      $_SESSION["error"][] = "Veuillez renseigner un email valide";
+    }
+    if ($_SESSION["error"] === []) {
 
       // hasher mdp
       $password = password_hash($_POST["password"], PASSWORD_ARGON2ID);
@@ -90,34 +62,30 @@ if (!empty($_POST)) {
       $user_id = $dbConnect->lastInsertId();
 
  
-      $sql2 = "INSERT INTO user_one_speciality (user_oneSp_Id, speciality_us_id) VALUES('$user_id', '$speciality_us_id')";
+      $sql2 = "INSERT INTO user_speciality (userId, user_specialities) VALUES('$user_id', '$specialities')";
       $query2 = $dbConnect->prepare($sql2);
+      $query->bindValue(":user_specialities", $_POST["user_specialities"], PDO::PARAM_STR);
       $query2->execute();
-      if(isset($_POST["speciality_us_id2"])){
-        $sql_in_3 = "INSERT INTO user_one_speciality (user_oneSp_Id, speciality_us_id) VALUES('$user_id', '$speciality_us_id2')";
-        $query_in_3 = $dbConnect->prepare($sql_in_3);
-        $query_in_3->execute();
-      }
-      if(isset($_POST["speciality_us_id3"])){
-        $sql_in_4 = "INSERT INTO user_one_speciality (user_oneSp_Id, speciality_us_id) VALUES('$user_id', '$speciality_us_id3')";
-        $query_in_4 = $dbConnect->prepare($sql_in_4);
-        $query_in_4->execute();
-      }
 
       echo "<p style=\"background: blue;\" id=\"message\" class=\"text-center  p-2 fw-4 fs-4 text-light\">Utilisateur ajouté sous le numéro " . $id . "</p>";
       echo "<p style=\"background: blue;\" class=\"text-center p-2 fw-4 fs-5 text-light\"><a href='user_new.php' class=\"text-info fs-4 fw-4\"> Retour à la page de la création</a></p>";
       header("Location: ../lists/usersAll.php");
 
-
-    
+?>
+      <!-- <script>
+  function backToPage() {
+    let message =document.getElementById('message');
+    message.style.display = 'none';
+   window.location.href = "../lists/usersAll.php";
+  }
+setTimeout(backToPage, 8000);
+  </script> -->
+<?php
+    }
   } else {
     $_SESSION["error"] = ["Veuillez remplir tous les champs"];
   }
 }
-}
-// }
-// }
-// }
 $titre = "Add user";
 include_once "../includes/admin_header.php";
 include_once "../includes/admin_sidebar.php";
@@ -139,27 +107,6 @@ include_once "../includes/admin_sidebar.php";
     padding: 5px;
   }
 </style>
-<script>
-    $(document).ready(function(){
-      $("#nationality").on("click", function(){
-            //  var email = $("#email");
-             var email = $("#email").val();
-             if(nationality){
-                  $.ajax({
-                    type: "POST",
-                    url: "ajaxData.php",
-                    data: 'email='+email,
-                    success:function(response){
-                  //  alert(response);
-                  $("#email").html(response);
-                  }
-                  })
-            
-              
-             }
-      });     
-    });    
-    </script>
 </head>
 <div class="body_page_new py-4" id="userNew" style="height: auto;">
 
@@ -196,7 +143,6 @@ include_once "../includes/admin_sidebar.php";
       <div class="mb-3">
         <label for="email" class="form-label fw-bold my-2 fs-4">Email</label>
         <input type="email" name="email" id="email" required class="form-control w-25">
-        <p id="verif_email"></p>
       </div>
       <!-- ******************Nationalité****************** -->
       <div class="mb-3">
@@ -242,65 +188,24 @@ include_once "../includes/admin_sidebar.php";
       }
       ?>
 
-      <!-- **************Speciality 1***************** -->
-      
-      <div class="mb-3 content" id="agent_speciality" style="display: none;">
-      <hr>
-      <label for="speciality" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title">Spécialité 1</label><br>
-      <select name="speciality_us_id" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;"> 
-      <option value=""></option>
-         <?php 
-       while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
-        $specialityId = $row["id"];
-        $specialityTitle = $row["title"];
-        echo "<option class=\"spec\"  value=".$specialityId." id=".$specialityTitle.">".$specialityTitle."</option>"; 
-      }
-          ?> 
-          </select>
-          </div>
+      <!-- **************Specialities***************** -->
+      <div class="mb-3 d-flex" id="agent_speciality" style="display: none;">
+        <label for="" class="form-label fw-bold mb-2 fs-4 me-2 mt-4" style="display: none;" id="speciality_title">Spécialité</label>
+        <div class="specialities_list fs-4 form-control w-25" id="specialities_list" style="display: none;">
+        <?php
+        while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
+           $specialityId = $row["id"];
+          $speciality = $row["title"];
+          ?>
+          <input type="checkbox" name="user_specialities[]" value="<?php echo $speciality ?>" class="choices mx-2" selected=false><?php echo $speciality ?><br>
 
-      <button type="button" id="add_spec2" style="display: none;">Ajouter une spécialité</button>
-         <!-- **************Speciality2***************** -->
-        
-         <div class="mb-3" id="agent_speciality2" style="display: none;">
-         <hr>
-      <label for="speciality2" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title2">Spécialité 2</label><br>
-        
-          <select name="speciality_us_id2" id="speciality2"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;">
-          <option value=""></option>
-          <?php 
-        while ($row2 = $query1_2->fetch(PDO::FETCH_ASSOC)) {
-
-          $specialityId2 = $row2["id"];
-          $specialityTitle2 = $row2["title"];
-          echo "<option class=\"spec\"  value=".$specialityId2." id=".$specialityTitle2.">".$specialityTitle2."</option>"; 
+        <?php
         }
           ?>
-          
-          </select>
-          </div>
-          <hr>
-          <button type="button" id="add_spec3" style="display: none;">Ajouter une spécialité</button>
-            <!-- **************Speciality3***************** -->
-        
-         <div class="mb-3" id="agent_speciality3" style="display: none;">
-         <hr>
-      <label for="speciality3" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title3">Spécialité 3</label><br>
-        
-          <select name="speciality_us_id3" id="speciality3"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;">
-          <option value=""></option>
-          <?php 
-        while ($row3 = $query1_3->fetch(PDO::FETCH_ASSOC)) {
 
-          $specialityId3 = $row3["id"];
-          $specialityTitle3 = $row3["title"];
-          echo "<option class=\"spec\"  value=".$specialityId3." id=".$specialityTitle3.">".$specialityTitle3."</option>"; 
-        }
-          ?>
-          
-          </select>
-          </div>
-         
+        </div>
+      </div>
+
       <!-- **************Password***************** -->
       <div class="mb-3">
         <label for="password" class="form-label fw-bold my-2 fs-5">Mot de passe</label>
@@ -322,37 +227,16 @@ include_once "../includes/admin_sidebar.php";
 
     <script>
       let agent = document.getElementById("agent");
-      let speciality = document.getElementById("speciality");
+      let list = document.getElementById("specialities_list");
       let speciality_title = document.getElementById("speciality_title");
-      let speciality_title2 = document.getElementById("speciality_title2");
-      let speciality_title3 = document.getElementById("speciality_title3");
       let agent_speciality = document.getElementById("agent_speciality");
-      let agent_speciality2 = document.getElementById("agent_speciality2");
-      let agent_speciality3 = document.getElementById("agent_speciality3");
-      let add_spec2_btn = document.getElementById("add_spec2");
-      let add_spec3_btn = document.getElementById("add_spec3");
-      let speciality2 = document.getElementById("speciality2");
-      let speciality3 = document.getElementById("speciality3");
       let target = document.getElementById("cible");
       let contact = document.getElementById("contact");
 
       agent.addEventListener("click", function() {
         agent_speciality.style.display = "block";
         speciality_title.style.display = "block";
-        speciality.style.display = "block";
-        add_spec2_btn.style.display = "block";
-      });
-
-      add_spec2_btn.addEventListener("click", function() {
-        agent_speciality2.style.display = "block";
-        speciality_title2.style.display = "block";
-        speciality2.style.display = "block";
-        add_spec3_btn.style.display = "block";
-      });
-      add_spec3_btn.addEventListener("click", function() {
-        agent_speciality3.style.display = "block";
-        speciality_title3.style.display = "block";
-        speciality3.style.display = "block";
+        list.style.display = "block";
       });
 
       target.addEventListener("click", function() {

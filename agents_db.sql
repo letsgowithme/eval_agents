@@ -7,7 +7,7 @@ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 lastname VARCHAR(100) NOT NULL,
 firstname VARCHAR(100) NOT NULL,
 birthdate DATE NOT NULL,
-email VARCHAR(50) NOT NULL,
+email VARCHAR(50) NOT NULL UNIQUE,
 nationality VARCHAR(100) NOT NULL,
 codeName VARCHAR(100) NOT NULL,
 userType VARCHAR(100) NOT NULL,
@@ -57,7 +57,13 @@ user_specialities VARCHAR (150) NOT NULL
 
 ALTER TABLE user_speciality ADD CONSTRAINT FK_userId FOREIGN KEY (userId) REFERENCES user(id);
 
+CREATE TABLE user_one_speciality(
+user_oneSp_Id INT NOT NULL,
+speciality_us_id INT 
+) engine=InnoDB;
 
+ALTER TABLE user_one_speciality ADD CONSTRAINT FK_user_oneSp_Id FOREIGN KEY (user_oneSp_Id) REFERENCES user(id);
+ALTER TABLE user_one_speciality ADD CONSTRAINT FK_speciality_us_id FOREIGN KEY (speciality_us_id) REFERENCES speciality(id);
 
 CREATE TABLE mission_speciality(
 mission_Id INT NOT NULL,
@@ -70,12 +76,12 @@ ALTER TABLE mission_speciality ADD CONSTRAINT FK_mis_spec_id FOREIGN KEY (mis_sp
 
 CREATE TABLE mission_hideouts(
 missionId INT NOT NULL,
-idHideout INT NOT NULL
+mis_hideouts VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
 ALTER TABLE mission_hideouts ADD CONSTRAINT FK_missionId FOREIGN KEY (missionId) REFERENCES mission(id);
 
-ALTER TABLE mission_hideouts ADD CONSTRAINT FK_idHideout FOREIGN KEY (idHideout) REFERENCES hideout(id);
+
 
 CREATE TABLE mission_agents(
 mA_mission_id INT NOT NULL,

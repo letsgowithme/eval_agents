@@ -17,10 +17,8 @@ $row = $query->fetch();
 $userType = $row['userType'];
 
 
-$sql1 = "SELECT * FROM user_one_speciality WHERE user_oneSp_Id='$id'";
-$query1_1 = $dbConnect->query($sql1);
-$query1_1->execute();
-$result1_1 = $query1_1->fetchAll(PDO::FETCH_ASSOC);
+$sql1 = "SELECT * FROM user_speciality WHERE userId='$id'";
+$query1 = $dbConnect->query($sql1);
 
 //ici on a la nationalité
 
@@ -73,25 +71,23 @@ include_once "../includes/admin_sidebar.php";
 <?php
 if($userType == 'agent'): 
   ?>
-<tr class="text-center" id="agent_specialities">
+<tr class="text-center" id="agent_specialities" ">
 <td>Specialitiés</td>
-<td>
   <?php
- foreach ($result1_1 as $tab) : 
-  $speciality_us_id = $tab["speciality_us_id"];
-
-  $sql_s2 = "SELECT * FROM speciality WHERE id = '$speciality_us_id'";
-  $query_s2 = $dbConnect->query($sql_s2);
-  $query_s2->execute();
-  while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) {
-
-    $specialityId = $row["id"];
-    $specialityTitle = $row["title"];
-    echo $specialityTitle."<br>";
-  }
-   endforeach
+ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) :
+ $specialities = unserialize($row["user_specialities"]);
+ ?>
+ <td class="text-center px-4 py-2">
+   <?php
+ foreach($specialities as $speciality) :
+   echo  $speciality."<br/>";
+   endforeach;
+   ?>
+   </td>
+   <?php
+   endwhile;
    ?>        
-       </td>     
+            
 </tr>
 <?php
 endif;

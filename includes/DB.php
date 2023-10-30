@@ -9,7 +9,7 @@ try {
   $dbConnect = new PDO($DSN, DB_USER, DB_PASSWORD);
   $dbConnect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $dbConnect->exec("SET NAMES utf8");
-  echo '<p class="text-light m-4 d-none">Connexion réussie à la DB</p>';
+  // echo '<p class="text-light m-4 d-none">Connexion réussie à la DB</p>';
   
 } catch (PDOException $e) {
     print "Error!: " . $e->getMessage() . "<br/>";

@@ -6,97 +6,44 @@ $sql_s1 = "SELECT * FROM `speciality` ORDER BY `title` ASC";
 $query_s1 = $dbConnect->query($sql_s1);
 $query_s1->execute();
 
-$sql_s1_2 = "SELECT * FROM `speciality` ORDER BY `title` ASC";
-$query_s1_2 = $dbConnect->query($sql_s1_2);
-$query_s1_2->execute();
-
-$sql_s1_3 = "SELECT * FROM `speciality` ORDER BY `title` ASC";
-$query_s1_3 = $dbConnect->query($sql_s1_3);
-$query_s1_3->execute();
-
-$sql_s2 = "SELECT * FROM user_one_speciality WHERE user_oneSp_Id='$up_id'";
-$query_s2 = $dbConnect->query($sql_s2);
-$query_s2->execute();
-$result_s2 = $query_s2->fetchAll();
-// while($row = $query_s2->fetch(PDO::FETCH_ASSOC)):
-
-//   $speciality_us_id = $row["speciality_us_id"];
- 
-
-// endwhile; 
-
-
 if(isset($_POST["submit"])){
 
-  // if(isset($_POST["user_specialities"])){
-  //   $specialities = serialize($_POST["user_specialities"]);
-  //   $sql_u1 = "UPDATE user_speciality SET user_specialities='$specialities' WHERE userId='$up_id'";
-  //   $query_u1 = $dbConnect->prepare($sql_u1); 
-  //   $query_u1->execute();
+  if(isset($_POST["user_specialities"])){
+    $specialities = serialize($_POST["user_specialities"]);
+    $sql_u1 = "UPDATE user_speciality SET user_specialities='$specialities' WHERE userId='$up_id'";
+    $query_u1 = $dbConnect->prepare($sql_u1); 
+    $query_u1->execute();
   
-  //   }elseif(isset($_GET["user_specialities"])){
-  //     $specialities = $user_specialities;
-  //     // $specialities = serialize($_POST["user_specialities"]);
-  //   $sql_u1 = "UPDATE user_speciality SET user_specialities='$specialities' WHERE userId='$up_id'";
-  //   $query_u1 = $dbConnect->prepare($sql_u1); 
-  //   $query_u1->execute();
-  //   }else{
-  //     $specialities = "";
-  //   }
+    }elseif(isset($_GET["user_specialities"])){
+      $specialities = $user_specialities;
+      // $specialities = serialize($_POST["user_specialities"]);
+    $sql_u1 = "UPDATE user_speciality SET user_specialities='$specialities' WHERE userId='$up_id'";
+    $query_u1 = $dbConnect->prepare($sql_u1); 
+    $query_u1->execute();
+    }else{
+      $specialities = "";
+    }
 
-  $lastname = strip_tags($_POST["lastname"]);
-  $firstname = strip_tags($_POST["firstname"]);
-  $birthdate = strip_tags($_POST["birthdate"]);
-  $email = strip_tags($_POST["email"]);
-  $nationality = strip_tags($_POST["nationality"]);
-  $country = strip_tags($_POST["country"]);
-  $codeName = strip_tags($_POST["codeName"]);
-  $userType = strip_tags($_POST["userType"]);
+  $lastname = $_POST["lastname"];
+  $firstname = $_POST["firstname"];
+  $birthdate = $_POST["birthdate"];
+  $email = $_POST["email"];
+  $nationality = $_POST["nationality"];
+  $country = $_POST["country"];
+  $codeName = $_POST["codeName"];
+  $userType = $_POST["userType"];
  
-  $speciality_us_id = strip_tags($_POST["speciality_us_id"]);
-
 
 
     $sql = "UPDATE user SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', email='$email', nationality='$nationality', codeName='$codeName', userType='$userType',  country='$country' WHERE id='$up_id'";
 
     $query = $dbConnect->prepare($sql); 
     $Execute = $query->execute();
-    // *************************************
-    $sql_in_2 = "UPDATE user_one_speciality SET speciality_us_id='$speciality_us_id' WHERE user_oneSp_Id='$up_id'";
-    $query_in_2 = $dbConnect->prepare($sql_in_2);
-    $query_in_2->execute();
-var_dump($sql_in_2);
-    if(isset($_POST["speciality_us_id2"])){
-      $speciality_us_id2 = strip_tags($_POST["speciality_us_id2"]);
-      $sql_in_3 = "UPDATE user_one_speciality SET speciality_us_id='$speciality_us_id2' WHERE user_oneSp_Id='$up_id'";
-      $query_in_3 = $dbConnect->prepare($sql_in_3);
-      $query_in_3->execute();
-    }else{
-      $speciality_us_id2 = $_GET["speciality_us_id2"];
-      $sql_in_3 = "UPDATE user_one_speciality SET speciality_us_id='$speciality_us_id2' WHERE user_oneSp_Id='$up_id'";
-      $query_in_3 = $dbConnect->prepare($sql_in_3);
-      $query_in_3->execute();
-    }
-    
-    if(isset($_POST["speciality_us_id3"])){
-      $speciality_us_id3 = strip_tags($_POST["speciality_us_id3"]);
-      $sql_in_4 = "UPDATE user_one_speciality SET speciality_us_id='$speciality_us_id3' WHERE user_oneSp_Id='$up_id'";
-      $query_in_4 = $dbConnect->prepare($sql_in_4);
-      $query_in_4->execute();
-    }else{
-      $speciality_us_id3 = $_GET["speciality_us_id3"];
-      $sql_in_4 = "UPDATE user_one_speciality SET speciality_us_id='$speciality_us_id3' WHERE user_oneSp_Id='$up_id'";
-      $query_in_4 = $dbConnect->prepare($sql_in_4);
-      $query_in_4->execute();
-    }
-
-    // ********************************
     if($Execute){
       echo "<p style=\"background: darkgrey;\" class=\"text-center fs-4 text-white p-2 ds-5\">Utilisateur modifié sous le numéro ". $up_id."<a class=\"ms-2 fw-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
       header("Location: ../lists/usersAll.php");
      
     }
-    
    
    
 }
@@ -113,8 +60,8 @@ include_once "../includes/admin_sidebar.php";
   <?php 
 global $dbConnect;
 
-// $sql_s2 = "SELECT * FROM user_speciality WHERE userId='$up_id'";
-// $query_s2 = $dbConnect->query($sql_s2);
+$sql_s2 = "SELECT * FROM user_speciality WHERE userId='$up_id'";
+$query_s2 = $dbConnect->query($sql_s2);
 // require_once "../../includes/DB.php";
 $sql_s3 = "SELECT * FROM `user` WHERE `id` = '$up_id'";
 $query_s3 = $dbConnect->query($sql_s3);
@@ -130,12 +77,12 @@ while($row = $query_s3->fetch()){
   $user_country = $row["country"];
   $codeName = $row["codeName"];
   $user_userType = $row["userType"];
-  
+
 }
 
 
   ?>
-<!-- <div> -->
+<div>
 <h1>Modifier l'utilisateur</h1> 
 <form method="post" action="user_update.php?id=<?php echo $up_id; ?>">
 <input type="hidden" name="up_id" value="<?php echo $row["id"] ?>">
@@ -229,131 +176,63 @@ foreach ($userTypeArray as $userType) {
 }
 ?>
  </div>
- </div>
- <hr>
-   <!-- ************************************** -->
+ <!-- ********************Specialities of user*********************** -->
  <?php
  if($user_userType == "agent"){
   ?>
-   <!-- ********************Specialities of user*********************** -->
-   <!-- select FROM user_one_speciality WHERE user_oneSp_Id='$up_id -->
- <?php
- $index = 1;
-   $user_specARR =[];
-foreach($result_s2 as $tab):
-  $speciality_user_id = $tab["speciality_us_id"];
-  // requete2
-  $sql_s2_2 = "SELECT * FROM speciality WHERE id = '$speciality_user_id'";
-  $query_s2_2 = $dbConnect->query($sql_s2_2);
-  $query_s2_2->execute();
-  while ($row = $query_s2_2->fetch(PDO::FETCH_ASSOC)):
-    $speciality_us_Id = $row["id"];
-    $user_specialityTitle = $row["title"];
-    $speciality_us_Id = "$speciality_us_Id";
-    // $user_specARR [] = $user_specialityTitle;
-
-
-
-  
-  echo "<input  class=\"user_spec\" id=\"speciality_user$index\" value=".$user_specialityTitle."><".$user_specialityTitle.">";
-      // endfor;
-
-$index = $index + 1;
-
-// var_dump($user_specialityTitle);
-endwhile;
-endforeach;  
-   ?>
-<!-- *************************SPECIALTIY 1********************** -->
- <div class="mb-3" id="agent_speciality">    
+  <div class="mb-3 mt-3 d-flex" id="agent_speciality">
+    <h5 class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;" id="speciality_title">Spécialité</h5>
+     <!-- afficher les specialités de l'Utilisateur -->
+    <div class="d-flex flex-column text-light pb-2 pe-3 fs-5" style="max-height: 200px;"> 
     
-      <label for="speciality" class="form-label fw-bold mt-2 fs-4" id="speciality_title">Spécialité 1</label><br>
-      <select name="speciality_us_id" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px;"> 
-          <?php 
-       while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)):
-        $speciality_us_id = $row["id"];
-        $specialityTitle = $row["title"];
-      
-        
-     if($specialityId == $speciality_us_Id){
-          $selected="selected";
-          }else{ 
-         $selected=""; 
-         } 
-      
-        echo "<option class=\"spec\"  name=".$speciality_us_id.".value=".$speciality_us_id.".$selected. id=".$specialityTitle.">".$specialityTitle."</option>"; 
-
-        // var_dump($specialityId);
-     endwhile;
-       
-     ?><br>
-           </select>
-          </div>
-          <!-- **************Speciality2***************** -->
-<div class="mb-3" id="agent_speciality2">
-<hr>
-<label for="speciality2" class="form-label fw-bold mt-2 fs-4" id="speciality_title2">Spécialité 2</label><br>
-<select name="speciality_us_id2" id="speciality2" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
-<?php 
-while ($row2 = $query_s1_2->fetch(PDO::FETCH_ASSOC)) {
-$specialityId2 = $row2["id"];
-$specialityTitle2 = $row2["title"];
-if($specialityId2 == $speciality_us_Id){
-$selected="selected";
-}else{ 
-$selected=""; 
-} 
-
-echo "<option class=\"spec\" name=".$specialityId2.".value=".$specialityId2.".$selected. id=".$specialityTitle2.">".$specialityTitle2."</option>"; 
-}
-?>
-</select>
-</div>
-
-<!-- <button type="button" id="add_spec3" >Ajouter une spécialité</button> -->
-<!-- **************Speciality3***************** -->
-<div class="mb-3" id="agent_speciality3">
-<hr>
-<label for="speciality3" class="form-label fw-bold mt-2 fs-4" id="speciality_title3">Spécialité 3</label><br> 
-<select name="speciality_us_id3" id="speciality3" class="fs-5 pb--2 pe-2" style="min-width: 330px; ">
-<?php 
-while ($row3 = $query_s1_3->fetch(PDO::FETCH_ASSOC)) {
-$specialityId3 = $row3["id"];
-$specialityTitle3 = $row3["title"];
-if($specialityTitle3 == $speciality_us_Id
-){
-$selected="selected";
-}else{ 
-$selected=""; 
-} 
-echo "<option class=\"spec\" name=".$specialityId3.".value=".$specialityId3.".$selected. id=".$specialityTitle3.">".$specialityTitle3."</option>"; 
-}
-?> 
-</select>
-</div>
-
-
-          <script>
-            $(document).ready(function () {
-              $user_spec1 = $("#speciality_user1");
-              $user_spec2 = $("#speciality_user2");
-              $user_spec3 = $("#speciality_user3");
-              $("#speciality").val($user_spec1.val()); 
-              $("#speciality2").val($user_spec2.val());
-              $("#speciality3").val($user_spec3.val());
-              });  
-            </script>
-         
-
-      <!-- <button type="button" id="add_spec2">Ajouter une spécialité</button> -->
-         
-           
- <button type="submit" class="my-4 fs-5 fw-bold mx-4" id="btn_submit"  name="submit">Enregistrer</button>
+     <?php
+   while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) :
+             $specialities = unserialize($row["user_specialities"]);
+            
+             foreach($specialities as $speciality) :
+               echo $speciality ? $speciality."<br/>" : "";
+               endforeach;
+   endwhile;
+   ?>
+ </div>
+ 
+ <div class="d-flex flex-row">
+   <div><button onclick="change_speciality()" class="mx-2" id="change_speciality_btn" type="button">Changer</button>
+ </div>
+ <!-- afficher la liste de specialités -->
+ </div> 
+ 
+ <div class="specialities_list mb-4" id="specialities_list" style="display: none;">
+ <?php
+         while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)) {
+            $specialityId = $row["id"];
+           $specialityTitle = $row["title"];
+           // $user_specialities = $row["user_specialities"];
+           ?>
+           <input type="checkbox" name="user_specialities[]" value="<?php echo $specialityTitle ?>" class="choices mx-2"><?php echo $specialityTitle ?><br>
+ 
+         <?php
+         }
+           ?>
+  </div>
+ 
+ </div>
+ <div id="warning_messages">
+ <div><span style="color: red; font-weight: bold; font-size: 1.2em;">Attention, les anciennes spécialités seront remplacées par de nouvelles!</span></div>
+ <div><span style="color: gdarkgray; font-weight: bold; font-size: 1em;">Si vous souhaitez conserver les anciennes spécialités, merci de cocher à nouveau les cases!</span></div>
+ </div>
 <?php 
  }
-?> 
+?>
+ 
+ </div>
+ </div>
+
+   <button type="submit" class="my-4 fs-5 fw-bold mx-4" id="btn_submit"  name="submit">Enregistrer</button>
 </form>
-</div> 
+</div>
+</div>
+</div>
 <script>
   function toggleList() {
   var change_country_btn = document.getElementById("change_country_btn"); 
@@ -436,7 +315,6 @@ function change_speciality() {
       list.style.display = "none";
     });
   </script>
-  
 <?php
 include_once "../includes/admin_footer.php";
 ?>

@@ -38,12 +38,12 @@ include_once "admin_header.php"; ?>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/specialities.php" class="nav-link text-white <?php echo !empty($specialities)?"active":"" ?>">
-              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sx-inline">Spécialités</span>
+              <i class="fa fa-person-chalkboard"></i><span class="fs-5 ms-3 d-none d-sx-inline">Spécialités</span>
               </a>
             </li>
             <li class="nav-item py-2 py-sm-0">
               <a href="../lists/missionTypes.php" class="nav-link text-white <?php echo !empty($missionTypes)?"active":"" ?>">
-              <i class="fs-5 fa fa-users"></i><span class="fs-5 ms-3 d-none d-sx-inline">Type de mission</span>
+              <i class="fa-solid fa-camera-retro"></i></i><span class="fs-5 ms-3 d-none d-sx-inline">Type de mission</span>
               </a>
             </li>
      
@@ -58,7 +58,7 @@ include_once "admin_header.php"; ?>
             <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/user_new.php">Utilisateur</a></li>
             <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/speciality_new.php">Spécialité</a></li>
             <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/missionType_new.php">Type de mission</a></li>
-            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/hideout_new.php">Planques</a></li>
+            <li class="list-unstyled"><a class="dropdown-item py-2 py-sx" href="../new/hideout_new.php">Planque</a></li>
            
           </ul> 
           </ul>

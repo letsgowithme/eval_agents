@@ -52,13 +52,9 @@ foreach ($query1->fetchAll(PDO::FETCH_NUM) as $tabValues) {
     <table id="datatable" class="display" style="border: 3px solid black; background:  #404144;">
       <thead class="my-4">
 <tr>
-<th class="hidden">Id</th>
-   <th class="text-center fs-4 px-4 py-2">Titre</th>
- 
-              <th class="text-center fs-4 px-4 py-2">Actions</th>
-        
-         
-
+<!-- <th class="hidden">Id</th> -->
+   <th class="text-center fs-4 px-4 py-2 w-25">Titre</th>
+              <th class="text-center fs-4 px-4 py-2 w-25">Actions</th>
         </tr>
       </thead>
 </tr>
@@ -66,16 +62,16 @@ foreach ($query1->fetchAll(PDO::FETCH_NUM) as $tabValues) {
 global $dbConnect;
 $sql = "SELECT * FROM speciality ORDER BY title ASC";
 $query = $dbConnect->query($sql);
+$query->execute();
 while ($row = $query->fetch(PDO::FETCH_ASSOC)):
-  // var_dump($row);
 $count++;
-$id = $row["id"];
+// $id = $row["id"];
 $title = $row["title"];
 
 
 ?>
 <tr>
-   <td class="hidden"><?php echo $id ?></td>
+   <!-- <td class="hidden"><?php echo $id ?></td> -->
   <td class="text-center px-4 py-2 fs-5"><?php echo  $title ?></td>
 
                 <td class="text-center">
@@ -113,5 +109,5 @@ $title = $row["title"];
 </div>
 </div>
 <!-- page specialities ends -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <?php include_once "../../includes/footer.php"; ?>
