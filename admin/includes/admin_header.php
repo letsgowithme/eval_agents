@@ -1,6 +1,7 @@
 <?php 
 $admin=true;
-session_start(); 
+session_start();
+ 
 $titre ="";
 ?>
 <!DOCTYPE html>
