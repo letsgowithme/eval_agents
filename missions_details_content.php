@@ -102,7 +102,7 @@ $query7->execute();
 <td>
 <?= $specialityTitle ?>
 </td>
-</tr>
+</tr>query8
 <tr>
 <td>Agents</td>
 <td>
