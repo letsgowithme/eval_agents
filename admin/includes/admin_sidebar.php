@@ -70,13 +70,13 @@ include_once "admin_header.php"; ?>
             <button class="btn border-none dropdown-toggle text-white" data-bs-toggle="dropdown" type="button" id="triggerId" data-aria-expanded="false"><i class="fa fa-user"></i><span class="fs-5 d-none ms-2 d-sm-inline">
               <?php 
               if(isset($_SESSION["user"])){
-                echo $_SESSION["user"]["lastname"];
+                echo $_SESSION["user"]["email"];
               }
               ?>
               </span>
             </button>
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-        <li><a class="dropdown-item" href="../../profil.php">Profil</a></li>
+     
         <li><a class="dropdown-item" href="../new/mission_new.php">Créer une mission</a></li>
         <li><a class="dropdown-item" href="../new/user_new.php">Créer un utilisateur</a></li>
         <li><hr class="dropdown-divider"></li>

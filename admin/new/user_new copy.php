@@ -246,7 +246,7 @@ include_once "../includes/admin_sidebar.php";
       
       <div class="mb-3 content" id="agent_speciality" style="display: none;">
       <hr>
-      <label for="speciality" class="form-label fw-bold mt-2 fs-4" style="display: none;" id="speciality_title">Spécialité 1</label><br>
+      <label for="speciality" class="form-label fw-bold mt-2 fs-4" style="display: none;" multiple=true id="speciality_title">Spécialité 1</label><br>
       <select name="speciality_us_id" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px; display: none;"> 
       <option value=""></option>
          <?php 

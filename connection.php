@@ -3,7 +3,7 @@
 $connect=true;
 session_start();
 if(isset($_SESSION["user"])){
-header("Location: profil.php");
+  header("Location: admin/main/admin_index.php");
 }
 
 if(!empty($_POST)){
@@ -22,31 +22,28 @@ if(!empty($_POST)){
 
   $query->execute();
 
-  $user = $query->fetch();
-  if(!$user){
-  die("L'utilisateur et/ou le mot de passe est incorrect");
-  }
-  // on a user, on verif son mdp
-  if(!password_verify($_POST["password"], $user["password"])){
-    die("L'utilisateur et/ou le mot de passe est incorrect");
-  }
+  // $user = $query->fetch();
+  // if(!$user){
+  // die("L'utilisateur et/ou le mot de passe est incorrect");
+  // }
+  // // on a user, on verif son mdp
+  // if(!password_verify($_POST["password"], $user["password"])){
+  //   die("L'utilisateur et/ou le mot de passe est incorrect");
+  // }
   //user et mdp sont corrects
  //on ouvre la session, connecter le user
  
  //on socke dans $_Session les info de user masi pas mdp
  $_SESSION["user"] = [
   "id" => $user["id"],
-  "lastname" => $user["lastname"],
-  "firstname" => $user["firstname"],
-  "birthdate" => $user["birthdate"],
   "email" => $user["email"],
   "roles" => $user["roles"]
  ];
  //on redirige vers la page de profil
- if($_SESSION["user"]["roles"] > 4){
+ if($_SESSION["user"]){
   header("Location: admin/main/admin_index.php");
  }else{
-  header("Location: profil.php");
+  header("Location: index.php");
  }
  
  

@@ -12,7 +12,7 @@ $query_s_s1->closeCursor();
 }
 // *********************************************************
 if(!empty($_POST["email"])){
-  $sql_s_s2 = "SELECT * FROM user WHERE email=:email";
+  $sql_s_s2 = "SELECT * FROM agents WHERE email=:email";
   $query_s_s2 = $dbConnect->prepare($sql_s_s2);
   $query_s_s2->execute(["email" => $_POST["email"]]);
   
@@ -31,6 +31,28 @@ if(!empty($_POST["email"])){
   endwhile;
 
   $query_s_s2->closeCursor();
+  }
+  // *********************************************************
+if(!empty($_POST["codeName"])){
+  $sql_s_s3 = "SELECT * FROM person WHERE codeName=:codeName";
+  $query_s_s3 = $dbConnect->prepare($sql_s_s3);
+  $query_s_s3->execute(["codeName" => $_POST["codeName"]]);
+  
+  while ($row = $query_s_s3->fetch(PDO::FETCH_ASSOC)):
+    if($row >= 1){
+      ?>
+      <script>
+      alert('Le nom de code déjà existe');
+      </script>
+      <?php
+
+  }else{
+     
+    $codeName = strip_tags($_POST["codeName"]);
+  }
+  endwhile;
+
+  $query_s_s3->closeCursor();
   }
 
 // if(!empty($_POST["speciality"])){

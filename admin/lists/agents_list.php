@@ -4,7 +4,7 @@
 <select name="agents[]" id="agents" multiple="multiple" class="fs-5 pb--2 pe-2"  style="min-width: 330px;">
     <!-- <option>Choisir:</option> -->
 <?php 
-$sql = "SELECT * FROM `user` WHERE `userType`= 'agent' ORDER BY `lastname` ASC";
+$sql = "SELECT * FROM `person` WHERE `userType`= 'agent' ORDER BY `lastname` ASC";
 $query = $dbConnect->query($sql);
 $query->execute();
 // $tab=$query->fetchAll();

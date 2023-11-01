@@ -26,7 +26,7 @@
         <li class="nav-item me-4">
           <a class="nav-link fs-4 <?php echo !empty($connect)?"active":"" ?>" href="connection.php">Se connecter</a></li>
         <?php else:?>
-          <li class="mt-2">Bonjour <?php echo $_SESSION["user"]["lastname"];?></li>
+          <li class="mt-2">Bonjour <?php echo $_SESSION["user"]["email"];?></li>
         <li class="nav-item">
           <a class="nav-link" href="deconnection.php">Se déconnecter</a></li>
           <?php endif;?>

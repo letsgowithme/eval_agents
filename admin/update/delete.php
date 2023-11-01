@@ -2,20 +2,21 @@
 //on demarre la session php
 $index=true;
 $titre = "Delete";
-include_once "../includes/admin_header.php";
-include_once "../includes/admin_sidebar.php";
+
+
 include_once "../../includes/DB.php";         
 include_once "../includes/admin_footer.php";
 
 if(!empty($_GET["id"])){
-  $sql1 =" DELETE FROM user_one_speciality WHERE user_oneSp_Id=:id";
+  $sql1 =" DELETE FROM agents WHERE id_user_agent=:id";
   $query1 = $dbConnect->prepare($sql1); 
   $Execute = $query1->execute(["id"=>$_GET["id"]]);
-  $sql1_1 = "DELETE FROM user WHERE id=:id";
+  $sql1_1 = "DELETE FROM person WHERE id=:id";
   $query1_1 = $dbConnect->prepare($sql1_1); 
   $Execute = $query1_1->execute(["id"=>$_GET["id"]]);
   $query1_1->closeCursor();
-  echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Utilisateur supprimé<br><a href="../lists/usersAll.php">Retour vers la Liste d\'utilisateurs</h2>';
+  // echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Utilisateur supprimé<br><a href="../lists/usersAll.php">Retour vers la Liste d\'utilisateurs</h2>';
+  header("Location: ../lists/usersAll.php");
 }
 if(!empty($_GET["idMission"])){
   $sql2 =" DELETE FROM mission_missionType WHERE mmt_missionId=:id";
@@ -74,4 +75,6 @@ if(!empty($_GET["idMissionType"])){
   $query5_1->closeCursor();
   echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Le type de mission supprimée<br><a href="../lists/missionTypes.php">Retour vers la Liste de types de mission</h2>';
 }
+include_once "../includes/admin_header.php";
+include_once "../includes/admin_sidebar.php";
 ?>
