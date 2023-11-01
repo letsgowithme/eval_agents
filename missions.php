@@ -10,7 +10,11 @@ $count = 0;
 <link rel="stylesheet" href="style/style.css">
 </head>
 <div class="p-3 body_page_new " style="height: 90vh;">
-<div> 
+<div>
+<h1>Liste de missions</h1>
+
+
+
 <?php include_once "missions_content.php"; ?>
 
 <?php include_once "includes/footer.php"; ?>

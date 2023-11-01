@@ -23,15 +23,13 @@ if (isset($_POST["submit"])) {
   }else{
     $userType = strip_tags($_POST["user_userType"]);
   }
+
   $lastname = strip_tags($_POST["lastname"]);
   $firstname = strip_tags($_POST["firstname"]);
   $birthdate = strip_tags($_POST["birthdate"]);
   $nationality = strip_tags($_POST["nationality"]);
   $country = strip_tags($_POST["country"]);
   $codeName = strip_tags($_POST["codeName"]);
-  
-  $specialities = serialize($_POST["specialities"]);
-  $code_id = strip_tags($_POST["code_id"]);
 
   $sql = "UPDATE person SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', nationality='$nationality',  country='$country',  userType='$userType', codeName='$codeName' WHERE id='$up_id'";
 
@@ -39,6 +37,15 @@ if (isset($_POST["submit"])) {
   $Execute = $query->execute();
 
   // *************************************
+  if(isset($_POST["specialities"]) && !empty($_POST["specialities"])) {
+    $specialities = serialize($_POST["specialities"]);
+  }else{
+    $specialities = serialize($_POST["user_specialities"]);
+  }
+
+  if(isset($_POST["code_id"]) && !empty($_POST["code_id"])) {
+    $code_id = strip_tags($_POST["code_id"]);
+  }
 
   $sql_in_2 = "UPDATE agents SET specialities='$specialities', code_id='$code_id' WHERE id_user_agent='$up_id'";
   $query_in_2 = $dbConnect->prepare($sql_in_2);
@@ -165,22 +172,25 @@ include_once "../includes/admin_sidebar.php";
 
   <input type="radio" name="userType" value="contact" class="choices form-label fw-bold mb-2 fs-5" style="margin-left: 10px;" id="contact"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Contact</span>
 
-  <input type="radio" name="userType" value="target" class="choices form-label fw-bold my-2 fs-5" style="margin-left: 10px;" id="target"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Cible</span>
+  <input type="radio" name="userType" value="cible" class="choices form-label fw-bold my-2 fs-5" style="margin-left: 10px;" id="target"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Cible</span>
   <hr>
 
 </div>
 
 </div>
+<?php 
+if($user_userType == 'agent'):
 
+?>
 <!-- ********************Specialities*********************** -->
-<div id="agent_speciality" class="hidden">
+<div id="agent_speciality">
   <h5 class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Spécialité: </h5>
   <?php
   $user_specialityArr = [];
   while ($row2 = $query_s3->fetch(PDO::FETCH_ASSOC)) :
     $specialities = unserialize($row2["specialities"]);
     foreach ($specialities as $user_speciality) :
-      echo "<input TYPE=\"hidden\" value=" . $user_speciality . "><br/>";
+      echo "<input type=\"\" value=".$user_speciality." name=\"user_specialities[]\"><br/>";
       $user_specialityArr[] = $user_speciality;
     endforeach;
   endwhile;
@@ -215,6 +225,7 @@ include_once "../includes/admin_sidebar.php";
   ?>
 </div>
 </div>
+<?php endif; ?>
 <!-- </div> -->
 <button type="submit" class="my-4 fs-5 fw-bold mx-4" id="btn_submit" name="submit">Enregistrer</button>
 </form>

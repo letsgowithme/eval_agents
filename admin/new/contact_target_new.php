@@ -165,7 +165,7 @@ include_once "../includes/admin_sidebar.php";
       <br>
         <input type="radio" name="userType" value="contact" class="choices form-label fw-bold mb-2 fs-5"  style="margin-left: 10px;" id="contact"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Contact</span>      
         <br>
-        <input type="radio" name="userType" value="target" class="choices form-label fw-bold my-2 fs-5"  style="margin-left: 10px;" id="target"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Cible</span> 
+        <input type="radio" name="userType" value="cible" class="choices form-label fw-bold my-2 fs-5"  style="margin-left: 10px;" id="target"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Cible</span> 
         <hr>
         <!-- ******************Codename****************** -->
        <div id="contact_secion">

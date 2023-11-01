@@ -7,7 +7,8 @@ include_once "../includes/admin_sidebar.php";
 $titre = "Hideouts";
 $count = 0;
 $list =[];
-$sql = "SELECT id FROM hideout WHERE id IN ( SELECT id FROM mission_hideouts WHERE mission_hideouts.idHideout=hideout.id)";
+// $sql = "SELECT id FROM hideout WHERE id IN ( SELECT id FROM mission_hideouts WHERE mission_hideouts.idHideout=hideout.id)";
+$sql = "SELECT id FROM hideout";
 $query = $dbConnect->prepare($sql);
 $query->execute();
 foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {

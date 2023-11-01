@@ -7,11 +7,11 @@
       <thead class="my-4">
          <tr>
          <?php if(isset($_SESSION["user"])):
-             
+              if($_SESSION["user"]["roles"] > 4 ):
                 ?>
             <th class="text-center fs-4" style="min-width: 150px!important;">Id</th>
             <?php endif; 
-           
+             endif;
              
            if(!isset($_SESSION["user"])):
             ?>
@@ -23,11 +23,11 @@
             <th class="text-center fs-4" style="min-width: 150px!important;">Titre</th>
 
             <?php if(isset($_SESSION["user"])):
-              
+              if($_SESSION["user"]["roles"] > 4 ):
                 ?>
             <th class="text-center fs-4" style="min-width: 150px!important;">Actions</th>
             <?php endif; 
-            
+            endif;
             ?>
             <th class="text-center fs-4 py-3" style="min-width: 150px!important;">Détails</th>
             
@@ -46,11 +46,11 @@ $title = $row["title"];
 ?>
 <tr>
 <?php if(isset($_SESSION["user"])):
-             
+              if($_SESSION["user"]["roles"] > 4 ):
                 ?>
 <td class="text-center py-3"><?php echo  $id ?></td>
 <?php endif; 
-            
+            endif;
             ?>
             <?php if(!isset($_SESSION["user"])):
             ?>
@@ -59,7 +59,7 @@ $title = $row["title"];
 ?>
 <td class="text-center py-3"><?php echo  $title ?></td>
 <?php if(isset($_SESSION["user"])):
-            
+              if($_SESSION["user"]["roles"] > 4 ):
                 ?>
 <td class="text-center">
 <a class="btn btn-success" href="../update/mission_update.php?id=<?php echo $id?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -72,7 +72,7 @@ $title = $row["title"];
 
 
 <?php endif; 
-          
+            endif;
             ?>
 <?php if(!isset($_SESSION["user"])):
 
@@ -80,11 +80,11 @@ $title = $row["title"];
 <td class="text-center"><a href="mission_details.php?id=<?php echo $id?>">Details</a></td>
 <?php endif; ?>
 <?php if(isset($_SESSION["user"])):
-          
+              if($_SESSION["user"]["roles"] > 4 ):
                 ?>
   <td class="text-center"><a href="../details/mission_adm_details.php?id=<?php echo $id?>">Details admin</a></td>
   <?php endif; 
-
+  endif; 
   ?>
 </tr> 
    <!-- Modal -->

@@ -21,14 +21,11 @@ $sql_s5 = "SELECT * FROM person WHERE userType='cible'  ORDER BY lastname ASC";
 $query_s5 = $dbConnect->query($sql_s5);
 $query_s5->execute();
 
-$sql_s7 = "SELECT * FROM person WHERE userType='agent'  ORDER BY lastname ASC"; 
-$query_s7 = $dbConnect->query($sql_s7);
-$query_s7->execute();
 
 
 //on traite le formulaire
 if(!empty($_POST)){
-  if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["countryList"], $_POST["mis_hideouts"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"], $_POST["agents"], $_POST["contacts"], $_POST["targets"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["countryList"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"]) &&!empty($_POST["agents"]) &&!empty($_POST["contacts"]) &&!empty($_POST["targets"])){
+  if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["countryList"], $_POST["mis_hideouts"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["countryList"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"])){
    
 
 
@@ -82,11 +79,11 @@ $query_i3->execute();
 $sql_i4 = "INSERT INTO mission_agents (ma_mission_id, agents) VALUES('$mmt_missionId', '$agents');";
 $query_i4 = $dbConnect->prepare($sql_i4);
 $query_i4->execute();
-var_dump($query_i4);
+
 $sql_i5 = "INSERT INTO mission_contacts (mc_mission_id, contacts) VALUES('$mmt_missionId', '$contacts');";
 $query_i5 = $dbConnect->prepare($sql_i5);
 $query_i5->execute();
-var_dump($query_i5);
+
 $sql_i6 = "INSERT INTO mission_targets (mt_mission_id, targets) VALUES('$mmt_missionId', '$targets');";
 $query_i6 = $dbConnect->prepare($sql_i6);
 $query_i6->execute();
@@ -231,17 +228,10 @@ exit;
               </select>
           </div>
          <!-- <*****************status************************** -->
-               <label for="status" class="form-label fw-bold my-2 fs-5" id="status">Status</label>
-          <div class="mb-3">              
-              <select name="missionStatus" id="status" class="fs-5 w-25">
-              <option value=""></option>;
-               <option value="En préparation">En préparation</option>;
-               <option value="En cours">En cours</option>;
-               <option value="Terminé">Terminé</option>;
-               <option value="Échec">Échec</option>;
-              </select> 
+         <div class="mb-3">
+         <label for="status" class="form-label fw-bold my-2 fs-5 text-light">Status</label>
+            <input type="text" class="form-control" style="max-width: 400px;"  name="status" id="status" value=""  required=true>
           </div>
-        
          <!-- *************Nom de code******************* -->
           <div class="mb-3">
             <label for="codeName" class="form-label fw-bold my-2 fs-5 text-light">Nome de code</label>
@@ -282,39 +272,32 @@ exit;
           ?>
           </select>
           </div>
-         <!-- ****************Adents******************* -->
-         <div class="mb-3 d-flex mt-4">
-          <label for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Agents</label>
+        <!-- ****************Agents******************* -->
+        <div><input type="" id="special_chosen" value=""></div>
+        <div class="mb-3 d-flex mt-4">
+        
+          <label for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;" id="agent_label">Agents</label>
           <select name="agents[]" multiple="multiple" id="agents" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
             <!-- recuperer que les agents -->
           <?php 
-       while($row7 = $query_s7->fetch(PDO::FETCH_ASSOC)):
-        $agentId = $row7["id"];
-        $lastname = $row7["lastname"];
-        $firstname = $row7["firstname"];   
-        $nationality = $row7["nationality"];
-        $country = $row7["country"];
-       
-       
-        $sql_s8 = "SELECT * FROM agents WHERE id_user_agent = '$agentId'"; 
-        $query_s8 = $dbConnect->query($sql_s8);
-        $query_s8->execute();
-        while ($row8 = $query_s8->fetch(PDO::FETCH_ASSOC)) :
-        $specialities = unserialize($row8["specialities"]);
-        foreach ($specialities as $user_speciality) :
-        echo $user_speciality.", ";
-      //   echo "<pre>";
-      //   var_dump($query_s8);
-      //  echo "</pre>";
-        echo "<option class=\"py-1\" value=".$agentId.">".$user_speciality." ".$firstname." - ".$lastname." (".$country." - ".$nationality.")"."</option><hr>";
-      endforeach;
-    endwhile;
-
-      endwhile;
+           $sql_s3 = "SELECT * FROM person, agents"; 
+           $query_s3 = $dbConnect->query($sql_s3);
+           $query_s3->execute();
+        while($row = $query_s3->fetch(PDO::FETCH_ASSOC)):
+         $agentId = $row["id"];
+         $lastname = $row["lastname"];
+         $firstname = $row["firstname"];   
+         $specilities = unserialize($row["specilities"]);
+         
+         echo "<option class=\"py-1 user_spec\"  value=".$agentId." ".$selected." ".">".$user_spec_id." - ".$firstname." ".$lastname."</option><hr>"; 
+        endwhile;
           ?>
+          
+      
           </select>
           </div>
+          <!-- ************************************** -->
           <!-- ****************Contacts******************* -->
         <div class="mb-3 d-flex mt-4">
           <label for="contacts" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Contacts</label>
@@ -374,23 +357,23 @@ exit;
            
          </script> -->
 
-                 <!-- <script>
-          $(document).ready(function(){
-            $speciality = $("#speciality");
-             $special_chosen = $("#special_chosen");
-             $agents = $("#agents");
+          //          <script>
+          // $(document).ready(function(){
+          //   $speciality = $("#speciality");
+          //    $special_chosen = $("#special_chosen");
+          //    $agents = $("#agents");
            
-             $("#speciality").change(function(){
-              $("#agent_label").addClass("bg-light");
-              // if($("#user_speciality").val() == speciality.val()){
-                $("#special_chosen").val($speciality.val()); 
-                $("#agents").val($speciality.val()); 
-               }
+          //    $("#speciality").change(function(){
+          //     $("#agent_label").addClass("bg-light");
+          //     // if($("#user_speciality").val() == speciality.val()){
+          //       $("#special_chosen").val($speciality.val()); 
+          //       $("#agents").val($speciality.val()); 
+          //     // }
               
-             });
-           });
+          //    });
+          //  });
            
-         </script> -->
+         </script>
 
 <!-- <script type="text/javascript">
   let agent = document.getElementById("agent");
@@ -416,11 +399,32 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     $("#speciality").on("change", function () {
     var speciality = $("#speciality").val();
     var user_spec = $(".user_spec").val();
-   
+    -->
+    // console.log(speciality);
+    // console.log(user_spec);
+  //  if($("#speciality").text() == $(".user_spec").text()) {
+    
+    
+    
+  //  }else{
+  //   $(".user_spec").addClass("visible");
+  //  }
+  
+  //     if(speciality == user_spec){
+  //     console.log(speciality);
+  //     console.log(user_spec);
+  //       $(".user_spec").addClass("visible");   
+  //     } else {
+  //       $(".user_spec").text("Pas de spécialité requise")
+  //     $(".user_spec").addClass("hidden");
+  //     }
+  <!-- });
+      });
+
   </script>
 
   <script> -->
-  <!-- $(document).ready(function () {
+  $(document).ready(function () {
     $("#speciality").on("change", function (callback) {
     var speciality = $("#speciality").val();
     var user_spec = $(".user_spec").val(); 
@@ -437,9 +441,9 @@ crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
         }
       }
   });
-      }); -->
+      });
 
-  </script>
+  </script> -->
 
 <script>
 
@@ -449,7 +453,7 @@ location.reload(true);
 });
 });
 </script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>  
+
         <?php
         include_once "../includes/admin_footer.php";
         ?>

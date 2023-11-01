@@ -42,7 +42,7 @@ while ($row = $query5->fetch(PDO::FETCH_ASSOC)):
   $specialityTitle = $row["title"];
 endwhile;
 
-$sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets WHERE mission_agents.mA_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission'";
+$sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets WHERE mission_agents.ma_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission'";
 $query7 = $dbConnect->query($sql7);
 $query7->execute();
  
@@ -108,52 +108,52 @@ $query7->execute();
 <td>
   <!-- recup les id des agents -->
 <?php 
+$us_specArr = [];
 while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
   $agents = unserialize($row["agents"]);
   $contacts = unserialize($row["contacts"]);
   $targets = unserialize($row["targets"]);
-  foreach($contacts as $contact) :
-    $user_contact = $contact.", ";
-    $sql9 = "SELECT * FROM user WHERE id = '$user_contact'";
-     $query9 = $dbConnect->prepare($sql9);
-    $query9->execute();
-  endforeach;
-   
-  foreach($targets as $target) :
-    $user_target = $target.", ";
-    $sql10 = "SELECT * FROM user WHERE id = '$user_target'";
-    $query10 = $dbConnect->prepare($sql10);
-   $query10->execute();
-  endforeach;
+  
   foreach ($agents as $agent):
     $agentId = $agent;
+   
     // var_dump($agentId);
-    $sql8= "SELECT * FROM user INNER JOIN user_speciality  ON user.id='$agentId' AND user_speciality.userId='$agentId'";
+    $sql8= "SELECT * FROM person, agents WHERE person.id='$agentId' AND agents.id_user_agent='$agentId'";
     $query8 = $dbConnect->prepare($sql8);
     $query8->execute();
+   
     while($row = $query8->fetch(PDO::FETCH_ASSOC)):    
       $ag_id = $row["id"];
       $ag_lastname = $row["lastname"];
       $ag_firstname = $row["firstname"];
-      $specialities = unserialize($row["user_specialities"]);  
+      $specialities = unserialize($row["specialities"]);  
+     
       foreach($specialities as $speciality) :
-       $user_spec = $speciality.", ";
-      endforeach;
+       $user_spec = $speciality;
+    endforeach;
       echo $ag_firstname." ".$ag_lastname." - ". $user_spec."<br>";
-  endwhile;  
+    endwhile;
   endforeach;
 endwhile;
 ?>
 </td>
+</tr>
 <tr>
   <td>Contacts</td>
 <td>
-  <?php  while($row = $query9->fetch(PDO::FETCH_ASSOC)):   
+  <?php
+foreach($contacts as $contact) :
+    $user_contact = $contact;
+    $sql9 = "SELECT * FROM person WHERE id = '$user_contact'";
+     $query9 = $dbConnect->prepare($sql9);
+    $query9->execute();
+      while($row = $query9->fetch(PDO::FETCH_ASSOC)):   
       $cont_id = $row["id"];
       $cont_lastname = $row["lastname"];
       $cont_firstname = $row["firstname"];
     endwhile;
     echo $cont_lastname." ".$cont_firstname."<br>";
+  endforeach;
     ?>
 </td>
 </tr>
@@ -161,11 +161,17 @@ endwhile;
 <td>Cibles</td>
 <td>
 <?php  
-     while($row = $query10->fetch(PDO::FETCH_ASSOC)):   
-      $targ_id = $row["id"];
-      $targ_lastname = $row["lastname"];
-      $targ_firstname = $row["firstname"];
-    endwhile;
+foreach($targets as $target) :
+  $user_target = $target;
+  $sql10 = "SELECT * FROM person WHERE id = '$user_target'";
+  $query10 = $dbConnect->prepare($sql10);
+ $query10->execute();
+endforeach;
+  while($row = $query10->fetch(PDO::FETCH_ASSOC)):   
+    $targ_id = $row["id"];
+    $targ_lastname = $row["lastname"];
+    $targ_firstname = $row["firstname"];
+  endwhile;    
     echo $targ_firstname." ".$targ_lastname."<br>";
     ?>
 </td>
