@@ -33,13 +33,12 @@ $missionTypeTitle = $missionType[0];
 
 $title = strip_tags($mission["title"]);
 // afficher spécialities
-$sql5 = "SELECT * FROM mission_speciality INNER JOIN speciality ON speciality.id = mission_speciality.mis_spec_id";
+$sql5 = "SELECT * FROM mission_speciality WHERE mission_Id='$idMission'";
 $query5 = $dbConnect->query($sql5);
 $query5->execute();
 while ($row = $query5->fetch(PDO::FETCH_ASSOC)):
   $mission_Id = $row["mission_Id"];
-  $mis_spec_id = $row["mis_spec_id"];
-  $specialityTitle = $row["title"];
+  $specialityTitle = $row["mis_speciality"];
 endwhile;
 
 $sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets WHERE mission_agents.ma_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission'";
@@ -69,11 +68,22 @@ $query7->execute();
 </tr>
 <tr>
 <td>Date de debut</td>
-<td><?= strip_tags($mission['startDate']) ?></td>
+<?php 
+$start = strip_tags($mission['startDate']);
+$date =  new DateTime($start);
+$newstart =  $date->format("d-m-Y");
+$startDate = $newstart;
+
+$end = strip_tags($mission['endDate']);
+$date2 =  new DateTime($end);
+$newend =  $date2->format("d-m-Y");
+$endDate = $newend;
+?>
+<td><?= $startDate ?></td>
 </tr>
 <tr>
 <td>Date de fin</td>
-<td><?= strip_tags($mission['endDate']) ?></td>
+<td><?= $endDate ?></td>
 </tr>
 <tr>
 <td>Pays</td>
@@ -98,11 +108,11 @@ $query7->execute();
     <?= $missionTypeTitle ?></td>
 </tr>
 <tr>
-<td>Spécialité</td>
+<td>Spécialité requise</td>
 <td>
 <?= $specialityTitle ?>
 </td>
-</tr>query8
+</tr>
 <tr>
 <td>Agents</td>
 <td>
@@ -121,7 +131,10 @@ while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
     $sql8= "SELECT * FROM person, agents WHERE person.id='$agentId' AND agents.id_user_agent='$agentId'";
     $query8 = $dbConnect->prepare($sql8);
     $query8->execute();
-   
+    echo '<pre>';
+    var_dump($agentId);
+    echo '</pre>';
+    
     while($row = $query8->fetch(PDO::FETCH_ASSOC)):    
       $ag_id = $row["id"];
       $ag_lastname = $row["lastname"];

@@ -41,7 +41,7 @@ $country = strip_tags($_POST["countryList"]);
 $missionStatus = strip_tags($_POST["missionStatus"]);
 $codeName = strip_tags($_POST["codeName"]);
 $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
-$specialityTitle = strip_tags($_POST["speciality"]);
+$specialityId = strip_tags($_POST["speciality"]);
 $agents = serialize($_POST["agents"]);
 $contacts = serialize($_POST["contacts"]);
 $targets = serialize($_POST["targets"]);
@@ -75,18 +75,18 @@ $query_i2 = $dbConnect->prepare($sql_i2);
 $query_i2->execute();
 
 
-$sql_i3 = "INSERT INTO mission_speciality (mission_Id, mis_speciality) VALUES('$mmt_missionId', '$specialityTitle');";
+$sql_i3 = "INSERT INTO mission_speciality (mission_Id, mis_spec_id) VALUES('$mmt_missionId', '$specialityId');";
 $query_i3 = $dbConnect->prepare($sql_i3);
 $query_i3->execute();
 
 $sql_i4 = "INSERT INTO mission_agents (ma_mission_id, agents) VALUES('$mmt_missionId', '$agents');";
 $query_i4 = $dbConnect->prepare($sql_i4);
 $query_i4->execute();
-
+var_dump($query_i4);
 $sql_i5 = "INSERT INTO mission_contacts (mc_mission_id, contacts) VALUES('$mmt_missionId', '$contacts');";
 $query_i5 = $dbConnect->prepare($sql_i5);
 $query_i5->execute();
-
+var_dump($query_i5);
 $sql_i6 = "INSERT INTO mission_targets (mt_mission_id, targets) VALUES('$mmt_missionId', '$targets');";
 $query_i6 = $dbConnect->prepare($sql_i6);
 $query_i6->execute();
@@ -151,9 +151,7 @@ exit;
              }else{
               $("#contacts").html("<option value=''>Pas de contacts dans ce pays></option>");
              }
-      });   
-       
-  
+      });     
       //  *********************************************
       $("#targets").on("change", function(){
              var agents = $("#agents").val();
@@ -164,60 +162,37 @@ exit;
                     url: "ajaxData2.php",
                     data: 'targets='+targets,
                     success:function(response){
-                  //  alert(response);
-                  $("#agents").html(response);
+                   alert(response);
+                  // $("#agents").html(response);
                   }
                   })
              }else{
               $("#agents").html("<option value=''>Pas d'agents requis></option>");
              }
       });  
-    // ****************************************************
-    $("#description").on("click", function(){
-             var title = $("#title").val();
-             if(title){
-                  $.ajax({
-                    type: "POST",
-                    url: "ajaxData3.php",
-                    data: 'title='+title,
-                    success:function(response){
-                  //  alert(response);
-                  $("#title").html(response);
-                  }
-                  })
-             }
-      });   
-     
-          //  $("#speciality").on("click", function(){
-          //     alert( $("#agents").val());
-          //  });
-       
-                // afficher les agents avec specialité choisie
-            $("#speciality").on("change", function(){
+    
+      //afficher les agents avec specialité choisie
+      $("#speciality").on("change", function(){
              var speciality = $("#speciality").val();
              var agents = $("#agents").val();
              if(speciality){
                   $.ajax({
                     type: "POST",
-                    url: "ajaxData2.php",
+                    url: "ajaxData.php",
                     data: 'speciality='+speciality,
                     success:function(response){
-                  //  alert(response);
-                  $("#agents").html(response);
+                   alert(response);
+                  // $("#agents").html(response);
                   }
                   })
              }else{
               $("#agents").html("<option value=''>Pas d'agents avec la spécialité requise></option>");
              }
-      });   
-
+      }); 
+      
+      
     }); 
            </script>
- <style>
-  .tx_color {
- color: #01013d!important;
-          }
- </style>
 </head>
 <div class="body_page_new py-4">
  <div class="p-4" style="max-width: 1000px;">
@@ -227,11 +202,11 @@ exit;
         <form class="form" action="mission_new.php" method="post">
           <div class="mb-3">
             <!-- **************title************* -->
-            <label for="title" class="form-label fw-bold my-2 fs-5 tx_color">Titre</label>
+            <label for="title" class="form-label fw-bold my-2 fs-5 text-light">Titre</label>
             <input type="text" class="form-control" style="max-width: 400px;"  name="title" id="title" value=""  required=true>
           </div>
           <!-- **************description************* -->
-          <label for="description" class="form-label fw-bold my-2 fs-5 tx_color" >Déscription</label>
+          <label for="description" class="form-label fw-bold my-2 fs-5 text-light" >Déscription</label>
           <div class="mb-3">
             <textarea id="description" name="description" rows="5" cols="44">
             </textarea>
@@ -239,30 +214,19 @@ exit;
           <!-- **************startDate************* -->
 
           <div class="mb-3">
-            <label for="startDate" class="form-label fw-bold my-2 fs-5 tx_color">Date de debut</label>
+            <label for="startDate" class="form-label fw-bold my-2 fs-5 text-light">Date de debut</label>
             <input type="date" class="form-control" style="max-width: 400px;" name="startDate" id="startDate" value="" required>
           </div>
           <!-- **************endDate************* -->
 
           <div class="mb-3">
-            <label for="endDate" class="form-label fw-bold my-2 fs-5 tx_color">Date de la fin</label>
+            <label for="endDate" class="form-label fw-bold my-2 fs-5 text-light">Date de la fin</label>
             <input type="date" class="form-control" style="max-width: 400px;" name="endDate" id="endDate" value="" required>
           </div>
-  <!-- <*****************status************************** -->
-  <label for="status" class="form-label fw-bold my-2 fs-5 tx_color" id="status">Status</label>
-          <div class="mb-3">              
-              <select name="missionStatus" id="status" class="fs-5 w-25">
-              <option value=""></option>;
-               <option value="En préparation">En préparation</option>;
-               <option value="En cours">En cours</option>;
-               <option value="Terminé">Terminé</option>;
-               <option value="Échec">Échec</option>;
-              </select> 
-          </div>
-        
+
            <!--  ***************COUNTRY****************** -->
 
-           <label for="countryList" class="form-label fw-bold my-2 fs-5 tx_color" id="pays_label">Pays</label>
+           <label for="countryList" class="form-label fw-bold my-2 fs-5" id="pays_label">Pays</label>
           <div class="mb-3">     
               <?php include_once "../lists/countries_list.php"; ?>
               
@@ -283,9 +247,9 @@ exit;
             $query_s6 = $dbConnect->query($sql_s6);
             $query_s6->execute();
            ?>
-             <label for="hideout" class="form-label fw-bold my-2 fs-5 tx_color">Planques</label>
+             <label for="hideout" class="form-label fw-bold my-2 fs-5">Planques</label>
           <div class="mb-3">     
-              <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-5 w-75 h-auto">
+              <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-5 w-50 h-auto">
                 <?php
                 while ($row = $query_s6->fetch(PDO::FETCH_ASSOC)):
                 $hideoutId = $row["id"];
@@ -304,24 +268,26 @@ exit;
               ?>
               </select>
           </div>
-       <!-- ****************Contacts******************* -->
-       <div class="mb-3 mt-4">
-          <label for="contacts" class="form-label fw-bold mb-2 fs-5 me-2 tx_color" style="width: 120px;">Contacts</label><br>
-          <select name="contacts[]" multiple="multiple" id="contacts" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
-
-            <!-- recuperer que les agents avec ajax-->
-       
-          </select>
+         <!-- <*****************status************************** -->
+               <label for="status" class="form-label fw-bold my-2 fs-5" id="status">Status</label>
+          <div class="mb-3">              
+              <select name="missionStatus" id="status" class="fs-5 w-25">
+              <option value=""></option>;
+               <option value="En préparation">En préparation</option>;
+               <option value="En cours">En cours</option>;
+               <option value="Terminé">Terminé</option>;
+               <option value="Échec">Échec</option>;
+              </select> 
           </div>
-          
+        
          <!-- *************Nom de code******************* -->
           <div class="mb-3">
-            <label for="codeName" class="form-label fw-bold my-2 fs-5 tx_color">Nome de code</label>
+            <label for="codeName" class="form-label fw-bold my-2 fs-5 text-light">Nome de code</label>
             <input type="text" class="form-control"  style="max-width: 400px;" name="codeName" id="codeName" value="" required>
           </div>
           
          <!-- *****************missionType************** -->
-           <label for="missionType" class="form-label fw-bold my-2 fs-5 tx_color">Type de mission</label>
+           <label for="missionType" class="form-label fw-bold my-2 fs-5 text-light">Type de mission</label>
            <select class="form-control"  style="max-width: 400px;" name="mmt_missionTypeId" required id="missionType">
            <option value="Choisir"></option>
            <?php 
@@ -337,8 +303,75 @@ exit;
 
          ?>      
            </select>
-  <!-- ****************Targets******************* -->
-  <div class="mb-3 d-flex mt-4">
+
+          <!-- ************Speciality **************** -->
+          <div class="mb-3 mt-4">
+          <label for="speciality" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Spécialité</label>
+        <br>
+          <select name="speciality" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px;">
+          <!-- <option>Choisir</option> -->
+          <?php 
+       while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) {
+
+        $specialityId = $row["id"];
+        $specialityTitle = $row["title"];
+        echo "<option class=\"spec\"  value=".$specialityId." id=".$specialityTitle.">".$specialityTitle."</option>"; 
+      }
+          ?>
+          </select>
+          </div>
+         <!-- ****************Adents******************* -->
+         <div class="mb-3 d-flex mt-4">
+          <label for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Agents</label>
+          <select name="agents[]" multiple="multiple" id="agents" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
+
+            <!-- recuperer que les agents -->
+          <?php 
+      //  while($row7 = $query_s7->fetch(PDO::FETCH_ASSOC)):
+      //   $agentId = $row7["id"];
+      //   $lastname = $row7["lastname"];
+      //   $firstname = $row7["firstname"];   
+      //   $nationality = $row7["nationality"];
+      //   $country = $row7["country"];
+       
+       
+        // $sql_s8 = "SELECT * FROM agents WHERE id_user_agent = '$agentId'"; 
+        // $query_s8 = $dbConnect->query($sql_s8);
+        // $query_s8->execute();
+        // while ($row8 = $query_s8->fetch(PDO::FETCH_ASSOC)) :
+        // $specialities = unserialize($row8["specialities"]);
+        // foreach ($specialities as $user_speciality) :
+        // echo $user_speciality.", ";
+      //   echo "<pre>";
+      //   var_dump($query_s8);
+      //  echo "</pre>";
+        // echo "<option class=\"py-1\" value=".$agentId.">".$user_speciality." - ".$firstname." ".$lastname." - ".$country." (".$nationality.")"."</option><hr>";
+    //   endforeach;
+    // endwhile;
+
+      // endwhile;
+          ?>
+          </select>
+          </div>
+          <!-- ****************Contacts******************* -->
+        <div class="mb-3 d-flex mt-4">
+          <label for="contacts" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Contacts</label>
+          <select name="contacts[]" multiple="multiple" id="contacts" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
+
+            <!-- recuperer que les agents -->
+          <?php 
+      //  while($row = $query_s4->fetch(PDO::FETCH_ASSOC)):
+      //   $contactId = $row["id"];
+      //   $lastname = $row["lastname"];
+      //   $firstname = $row["firstname"];   
+      //   $country = $row["country"];
+        // echo "<option class=\"py-1\" value=".$contactId.">".$country." ".$firstname." ".$lastname."</option><hr>"; 
+      // endwhile;
+          ?>
+          </select>
+          </div>
+          <!-- ****************Targets******************* -->
+        <div class="mb-3 d-flex mt-4">
           <label for="targets" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Cibles</label>
           <select name="targets[]" multiple="multiple" id="targets" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
@@ -354,35 +387,6 @@ exit;
           ?>
           </select>
           </div>
-          <!-- ************Speciality **************** -->
-          <div class="mb-3 mt-4">
-          <label for="speciality" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d;">Spécialité requise</label>
-        <br>
-          <select name="speciality" id="speciality"  class="fs-5 pb--2 pe-2" style="min-width: 330px;">
-          <option></option>
-          <?php 
-       while ($row = $query_s2->fetch(PDO::FETCH_ASSOC)) {
-
-        $specialityId = $row["id"];
-        $specialityTitle = $row["title"];
-        // echo "<option class=\"spec\"  value=".$specialityTitle." id=".$specialityTitle.". name=".$specialityId.">".$specialityTitle."</option>"; 
-        echo "<option class=\"spec\"  value=".$specialityId."  name=".$specialityTitle.">".$specialityTitle."</option>"; 
-
-      }
-          ?>
-          </select>
-          </div>
-        
-         <!-- ****************Adents******************* -->
-         <div class="mb-3 d-flex mt-4">
-          <label for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Agents</label>
-          <select name="agents[]" multiple="multiple" id="agents" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
-     
-            <!-- recuperer que les agents avec ajax-->
-     
-          </select>
-          </div>
-          
           
           <?php
                   include_once "btn_create.php";
@@ -391,9 +395,22 @@ exit;
         <button type="button" class="btn btn-primary" id="btn_reload">Réinisialiser</button>
         </div>
    
-     
+        <?php
+       
+  ?>
 </div>
-
+<!-- <script>
+          $(document).ready(function(){
+            $country = $("#country");
+             $hideout = $("#hideout");
+             $chosen_country =  $("#chosen_country");
+             $("#country").change(function(){
+              $("#pays_label").addClass("btn btn-info");
+              $("#hideout").val($country.val()); 
+             });
+           });
+           
+         </script> -->
 
                  <!-- <script>
           $(document).ready(function(){

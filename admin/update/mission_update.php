@@ -75,24 +75,27 @@ if (!empty($_POST["submit"])) {
   $targets = serialize($_POST["targets"]);
 
   $sql4 = "UPDATE mission SET title='$title', description='$description', startDate='$startDate', endDate='$endDate', country='$country', missionStatus='$missionStatus', codeName='$codeName' WHERE id='$idMission'";
-
   $query4 = $dbConnect->query($sql4);
-  $Execute = $query4->execute();
+  $Execute4 = $query4->execute();
   if ($Execute) {
-    echo "<p style=\"background: darkgrey; color: white; font-weight: bold;\" class=\"text-center p-2\">La mission modifiée sous le numéro " . $idMission .
-      "<a class=\"fs-4 ms-3 text-bold text-dark\" href='../lists/missions_adm.php'>Retour</a></p>";
+    // echo "<p style=\"background: darkgrey; color: white; font-weight: bold;\" class=\"text-center p-2\">La mission modifiée sous le numéro " . $idMission .
+    //   "<a class=\"fs-4 ms-3 text-bold text-dark\" href='../lists/missions_adm.php'>Retour</a></p>";
 
-    // header("Location: ../lists/missions_adm.php");
-
+     header("Location: ../lists/missions_adm.php");
+   
 
   }
+
+echo "<pre>";
+var_dump($sql4);
+echo "</pre>";
   $sql5 = "UPDATE mission_missionType SET mmt_missionTypeId='$mmt_missionTypeId' WHERE mmt_missionId='$idMission'";
   $query5 = $dbConnect->query($sql5);
-  $Execute = $query5->execute();
+  $Execute5 = $query5->execute();
 
   $sql_u3 = "UPDATE mission_speciality SET mis_spec_id='$mis_spec_id' WHERE mission_Id='$idMission'";
   $query_u3 = $dbConnect->query($sql_u3);
-  $Execute = $query_u3->execute();
+  $Execute_u3 = $query_u3->execute();
 
   $sql_i4 = "UPDATE mission_agents SET  agents='$agents' WHERE mA_mission_id='$idMission'";
   $query_i4 = $dbConnect->prepare($sql_i4);
@@ -106,6 +109,8 @@ if (!empty($_POST["submit"])) {
   $query_i6 = $dbConnect->prepare($sql_i6);
   $query_i6->execute();
 }
+
+
 
 
 ?>
@@ -131,6 +136,7 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
 ?>
 <div class="py-4 body_page_new">
   <div>
+
     <h1>Modifier la mission</h1>
     <form method="post" action="mission_update.php?id=<?php echo $idMission; ?>">
       <div class="mb-3">
@@ -145,19 +151,33 @@ while ($row = $query6->fetch(PDO::FETCH_ASSOC)) {
           <textarea name="description" id="description" cols="54" rows="10"><?php echo $description ?></textarea>
         </div>
         <!-- ***********startDate de La mission************** -->
+        <?php
+            $date =  new DateTime($startDate);
+            $newStartDate =  $date->format("d/m/Y");
+            $startDate = $newStartDate;
+            ?>
         <div class="mb-3 d-flex">
-          <label for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label>
+          <label for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 140px;">Date de debut</label>
           <button type="button" class="fs-6 me-4" onclick="startDateBtn()" value="<?php echo $startDate ?>" name="btnStartDate" id="btnStartDate"><?php echo $startDate ?></button>
+          
           <input type="dateTime" style="display: none;" name="startDate" id="startDate" placeholder="<?php echo $startDate ?>" value="<?php echo $startDate ?>">
+          <?php
 
+?>
 
         </div>
-        <!-- **************endDate de La mission************ -->
+        <!-- **************endDate de La mission************ -->  <?php
+          $date2 =  new DateTime($endDate);
+          $newEndDate =  $date2->format("d/m/Y");
+          $endDate = $newEndDate;
+          ?>
         <div class="mb-3 d-flex">
-          <label for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de debut</label>
-          <button type="button" class="fs-6 me-4" onclick="endDateBtn()" value="<?php echo $endDate ?>" name="btnStartDate" id="btnStartDate"><?php echo $endDate ?></button>
+          <label for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 140px;">Date de fin</label>
+          <button type="button" class="fs-6 me-4" onclick="endDateBtn()" value="<?php echo $endDate ?>" name="btnEndDate" id="btnEndDate"><?php echo $endDate ?></button>
+        
           <input type="dateTime" style="display: none;" name="endDate" id="endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
         </div>
+
         <!-- **************Pays de la mission************* -->
         <div class="mb-3">
           <label for="country" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>

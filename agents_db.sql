@@ -77,7 +77,7 @@ ALTER TABLE user_speciality ADD CONSTRAINT FK_userId FOREIGN KEY (userId) REFERE
 
 CREATE TABLE mission_speciality(
 mission_Id INT NOT NULL,
-mis_spec_id INT NOT NULL
+mis_spec_id INT  NOT NULL
 ) engine=InnoDB;
 
 

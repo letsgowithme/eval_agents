@@ -8,7 +8,7 @@ $title = strip_tags($_POST["title"]);
 
 require_once "../../includes/DB.php";
 
-$sql = "INSERT INTO `speciality`(`title`) 
+$sql = "INSERT INTO speciality(title) 
 VALUES(:title)";
 
 $query = $dbConnect->prepare($sql);
@@ -16,7 +16,8 @@ $query = $dbConnect->prepare($sql);
 $query->bindValue(':title', $title, PDO::PARAM_STR);
 
 if(!$query->execute()){
-  die("Failed to insert INTO `Spécialité`");
+  die("Failed to insert INTO Spécialité");
+  // echo "<p>La specialité déjà existe";
 }
 $id = $dbConnect->lastInsertId();
 
@@ -57,6 +58,27 @@ include_once "../includes/admin_sidebar.php";
     padding: 5px;
   }
 </style>
+<script>
+    $(document).ready(function(){
+      $("#btn_submit").on("click", function(){
+            //  var email = $("#email");
+             var title = $("#title").val();
+             if(title){
+                  $.ajax({
+                    type: "POST",
+                    url: "ajaxData.php",
+                    data: 'title='+title,
+                    success:function(response){
+                  //  alert(response);
+                  $("#title").html(response);
+                  }
+                  })
+            
+              
+             }
+      });     
+    });    
+    </script>
 </head>
 
   <div>

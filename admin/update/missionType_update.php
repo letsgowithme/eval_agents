@@ -6,12 +6,12 @@ if(isset($_POST["submit"])){
  
   $title = $_POST["title"];
  
-    $sql = "UPDATE  speciality  SET title='$title' WHERE id='$spec_up_id'";
+    $sql = "UPDATE  missionType  SET title='$title' WHERE id='$spec_up_id'";
 
     $query = $dbConnect->query($sql); 
     $Execute = $query->execute();
     if($Execute){
-      header("Location: ../lists/specialities.php");
+     header("Location: ../lists/missionTypes.php");
     }
 }
 
@@ -27,7 +27,7 @@ include_once "../includes/admin_sidebar.php";
   <?php 
 global $dbConnect;
 // require_once "../../includes/DB.php";
-$sql2 = "SELECT * FROM  speciality  WHERE  id  = '$spec_up_id'";
+$sql2 = "SELECT * FROM  missionType  WHERE  id  = '$spec_up_id'";
 $query2 = $dbConnect->query($sql2);
 
 while($row = $query2->fetch()){
@@ -39,9 +39,9 @@ while($row = $query2->fetch()){
   ?>
 <div class="p-4" style="height: 90vh;">
   <div>
-<div><h1>Modifier la spécialité numéro <?= $spec_up_id ?></h1></div> 
+<div><h1>Modifier le type de mission numéro <?= $spec_up_id ?></h1></div> 
   
-<form method="post" action="speciality_update.php?id=<?php echo $spec_up_id; ?>">
+<form method="post" action="missionType_update.php?id=<?php echo $spec_up_id; ?>">
 <div class="mb-3">
   <!-- ******************Code de La planque****************** -->
   

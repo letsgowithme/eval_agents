@@ -17,7 +17,7 @@ $query->bindValue(':title', $title, PDO::PARAM_STR);
 
 if(!$query->execute()){
   die("Failed to insert INTO `missionType`");
-}
+} 
 $id = $dbConnect->lastInsertId();
 
 // header("Location: mission_type_new.php");
@@ -51,6 +51,26 @@ include_once "../includes/admin_sidebar.php";
     padding: 5px;
   }
 </style>
+<script>
+    $(document).ready(function(){
+      $("#btn_submit").on("click", function(){
+             var title = $("#title").val();
+             if(title){
+                  $.ajax({
+                    type: "POST",
+                    url: "ajaxData2.php",
+                    data: 'title='+title,
+                    success:function(response){
+                  //  alert(response);
+                  $("#title").html(response);
+                  }
+                  })
+            
+              
+             }
+      });     
+    });    
+    </script>
 </head>
 <body class="body_page_new">
   <div class="container">
