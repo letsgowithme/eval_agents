@@ -6,12 +6,23 @@ if(!empty($_POST["countryList"])){
   $query_s1->execute(["countryContact" => $_POST["countryList"]]);
   
   while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)):
-  echo "<option value=".$row["country"].">".$row["firstname"]." ".$row["lastname"]." (".$row["country"].")</option>";
+  echo "<option value=".$row["id"].">".$row["firstname"]." ".$row["lastname"]." (".$row["country"].")</option>";
   endwhile;
   $query_s1->closeCursor();
   }
   // *********************************************
   if(!empty($_POST["targets"])){
+    $target = $_POST["targets"];
+    $targetId = intval($target);
+
+    $sql_s8_1 = "SELECT nationality FROM person WHERE id = '$targetId'"; 
+    $query_s8_1 = $dbConnect->query($sql_s8_1);
+    $query_s8_1->execute();
+    $nationsAll = $query_s8_1->fetch();
+    $target_nation = $nationsAll[0];
+    
+      
+    $selected = "";
     $sql_s2 = "SELECT * FROM person WHERE nationality!=:agentNationality AND userTYPE='agent'";
     $query_s2 = $dbConnect->prepare($sql_s2);
     $query_s2->execute(["agentNationality" => $_POST["targets"]]);
@@ -28,15 +39,17 @@ if(!empty($_POST["countryList"])){
       while ($row8 = $query_s8->fetch(PDO::FETCH_ASSOC)) :
         $specialities = unserialize($row8["specialities"]);
 
+        if($target_nation != $ag_nation):
         foreach ($specialities as $user_speciality) :
         echo $user_speciality.", ";
         
         
-        echo "<option value=".$row["nationality"].">".$user_speciality." - ".$row["firstname"]." ".$row["lastname"]." - ".$row["nationality"]."</option>";
+        echo "<option value=".$agentId.">".$user_speciality." - ".$row["firstname"]." ".$row["lastname"]." - ".$row["nationality"]."</option>";
       
 
      
     endforeach;
+  endif;
     endwhile;
   
 endwhile;
@@ -76,7 +89,7 @@ $query3->execute();
 $specTitleAll = $query3->fetch();
 $specTitle = $specTitleAll[0];
 // *************************
-    $sql_s2 = "SELECT * FROM person WHERE id!=:agentId AND userTYPE='agent'";
+    $sql_s2 = "SELECT * FROM person WHERE id=:agentId AND userTYPE='agent'";
     $query_s2 = $dbConnect->prepare($sql_s2);
     $query_s2->execute(["agentId" => $_POST["speciality"]]);
     

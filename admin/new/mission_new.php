@@ -41,7 +41,7 @@ $country = strip_tags($_POST["countryList"]);
 $missionStatus = strip_tags($_POST["missionStatus"]);
 $codeName = strip_tags($_POST["codeName"]);
 $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
-$specialityTitle = strip_tags($_POST["speciality"]);
+$specialityId = strip_tags($_POST["speciality"]);
 $agents = serialize($_POST["agents"]);
 $contacts = serialize($_POST["contacts"]);
 $targets = serialize($_POST["targets"]);
@@ -75,7 +75,7 @@ $query_i2 = $dbConnect->prepare($sql_i2);
 $query_i2->execute();
 
 
-$sql_i3 = "INSERT INTO mission_speciality (mission_Id, mis_speciality) VALUES('$mmt_missionId', '$specialityTitle');";
+$sql_i3 = "INSERT INTO mission_speciality (mission_Id, mis_spec_id) VALUES('$mmt_missionId', '$specialityId');";
 $query_i3 = $dbConnect->prepare($sql_i3);
 $query_i3->execute();
 
@@ -123,7 +123,7 @@ exit;
              if(countryList){
                   $.ajax({
                     type: "POST",
-                    url: "ajaxData.php",
+                    url: "../ajax/ajaxData.php",
                     data: 'countryList='+countryList,
                     success:function(response){
                    
@@ -141,7 +141,7 @@ exit;
              if(countryList){
                   $.ajax({
                     type: "POST",
-                    url: "ajaxData2.php",
+                    url: "../ajax/ajaxData2.php",
                     data: 'countryList='+countryList,
                     success:function(response){
                    
@@ -155,13 +155,13 @@ exit;
        
   
       //  *********************************************
-      $("#targets").on("change", function(){
+      $("#targets").on("click", function(){
              var agents = $("#agents").val();
              var targets = $("#targets").val();
              if(targets){
                   $.ajax({
                     type: "POST",
-                    url: "ajaxData2.php",
+                    url: "../ajax/ajaxData2.php",
                     data: 'targets='+targets,
                     success:function(response){
                   //  alert(response);
@@ -178,7 +178,7 @@ exit;
              if(title){
                   $.ajax({
                     type: "POST",
-                    url: "ajaxData3.php",
+                    url: "../ajax/ajaxData3.php",
                     data: 'title='+title,
                     success:function(response){
                   //  alert(response);
@@ -199,7 +199,7 @@ exit;
              if(speciality){
                   $.ajax({
                     type: "POST",
-                    url: "ajaxData2.php",
+                    url: "../ajax/ajaxData2.php",
                     data: 'speciality='+speciality,
                     success:function(response){
                   //  alert(response);
@@ -349,7 +349,7 @@ exit;
         $lastname = $row["lastname"];
         $firstname = $row["firstname"];   
         $nation = $row["nationality"];
-         echo "<option class=\"py-1\" value=". $row["nationality"].">".$firstname." ".$lastname." - ".$nation."</option><hr>"; 
+         echo "<option class=\"py-1\" value=". $row["id"].">".$firstname." ".$lastname." - ".$nation."</option><hr>"; 
       endwhile;
           ?>
           </select>

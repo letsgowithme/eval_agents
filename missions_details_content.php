@@ -38,13 +38,22 @@ $query5 = $dbConnect->query($sql5);
 $query5->execute();
 while ($row = $query5->fetch(PDO::FETCH_ASSOC)):
   $mission_Id = $row["mission_Id"];
-  $specialityTitle = $row["mis_speciality"];
+  $specialityId = $row["mis_spec_id"];
 endwhile;
+$sql5_1= "SELECT title FROM speciality WHERE id='$specialityId'";
+ $query5_1 = $dbConnect->prepare($sql5_1);
+$query5_1->execute();
+$speciality = $query5_1->fetch();
+$specialityTitle = $speciality[0];
 
-$sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets WHERE mission_agents.ma_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission'";
+
+$sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets, mission_hideouts WHERE mission_agents.ma_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission' AND mission_hideouts.missionId='$idMission'";
 $query7 = $dbConnect->query($sql7);
 $query7->execute();
  
+$sql7_1 = "SELECT * FROM hideout";
+$query7_1 = $dbConnect->query($sql7_1);
+$query7_1->execute();
   ?>
 
 
@@ -90,6 +99,34 @@ $endDate = $newend;
 <td><?= strip_tags($mission['country']) ?></td>
 </tr>
 <tr>
+  <td>Planques</td>
+<td>
+  <?php
+  while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
+    $hideouts = unserialize($row["mis_hideouts"]);
+    $agents = unserialize($row["agents"]);
+    $contacts = unserialize($row["contacts"]);
+    $targets = unserialize($row["targets"]);
+foreach($hideouts as $hideout) :
+    $hideoutId = $hideout;
+    $sql9_1 = "SELECT * FROM hideout WHERE id = '$hideoutId'";
+     $query9_1 = $dbConnect->prepare($sql9_1);
+    $query9_1->execute();
+      while($row = $query9_1->fetch(PDO::FETCH_ASSOC)):   
+      $hideout_id = $row["id"];
+      $code = $row["code"];
+      $city = $row["city"];
+      $address = $row["address"];
+      $country = $row["country"];
+      $hideoutType = $row["hideoutType"];
+    endwhile;
+    echo $code." ".$city." ".$address." ".$country." ".$hideoutType."<br>";
+  endforeach;
+
+    ?>
+</td>
+</tr>
+<tr>
 <td>Status</td>
 <td><?= strip_tags($mission['missionStatus']) ?></td>
 </tr>
@@ -119,21 +156,17 @@ $endDate = $newend;
   <!-- recup les id des agents -->
 <?php 
 $us_specArr = [];
-while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
-  $agents = unserialize($row["agents"]);
-  $contacts = unserialize($row["contacts"]);
-  $targets = unserialize($row["targets"]);
-  
+// while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
+ 
+ 
   foreach ($agents as $agent):
     $agentId = $agent;
    
-    // var_dump($agentId);
+   
     $sql8= "SELECT * FROM person, agents WHERE person.id='$agentId' AND agents.id_user_agent='$agentId'";
     $query8 = $dbConnect->prepare($sql8);
     $query8->execute();
-    echo '<pre>';
-    var_dump($agentId);
-    echo '</pre>';
+  
     
     while($row = $query8->fetch(PDO::FETCH_ASSOC)):    
       $ag_id = $row["id"];
@@ -147,7 +180,7 @@ while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
       echo $ag_firstname." ".$ag_lastname." - ". $user_spec."<br>";
     endwhile;
   endforeach;
-endwhile;
+
 ?>
 </td>
 </tr>
@@ -167,6 +200,7 @@ foreach($contacts as $contact) :
     endwhile;
     echo $cont_lastname." ".$cont_firstname."<br>";
   endforeach;
+
     ?>
 </td>
 </tr>
@@ -186,8 +220,12 @@ endforeach;
     $targ_firstname = $row["firstname"];
   endwhile;    
     echo $targ_firstname." ".$targ_lastname."<br>";
+  
     ?>
 </td>
+<?php 
+endwhile;
+?>
 </tr>
  </td>
 </tr>

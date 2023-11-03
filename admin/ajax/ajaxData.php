@@ -1,12 +1,13 @@
 <?php 
 include_once("../../includes/DB.php");
 if(!empty($_POST["countryList"])){
+  $selected = "";
 $sql_s_s1 = "SELECT * FROM hideout WHERE country=:countryChoice ORDER BY city ASC";
 $query_s_s1 = $dbConnect->prepare($sql_s_s1);
 $query_s_s1->execute(["countryChoice" => $_POST["countryList"]]);
 
 while ($row = $query_s_s1->fetch(PDO::FETCH_ASSOC)):
-echo "<option value=".$row["country"].">".$row["address"]." ".$row["city"]." ".$row["country"]." -  ".$row["hideoutType"]."</option>";
+echo "<option value=".$row["id"].".$selected.>".$row["address"]." ".$row["city"]." ".$row["country"]." -  ".$row["hideoutType"]."</option>";
 
 
 endwhile;
@@ -79,29 +80,5 @@ if(!empty($_POST["codeName"])){
   
     $query_s_s4->closeCursor();
   }
-// 
 
-// if(!empty($_POST["speciality"])){
-//   $us_specialities = [];
-//   $sql2 = "SELECT * FROM agents WHERE agents.specialities=:spec_agentsToChoose";
-//   $query2 = $dbConnect->prepare($sql2);
-//   $query2->execute(["spec_agentsToChoose" => $_POST["speciality"]]);
-  
-//   while ($row = $query2->fetch(PDO::FETCH_ASSOC)):
-//     $id_user_agent = $row["id_user_agent"];
-//     $specialities = unserialize($row["specialities"]);
-//     foreach ($specialities as $speciality) {
-//      $specialityId = $speciality.",";
-//      $us_specialities[] = $specialityId;
-//      if(in_array($_POST["speciality"], $us_specialities)){
-          
-//       $selected  = "selected";
-//     }else {
-//       $selected = "";
-//     }
-//   echo "<option value=".$specialityId.". $selected>".$id_user_agent." ".$specialityId."</option>";
-//     }
-//   endwhile;
-//   $query2->closeCursor();
-//   }
-// ?>
+ ?>
