@@ -144,7 +144,7 @@ exit;
                     url: "../ajax/ajaxData2.php",
                     data: 'countryList='+countryList,
                     success:function(response){
-                   
+                  
                   $("#contacts").html(response);
                   }
                   })
@@ -165,6 +165,8 @@ exit;
                     data: 'targets='+targets,
                     success:function(response){
                   //  alert(response);
+              
+                   
                   $("#agents").html(response);
                   }
                   })
@@ -188,9 +190,6 @@ exit;
              }
       });   
      
-          //  $("#speciality").on("click", function(){
-          //     alert( $("#agents").val());
-          //  });
        
                 // afficher les agents avec specialité choisie
             $("#speciality").on("change", function(){
@@ -203,6 +202,7 @@ exit;
                     data: 'speciality='+speciality,
                     success:function(response){
                   //  alert(response);
+                 
                   $("#agents").html(response);
                   }
                   })
@@ -240,13 +240,14 @@ exit;
 
           <div class="mb-3">
             <label for="startDate" class="form-label fw-bold my-2 fs-5 tx_color">Date de debut</label>
-            <input type="date" class="form-control" style="max-width: 400px;" name="startDate" id="startDate" value="" required>
+            <input type="date" class="form-control" style="max-width: 200px;" name="startDate" id="startDate" value="" required>
           </div>
+        
           <!-- **************endDate************* -->
 
           <div class="mb-3">
             <label for="endDate" class="form-label fw-bold my-2 fs-5 tx_color">Date de la fin</label>
-            <input type="date" class="form-control" style="max-width: 400px;" name="endDate" id="endDate" value="" required>
+            <input type="date" class="form-control" style="max-width: 200px;" name="endDate" id="endDate" value="" required>
           </div>
   <!-- <*****************status************************** -->
   <label for="status" class="form-label fw-bold my-2 fs-5 tx_color" id="status">Status</label>
@@ -309,7 +310,7 @@ exit;
           <label for="contacts" class="form-label fw-bold mb-2 fs-5 me-2 tx_color" style="width: 120px;">Contacts</label><br>
           <select name="contacts[]" multiple="multiple" id="contacts" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
-            <!-- recuperer que les agents avec ajax-->
+            <!-- recuperer les contacts avec ajax-->
        
           </select>
           </div>
@@ -342,7 +343,7 @@ exit;
           <label for="targets" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Cibles</label>
           <select name="targets[]" multiple="multiple" id="targets" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
 
-            <!-- recuperer que les agents -->
+            <!-- recuperer les cibles -->
           <?php 
        while($row = $query_s5->fetch(PDO::FETCH_ASSOC)):
         $targetId = $row["id"];
@@ -382,88 +383,15 @@ exit;
      
           </select>
           </div>
-          
-          
           <?php
                   include_once "btn_create.php";
-                  ?>
+            ?>
         </form>
         <button type="button" class="btn btn-primary" id="btn_reload">Réinisialiser</button>
         </div>
    
-     
 </div>
-
-
-                 <!-- <script>
-          $(document).ready(function(){
-            $speciality = $("#speciality");
-             $special_chosen = $("#special_chosen");
-             $agents = $("#agents");
-           
-             $("#speciality").change(function(){
-              $("#agent_label").addClass("bg-light");
-              // if($("#user_speciality").val() == speciality.val()){
-                $("#special_chosen").val($speciality.val()); 
-                $("#agents").val($speciality.val()); 
-               }
-              
-             });
-           });
-           
-         </script> -->
-
-<!-- <script type="text/javascript">
-  let agent = document.getElementById("agent");
-let spec = document.getElementsByClassName("spec");
-let user_spec =document.getElementsByClassName("user_spec");
-agent.addEventListener("change", function(){
-  // if(spec == user_spec){
-    alert(user_spec.value());
-  // }else{
-  //   alert(user_spec);
-  // }
-})
-  </script> -->
-
-<!-- </script><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.2/jquery.modal.min.js" 
-integrity="sha512-ztxZscxb55lKL+xmWGZEbBHekIzy+1qYKHGZTWZYH1GUwxy0hiA18lW6ORIMj4DHRgvmP/qGcvqwEyFFV7OYVQ==" 
-crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
-
-<!-- <script>
-  $(document).ready(function () {
-    var agent = $("agent");
-    console.log(jQuery.type(agent));
-    $("#speciality").on("change", function () {
-    var speciality = $("#speciality").val();
-    var user_spec = $(".user_spec").val();
-   
-  </script>
-
-  <script> -->
-  <!-- $(document).ready(function () {
-    $("#speciality").on("change", function (callback) {
-    var speciality = $("#speciality").val();
-    var user_spec = $(".user_spec").val(); 
-    // var agent_info = $(".agent_info");
-      console.log(speciality);
-      console.log(user_spec);
-      // console.log(agent_info);
-      if(speciality != user_spec){
-        $(".user_spec").addClass("hidden");
-        $(".user_spec").text("Pas de spécialité requise")
-        callback;
-        if(speciality == user_spec){
-          $(".user_spec").addClass("visible");
-        }
-      }
-  });
-      }); -->
-
-  </script>
-
 <script>
-
 $(document).ready(function () {
 $("#btn_reload").click(function () {
 location.reload(true);

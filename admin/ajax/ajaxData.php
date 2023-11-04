@@ -7,7 +7,7 @@ $query_s_s1 = $dbConnect->prepare($sql_s_s1);
 $query_s_s1->execute(["countryChoice" => $_POST["countryList"]]);
 
 while ($row = $query_s_s1->fetch(PDO::FETCH_ASSOC)):
-echo "<option value=".$row["id"].".$selected.>".$row["address"]." ".$row["city"]." ".$row["country"]." -  ".$row["hideoutType"]."</option>";
+echo "<option value=".$row["id"]." ".$selected.">".$row["address"]." ".$row["city"]." ".$row["country"]." -  ".$row["hideoutType"]."</option>";
 
 
 endwhile;
