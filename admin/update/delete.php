@@ -1,12 +1,8 @@
 <?php
-//on demarre la session php
 $index=true;
 $titre = "Delete";
-
-
 include_once "../../includes/DB.php";         
 include_once "../includes/admin_footer.php";
-
 if(!empty($_GET["id"])){
   $sql1 =" DELETE FROM agents WHERE id_user_agent=:id";
   $query1 = $dbConnect->prepare($sql1); 
@@ -15,8 +11,7 @@ if(!empty($_GET["id"])){
   $query1_1 = $dbConnect->prepare($sql1_1); 
   $Execute = $query1_1->execute(["id"=>$_GET["id"]]);
   $query1_1->closeCursor();
-  // echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Utilisateur supprimé<br><a href="../lists/usersAll.php">Retour vers la Liste d\'utilisateurs</h2>';
-  header("Location: ../lists/usersAll.php");
+  echo '<h2 class="text-center" style="position:absolute; top: 20%; left: 50%;">Utilisateur supprimé<br><a href="../lists/usersAll.php">Retour vers la Liste d\'utilisateurs</h2>';
 }
 if(!empty($_GET["idMission"])){
   $sql2 =" DELETE FROM mission_missionType WHERE mmt_missionId=:id";
@@ -81,4 +76,3 @@ if(!empty($_GET["idMissionType"])){
 }
 include_once "../includes/admin_header.php";
 include_once "../includes/admin_sidebar.php";
-?>

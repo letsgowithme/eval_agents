@@ -11,12 +11,10 @@ $sql_s2 = "SELECT * FROM speciality ORDER BY title ASC";
 $query_s2 = $dbConnect->query($sql_s2);
 $query_s2->execute();
 
-
-// contacts
 $sql_s4 = "SELECT * FROM person WHERE userType='contact' ORDER BY firstname ASC"; 
 $query_s4 = $dbConnect->query($sql_s4);
 $query_s4->execute();
-// targets
+
 $sql_s5 = "SELECT * FROM person WHERE userType='cible'  ORDER BY lastname ASC"; 
 $query_s5 = $dbConnect->query($sql_s5);
 $query_s5->execute();
@@ -25,12 +23,9 @@ $sql_s7 = "SELECT * FROM person WHERE userType='agent'  ORDER BY lastname ASC";
 $query_s7 = $dbConnect->query($sql_s7);
 $query_s7->execute();
 
-
 //on traite le formulaire
 if(!empty($_POST)){
-  if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["countryList"], $_POST["mis_hideouts"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"], $_POST["agents"], $_POST["contacts"], $_POST["targets"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["countryList"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"]) &&!empty($_POST["agents"]) &&!empty($_POST["contacts"]) &&!empty($_POST["targets"])){
-   
-
+  if(isset($_POST["title"], $_POST["description"], $_POST["startDate"], $_POST["endDate"], $_POST["countryList"], $_POST["mis_hideouts"], $_POST["missionStatus"], $_POST["codeName"], $_POST["mmt_missionTypeId"], $_POST["agents"], $_POST["contacts"], $_POST["targets"]) &&!empty($_POST["title"]) &&!empty($_POST["description"]) &&!empty($_POST["startDate"]) &&!empty($_POST["endDate"]) &&!empty($_POST["countryList"]) &&!empty($_POST["missionStatus"]) &&!empty($_POST["codeName"]) &&!empty($_POST["mmt_missionTypeId"]) &&!empty($_POST["agents"])  &&!empty($_POST["targets"]) &&!empty($_POST["contacts"])){
 
 $title = strip_tags($_POST["title"]);
 $description = strip_tags($_POST["description"]);
@@ -44,10 +39,8 @@ $mmt_missionTypeId = strip_tags($_POST["mmt_missionTypeId"]);
 $specialityId = strip_tags($_POST["speciality"]);
 $agents = serialize($_POST["agents"]);
 $contacts = serialize($_POST["contacts"]);
-$targets = serialize($_POST["targets"]);
 $mis_hideouts = serialize($_POST["mis_hideouts"]);
-
-
+$targets = serialize($_POST["targets"]);
 // ***************************************************
 
 $sql_i1 = "INSERT INTO mission(title, description, startDate, endDate, country, missionStatus, codeName) 
@@ -63,15 +56,10 @@ $query_i1->bindValue(':country', $country, PDO::PARAM_STR);
 $query_i1->bindValue(':missionStatus', $missionStatus, PDO::PARAM_STR);
 $query_i1->bindValue(':codeName', $codeName, PDO::PARAM_STR);
 
-
-
-
 if(!$query_i1->execute()){
   die("Failed to insert INTO mission");
 }
 $id = $dbConnect->lastInsertId();
-
-// Remplir table mission_misionType
 $mmt_missionId = $dbConnect->lastInsertId();
 
 $sql_i2 = "INSERT INTO mission_missionType (mmt_missionId, mmt_missionTypeId) VALUES('$mmt_missionId', '$mmt_missionTypeId');";
@@ -95,23 +83,16 @@ $sql_i6 = "INSERT INTO mission_targets (mt_mission_id, targets) VALUES('$mmt_mis
 $query_i6 = $dbConnect->prepare($sql_i6);
 $query_i6->execute();
 
-// var_dump(gettype($mis_hideouts));
 $sql_i7 = "INSERT INTO mission_hideouts (missionId, mis_hideouts) VALUES('$mmt_missionId', '$mis_hideouts');";
 $query_i7 = $dbConnect->prepare($sql_i7);
 $query_i7->execute();
-// var_dump(gettype($mis_hideouts));
-// header("Location: ../lists/missions_adm.php");
 echo "<p>La mission ajoutée sous le numéro ". $id."</p>";
 echo "<a href='missions_adm.php'>Retour</a>";
 exit;
-
   }else{
     die("Le formulaire est incomplet");
   }
 }
-// }
-
-
 ?>
 <link rel="stylesheet" href="../../style/style_in_ad.css">
 <link rel="stylesheet" href="../../style/style.css">
@@ -254,7 +235,7 @@ exit;
             <input type="date" class="form-control" style="max-width: 200px;" name="endDate" id="endDate" value="" >
           </div>
   <!-- <*****************status************************** -->
-  <label for="status" class="form-label fw-bold my-2 fs-5 tx_color" id="status">Status</label>
+  <label for="status" class="form-label fw-bold my-2 fs-5 tx_color" id="statusTitle">Status</label>
           <div class="mb-3">              
               <select name="missionStatus" id="status" class="fs-5 w-25">
               <!-- <option value=""></option>; -->

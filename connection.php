@@ -1,11 +1,9 @@
 <?php
-//on demarre la session php
 $connect=true;
 session_start();
 if(isset($_SESSION["user"])){
   header("Location: admin/main/admin_index.php");
 }
-
 if(!empty($_POST)){
   if(isset($_POST["email"], $_POST["password"]) && !empty($_POST["email"]) &&!empty($_POST["password"])
   ){
@@ -19,15 +17,17 @@ if(!empty($_POST)){
   $query = $dbConnect->prepare($sql);
   $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
   $query->execute();
-
-   $user = $query->fetch();
-  // if(!$user){
-  // die("L'utilisateur et/ou le mot de passe est incorrect");
-  // }
-  // // on a user, on verif son mdp
+   $user = $query->fetch(PDO::FETCH_ASSOC);
+   var_dump($user);
+   var_dump($user["password"]);
+  if(!$user){
+  die("L'utilisateur et/ou le mot de passe est incorrect");
+  }
+  // on a user, on verif son mdp
   // if(!password_verify($_POST["password"], $user["password"])){
   //   die("L'utilisateur et/ou le mot de passe est incorrect");
   // }
+  
   //user et mdp sont corrects
  //on ouvre la session, connecter le user
  
@@ -37,27 +37,22 @@ if(!empty($_POST)){
   "email" => $user["email"],
   "roles" => $user["roles"]
  ];
- //on redirige vers la page de profil
  if($_SESSION["user"]){
   header("Location: admin/main/admin_index.php");
  }else{
   header("Location: index.php");
- }
- 
- 
+ } 
   }
 }
 $titre = "Connexion";
 include_once "includes/header.php";
 include_once "includes/navbar.php";
-
 ?>
 <link rel="stylesheet" href="style/style_in_ad.css">
 <link rel="stylesheet" href="style/style.css">
 </head>
 <body class="body_page">
   <div  style="height: 85vh;">
-  
 <form method="post">
 <div class="m-4 w-100 fw-bold">
    <div class=" ms-4">

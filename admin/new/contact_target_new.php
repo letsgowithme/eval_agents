@@ -5,9 +5,6 @@ if (!empty($_POST)) {
   if (
     isset($_POST["lastname"], $_POST["firstname"], $_POST["birthdate"], $_POST["nationality"],  $_POST["country"], $_POST["userType"], $_POST["codeName"]) && !empty($_POST["lastname"]) && !empty($_POST["firstname"]) && !empty($_POST["birthdate"]) && !empty($_POST["nationality"]) && !empty($_POST["country"]) && !empty($_POST["userType"])&& !empty($_POST["codeName"])
   ) {
-   
-    //le form est complet
-
     $lastname = strip_tags($_POST["lastname"]);
     $firstname = strip_tags($_POST["firstname"]);
     $birthdate = strip_tags($_POST["birthdate"]);
@@ -16,9 +13,7 @@ if (!empty($_POST)) {
     $userType = strip_tags($_POST["userType"]);
     $codeName = strip_tags($_POST["codeName"]);
     require_once "../../includes/DB.php";
-
     $_SESSION["error"] = [];
-
         if (strlen($lastname) < 3) {
           $_SESSION["error"]["lastname"] = "Le nom est trop court";
         }
@@ -26,13 +21,8 @@ if (!empty($_POST)) {
           $_SESSION["error"]["firstname"] = "Le prénom est trop court";
         }
         if ($_SESSION["error"] === []) {
-
-
-
       $sql = "INSERT INTO person (lastname, firstname, birthdate,  nationality, country, userType, codeName) VALUES(:lastname, :firstname, :birthdate, :nationality, :country, :userType, :codeName)";
-
       $query = $dbConnect->prepare($sql);
-
       $query->bindValue(":lastname", $lastname, PDO::PARAM_STR);
       $query->bindValue(":firstname", $firstname, PDO::PARAM_STR);
       $query->bindValue(":birthdate", $birthdate, PDO::PARAM_STR);
@@ -42,37 +32,27 @@ if (!empty($_POST)) {
       $query->bindValue(":codeName", $codeName, PDO::PARAM_STR);
       $query->execute();
       $query->closeCursor();
-
-      //on recup id de nouvel utilisateur
       $user_id = $dbConnect->lastInsertId();
-
-      echo "<script>
-      alert('Personne ajoutée')</script>";
-      header("Location: ../lists/usersAll.php");
-    
+      echo "<p>La personne ajoutée sous le numéro ". $user_id."</p>";
+      echo "<a href='../lists/usersAll.php'>Retour</a>";
   } else {
     $_SESSION["error"] = ["Veuillez remplir tous les champs"];
   }
 }
 }
-
 $titre = "Add user";
 include_once "../includes/admin_header.php";
 include_once "../includes/admin_sidebar.php";
-
 ?>
 <link href="../../style/style.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="../logo.png">
-
 <style>
   input {
     font-size: 1.3em;
     margin-bottom: 10px;
   }
-
   label {
     width: 220px;
-
     color: #b2b2b5;
     padding: 5px;
   }
@@ -81,7 +61,6 @@ include_once "../includes/admin_sidebar.php";
     $(document).ready(function(){
       btn_submit = $("#btn_submit");
       $("#btn_submit").on("click", function(){
-            //  var email = $("#email");
              var codeName = $("#codeName").val();
              if(btn_submit){
                   $.ajax({
@@ -93,8 +72,6 @@ include_once "../includes/admin_sidebar.php";
                   $("#codeName").html(response);
                   }
                   })
-            
-              
              }
       });     
     });    

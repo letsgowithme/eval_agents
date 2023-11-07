@@ -54,11 +54,11 @@ CREATE TABLE mission(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 description TEXT NOT NULL,
-startDate DATETIME NULL,
-endDate DATETIME  NULL,
 country VARCHAR(100) NOT NULL,
-missionStatus ENUM('En préparation', 'En cours', 'Terminé', 'Échec') NOT NULL,
-codeName VARCHAR(50) NOT NULL
+missionStatus VARCHAR(100) NOT NULL,
+codeName VARCHAR(50) NOT NULL,
+startDate VARCHAR(255) NOT NULL,
+endDate VARCHAR(255) NOT NULL
 ) engine=InnoDB;
 
 

@@ -1,6 +1,5 @@
-<?php 
-$admin=true;
-
+<?php
+$admin = true;
 include_once "../includes/admin_header.php";
 include_once "../includes/admin_sidebar.php";
 $titre = "admin";
@@ -14,10 +13,4 @@ $titre = "admin";
 </div>
 <div>
 </div>
-
-
-<!-- <div style="position: fixed; bottom: 0; "> -->
-
 <?php include "../includes/admin_footer.php"; ?>
-<!-- </div> -->
-

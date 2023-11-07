@@ -35,11 +35,6 @@ $sql_s5 = "SELECT * FROM person WHERE userType='cible'  ORDER BY lastname ASC";
 $query_s5 = $dbConnect->query($sql_s5);
 $query_s5->execute();
 
-// $sql_s6 = "SELECT * FROM mission_agents, mission_contacts, mission_targets, mission_hideouts  WHERE mission_agents.ma_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission' AND mission_hideouts.missionId='$idMission'";
-// $query_s6 = $dbConnect->query($sql_s6);
-// $query_s6->execute();
-
-
 
 if (isset($_POST["submit"])) {
   $title = $_POST["title"];
@@ -48,11 +43,6 @@ if (isset($_POST["submit"])) {
   $endDate = $_POST["endDate"];
   $country = $_POST["country"];
   $codeName = $_POST["codeName"];
-  
-  // $mis_hideouts = serialize($_POST["mis_hideouts"]);
-  // $contacts = serialize($_POST["contacts"]);
-  // $targets = serialize($_POST["targets"]);
-  // $agents = serialize($_POST["agents"]);
 
   if (isset($_POST["mmt_missionTypeId"]) && !empty($_POST["mmt_missionTypeId"])) {
     $mmt_missionTypeId = intval($_POST["mmt_missionTypeId"]);
@@ -76,46 +66,31 @@ if (isset($_POST["submit"])) {
     $sql_u4 = "UPDATE mission_hideouts SET mis_hideouts='$mis_hideouts' WHERE  missionId='$idMission'";
     $query_u4 = $dbConnect->prepare($sql_u4);
     $query_u4->execute();
-    
-  } 
-  // else {
-  //   $mis_hideouts = serialize($_POST["mission_mis_hideouts"]);
-  // }
+  }
+
   if (!empty($_POST["contacts"])) {
     $contacts = serialize($_POST["contacts"]);
     $sql_u5 = "UPDATE mission_contacts SET contacts='$contacts' WHERE  mc_mission_id='$idMission'";
-  $query_u5 = $dbConnect->prepare($sql_u5);
-  $query_u5->execute();
-  } 
-  // else {
-  //   $contacts = serialize($_POST["mission_contacts"]);
-  // }
+    $query_u5 = $dbConnect->prepare($sql_u5);
+    $query_u5->execute();
+  }
+
   if (!empty($_POST["targets"])) {
     $targets = serialize($_POST["targets"]);
 
-  $sql_u6 = "UPDATE mission_targets SET targets='$targets' WHERE  mt_mission_id='$idMission'";
-  $query_u6 = $dbConnect->prepare($sql_u6);
-  $query_u6->execute();
-  } 
-  // else {
-  //   $targets = serialize($_POST["mission_targets"]);
-  // }
+    $sql_u6 = "UPDATE mission_targets SET targets='$targets' WHERE  mt_mission_id='$idMission'";
+    $query_u6 = $dbConnect->prepare($sql_u6);
+    $query_u6->execute();
+  }
+
   if (!empty($_POST["agents"])) {
     $agents = serialize($_POST["agents"]);
 
+    $sql_u7 = "UPDATE mission_agents SET  agents='$agents' WHERE ma_mission_id='$idMission'";
+    $query_u7 = $dbConnect->prepare($sql_u7);
+    $query_u7->execute();
+  }
 
-  $sql_u7 = "UPDATE mission_agents SET  agents='$agents' WHERE ma_mission_id='$idMission'";
-  $query_u7 = $dbConnect->prepare($sql_u7);
-  $query_u7->execute();
-
-  } 
-  // else {
-  //   $agents = serialize($_POST["mission_agents"]);
-  // }
-  // var_dump(gettype($mis_hideouts));
-  // var_dump(gettype($contacts));
-  // var_dump(gettype($targets));
-  // var_dump(gettype($agents));
   $sq_up = "UPDATE mission SET title='$title', description='$description', startDate='$startDate', endDate='$endDate', country='$country', missionStatus='$missionStatus', codeName='$codeName' WHERE id='$idMission'";
   $query_up = $dbConnect->query($sq_up);
   $Execute_up = $query_up->execute();
@@ -127,10 +102,6 @@ if (isset($_POST["submit"])) {
   $sql_u3 = "UPDATE mission_speciality SET mis_spec_id='$mis_spec_id' WHERE mission_Id='$idMission'";
   $query_u3 = $dbConnect->prepare($sql_u3);
   $query_u3->execute();
-  // var_dump(gettype($mis_hideouts));
- 
- 
-  
 
   if ($Execute_up) {
     echo "<p style=\"background: darkgrey; color: white; font-weight: bold;\" class=\"text-center p-2\">La mission modifiée sous le numéro " . $idMission .
@@ -142,9 +113,7 @@ if (isset($_POST["submit"])) {
 <link href="../../style/style_in_ad.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="../logo.png">
 <script></script>
-
 <?php
-
 ?>
 <script>
   $(document).ready(function() {
@@ -183,8 +152,6 @@ if (isset($_POST["submit"])) {
         $("#contacts").html("<option value=''>Pas de contacts dans ce pays></option>");
       }
     });
-
-
     //  *********************************************
     $("#targets").on("click", function() {
       var agents = $("#agents").val();
@@ -204,7 +171,6 @@ if (isset($_POST["submit"])) {
       }
     });
     // ****************************************************
-
     // afficher les agents avec specialité choisie
     $("#speciality").on("click", function() {
       var speciality = $("#speciality").val();
@@ -215,8 +181,6 @@ if (isset($_POST["submit"])) {
           url: "../ajax/ajaxData2.php",
           data: 'speciality=' + speciality,
           success: function(response) {
-            //  alert(response);
-
             $("#agents").html(response);
           }
         })
@@ -241,11 +205,9 @@ if (isset($_POST["submit"])) {
         $("#targets").html("<option value=''>Pas d'agents requis></option>");
       }
     });
-
   });
 </script>
 </head>
-
 <?php
 global $dbConnect;
 while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
@@ -264,17 +226,13 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
   $contacts = unserialize($row["contacts"]);
   $targets = unserialize($row["targets"]);
   $agents = unserialize($row["agents"]);
-
 }
-
 ?>
 <div class="py-4 body_page_new">
   <div>
     <?php
-
     ?>
     <h1>Modifier la mission numéro <?php echo $idMission; ?></h1>
-
     <form method="post" action="mission_update.php?id=<?php echo $idMission; ?>">
       <div class="mb-3">
         <!-- ************titre****************** -->
@@ -288,23 +246,12 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           <textarea name="description" id="description" cols="54" rows="10"><?php echo $description ?></textarea>
         </div>
         <!-- ***********startDate de La mission************** -->
-        <?php
-        // $start = $startDate;
-        // $date =  new DateTime($start);
-        // $startDate =  $date->format("Y-m-d");
-
-
-        // $end = $endDate;
-        // $date2 =  new DateTime($end);
-        // $endDate =  $date2->format("d m Y");
-        ?>
         <div class="mb-3 d-flex">
           <h5 for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 140px;">Date de debut</h5>
           <input type="text" name="current_startDate" id="mis_startDate" placeholder="<?php echo $startDate ?>" value="<?php echo $startDate ?>">
           <button type="button" class="fs-6 me-4" onclick="startDateBtn()" value="" name="btnStartDate" id="btnStartDate">Change</button>
           <input type="date" style="display: none;" name="startDate" id="startDate" placeholder="<?php echo $startDate ?>" value="<?php echo   $startDate ?>">
         </div>
-
         <!-- **************endDate de La mission************ -->
         <div class="mb-3 d-flex">
           <h5 for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 140px;">Date de fin</h5>
@@ -312,7 +259,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           <button type="button" class="fs-6 me-4" onclick="endDateBtn()" value="" name="btnEndDate" id="btnEndDate">Change</button>
           <input type="date" style="display: none;" name="endDate" id="endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
         </div>
-
         <!-- *****************************STATUS****************** -->
         <div class="mb-3 d-flex">
           <label for="status" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 120px;">Status</label>
@@ -350,7 +296,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
             ?>
           </select>
         </div>
-
         <!-- ******Pays de la mission************* -->
         <div class="mb-3">
           <label for="countryList" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>
@@ -378,38 +323,16 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
       $targetsArr = [];
       $mission_agentsArr = [];
       $mission_agents_infoArr = [];
-      // $mis_us_spec = [];
-      // while ($row6 = $query1->fetch(PDO::FETCH_ASSOC)) :
-        // $hideouts = unserialize($row6["mis_hideouts"]);
-        // $contacts = unserialize($row6["contacts"]);
-        // $targets = unserialize($row6["targets"]);
-        // $agents = unserialize($row6["agents"]);
-        // $hideoutsArr = [];
-        // $contactsArr = [];
-        // $targetsArr = [];
-        // $mission_agentsArr = [];
-        // $mission_agents_infoArr = [];
-        // $mis_us_spec = [];
-        
-       var_dump(gettype($hideouts));
-       var_dump(gettype($contacts));
-       var_dump(gettype($targets));
-       var_dump(gettype($agents));
-
-     
       ?>
       <!-- ****hideouts de la mission******* -->
       <?php
-     
       foreach ($hideouts as $hideout) :
         $hideoutId = intval($hideout);
         $hideoutsArr[] = $hideoutId;
-       
       ?>
         <input type="hidden" name="mission_mis_hideouts" value="<?php echo $hideoutId ?>">
       <?php
       endforeach;
-
       ?>
       <!-- ****************Hideouts******************* -->
       <div class="mb-3 d-flex mt-4">
@@ -423,16 +346,13 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
             $address = $row["address"];
             $country = $row["country"];
             $hideoutType = $row["hideoutType"];
-
             if (in_array($hideout_id, $hideoutsArr)) {
               echo "<option class=\"fs-6\" value=" . $hideout_id . " $selected>" . $code . " " . $city . " - " . $address . " " . $country . " " . $hideoutType . "</option><hr>";
             }
           endwhile;
-         
           ?>
         </select>
       </div>
-    
       <!-- **********Contacts OF MISSION********* -->
       <?php
       foreach ($contacts as $contact) :
@@ -461,8 +381,8 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           ?>
         </select>
       </div>
-     <!-- **********TARGETS OF MISSION********* -->
-     <?php
+      <!-- **********TARGETS OF MISSION********* -->
+      <?php
       foreach ($targets as $target) :
         $target_Id = intval($target);
         $targetsArr[] = $target_Id;
@@ -489,8 +409,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           ?>
         </select>
       </div>
-
-      
       <!-- **********Specialité choix*********** -->
       <div class="mb-3">
         <h5 for="speciality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Spécialité</h5>
@@ -510,13 +428,11 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           ?>
         </select>
       </div>
-
       <!-- ********AGENTS of mission************ -->
       <?php
       foreach ($agents as $agent) :
         $mission_agentId = intval($agent);
         $mission_agentsArr[] = $mission_agentId;
-
         $sql_s_s1 = "SELECT * FROM agents WHERE agents.id_user_agent = '$mission_agentId'";
         $query_s_s1 = $dbConnect->query($sql_s_s1);
         $query_s_s1->execute();
@@ -534,7 +450,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
         endwhile;
       endforeach;
       ?>
-
       <!-- *************All agents************ -->
       <div class="mb-3 d-flex mt-4">
         <h5 for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Agents</h5>
@@ -546,7 +461,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
             $firstname = $row3["firstname"];
             $nationality = $row3["nationality"];
             $country = $row3["country"];
-
             $sql_s8 = "SELECT * FROM agents WHERE id_user_agent = '$agentId'";
             $query_s8 = $dbConnect->query($sql_s8);
             $query_s8->execute();
@@ -564,13 +478,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           ?>
         </select>
       </div>
-
-      <?php 
-    // endwhile;
-     ?>
-
-
-
       <!-- *********fin d'affichage************ -->
       <?php
       include_once "../new/btn_create.php";
@@ -609,7 +516,6 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
       $("#status").on("change", function() {
         $("#currentStatus").val($("#status").val());
         $currentStatus.addClass("hidden");
-
       });
     })
   });

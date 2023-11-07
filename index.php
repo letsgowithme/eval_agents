@@ -1,6 +1,5 @@
 <?php
-//on demarre la session php
-session_start();
+// session_start();
 $index=true;
 $titre = "Accueil";
 include_once "includes/header.php";

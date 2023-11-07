@@ -4,14 +4,12 @@ if (!isset($_GET["id"]) || empty($_GET["id"])) {
   header("Location: mission_details.php");
   exit;
 }
-
 $idMission = $_GET["id"];
 require_once "includes/DB.php";
 $sql = "SELECT * FROM mission WHERE id = '$idMission'";
 $query = $dbConnect->query($sql);
 $query->execute();
 $mission = $query->fetch();
-
 if (!$mission) {
   http_response_code(404);
   echo "Page non trouvée";
@@ -24,13 +22,11 @@ while ($row = $query2->fetch(PDO::FETCH_ASSOC)) :
   $mmt_missionId = $row["mmt_missionId"];
   $mmt_missionTypeId = $row["mmt_missionTypeId"];
 endwhile;
-
 $sql3 = "SELECT title FROM missionType WHERE id='$mmt_missionTypeId'";
 $query3 = $dbConnect->prepare($sql3);
 $query3->execute();
 $missionType = $query3->fetch();
 $missionTypeTitle = $missionType[0];
-
 $title = $mission["title"];
 // afficher spécialities
 $sql5 = "SELECT * FROM mission_speciality WHERE mission_Id='$idMission'";
@@ -45,23 +41,16 @@ $query5_1 = $dbConnect->prepare($sql5_1);
 $query5_1->execute();
 $speciality = $query5_1->fetch();
 $specialityTitle = $speciality[0];
-
-
 $sql7 = "SELECT * FROM mission_agents, mission_contacts, mission_targets, mission_hideouts WHERE mission_agents.ma_mission_id='$idMission' AND mission_contacts.mc_mission_id='$idMission' AND mission_targets.mt_mission_id='$idMission' AND mission_hideouts.missionId='$idMission'";
 $query7 = $dbConnect->query($sql7);
 $query7->execute();
-
 $sql7_1 = "SELECT * FROM hideout";
 $query7_1 = $dbConnect->query($sql7_1);
 $query7_1->execute();
 ?>
-
-
 <div class="body_page_new py-4">
   <div>
-
     <h1 class="text-white">Mission <strong><?= $mission['title'] ?></strong> numéro <?= $mission['id'] ?></h1>
-
     <table width="100%" border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4 w-75 fs-5">
       <tr>
         <td class="hidden">Id</td>
@@ -102,14 +91,13 @@ $query7_1->execute();
         <td>Planques</td>
         <?php
         while ($row = $query7->fetch(PDO::FETCH_ASSOC)) :
-            $hideouts = unserialize($row["mis_hideouts"]);
-            $agents = unserialize($row["agents"]);
-            $contacts = unserialize($row["contacts"]);
-            $targets = unserialize($row["targets"]);
-            ?>
-        <td>
-          <?php
-         
+          $hideouts = unserialize($row["mis_hideouts"]);
+          $agents = unserialize($row["agents"]);
+          $contacts = unserialize($row["contacts"]);
+          $targets = unserialize($row["targets"]);
+        ?>
+          <td>
+            <?php
             foreach ($hideouts as $hideout) :
               $hideoutId = $hideout;
               $sql9_1 = "SELECT * FROM hideout WHERE id = '$hideoutId'";
@@ -125,27 +113,25 @@ $query7_1->execute();
               endwhile;
               echo $code . " " . $city . " " . $address . " " . $country . " " . $hideoutType . "<br>";
             endforeach;
-
-          ?>
-        </td>
+            ?>
+          </td>
       </tr>
       <tr>
         <td>Contacts</td>
         <td>
           <?php
-            foreach ($contacts as $contact) :
-              $user_contact = $contact;
-              $sql9 = "SELECT * FROM person WHERE id = '$user_contact'";
-              $query9 = $dbConnect->prepare($sql9);
-              $query9->execute();
-              while ($row = $query9->fetch(PDO::FETCH_ASSOC)) :
-                $cont_id = $row["id"];
-                $cont_lastname = $row["lastname"];
-                $cont_firstname = $row["firstname"];
-              endwhile;
-              echo $cont_lastname . " " . $cont_firstname . "<br>";
-            endforeach;
-
+          foreach ($contacts as $contact) :
+            $user_contact = $contact;
+            $sql9 = "SELECT * FROM person WHERE id = '$user_contact'";
+            $query9 = $dbConnect->prepare($sql9);
+            $query9->execute();
+            while ($row = $query9->fetch(PDO::FETCH_ASSOC)) :
+              $cont_id = $row["id"];
+              $cont_lastname = $row["lastname"];
+              $cont_firstname = $row["firstname"];
+            endwhile;
+            echo $cont_lastname . " " . $cont_firstname . "<br>";
+          endforeach;
           ?>
         </td>
       </tr>
@@ -179,63 +165,51 @@ $query7_1->execute();
         <td>
           <!-- recup les id des agents -->
           <?php
-            $us_specArr = [];
-            // while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
-
-
-            foreach ($agents as $agent) :
-              $agentId = $agent;
-
-
-              $sql8 = "SELECT * FROM person, agents WHERE person.id='$agentId' AND agents.id_user_agent='$agentId'";
-              $query8 = $dbConnect->prepare($sql8);
-              $query8->execute();
-
-
-              while ($row = $query8->fetch(PDO::FETCH_ASSOC)) :
-                $ag_id = $row["id"];
-                $ag_lastname = $row["lastname"];
-                $ag_firstname = $row["firstname"];
-                $specialities = unserialize($row["specialities"]);
-
-                foreach ($specialities as $speciality) :
-                  $user_spec = $speciality;
-                endforeach;
-                echo $ag_firstname . " " . $ag_lastname . " - " . $user_spec . "<br>";
-              endwhile;
-            endforeach;
-
+          $us_specArr = [];
+          // while ($row = $query7->fetch(PDO::FETCH_ASSOC)):
+          foreach ($agents as $agent) :
+            $agentId = $agent;
+            $sql8 = "SELECT * FROM person, agents WHERE person.id='$agentId' AND agents.id_user_agent='$agentId'";
+            $query8 = $dbConnect->prepare($sql8);
+            $query8->execute();
+            while ($row = $query8->fetch(PDO::FETCH_ASSOC)) :
+              $ag_id = $row["id"];
+              $ag_lastname = $row["lastname"];
+              $ag_firstname = $row["firstname"];
+              $specialities = unserialize($row["specialities"]);
+              foreach ($specialities as $speciality) :
+                $user_spec = $speciality;
+              endforeach;
+              echo $ag_firstname . " " . $ag_lastname . " - " . $user_spec . "<br>";
+            endwhile;
+          endforeach;
           ?>
         </td>
       </tr>
-
       <tr>
         <td>Cibles</td>
         <td>
           <?php
-            foreach ($targets as $target) :
-              $user_target = $target;
-              $sql10 = "SELECT * FROM person WHERE id = '$user_target'";
-              $query10 = $dbConnect->prepare($sql10);
-              $query10->execute();
-            endforeach;
-            while ($row = $query10->fetch(PDO::FETCH_ASSOC)) :
-              $targ_id = $row["id"];
-              $targ_lastname = $row["lastname"];
-              $targ_firstname = $row["firstname"];
-            endwhile;
-            echo $targ_firstname . " " . $targ_lastname . "<br>";
-
-          ?>
-           <?php
+          foreach ($targets as $target) :
+            $user_target = $target;
+            $sql10 = "SELECT * FROM person WHERE id = '$user_target'";
+            $query10 = $dbConnect->prepare($sql10);
+            $query10->execute();
+          endforeach;
+          while ($row = $query10->fetch(PDO::FETCH_ASSOC)) :
+            $targ_id = $row["id"];
+            $targ_lastname = $row["lastname"];
+            $targ_firstname = $row["firstname"];
           endwhile;
-      ?>
+          echo $targ_firstname . " " . $targ_lastname . "<br>";
+          ?>
+        <?php
+        endwhile;
+        ?>
         </td>
-     
       </tr>
       </td>
       </tr>
     </table>
-
   </div>
 </div>
