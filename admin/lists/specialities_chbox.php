@@ -1,5 +1,5 @@
 <?php require_once "../../includes/DB.php"; 
-$sql = "SELECT * FROM `speciality` ORDER BY `title` ASC";
+$sql = "SELECT * FROM speciality ORDER BY title ASC";
 $query = $dbConnect->query($sql);
 $query->execute();
 ?>

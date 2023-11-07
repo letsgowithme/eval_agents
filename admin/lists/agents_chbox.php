@@ -1,5 +1,5 @@
 <?php require_once "../../includes/DB.php"; 
-$sql = "SELECT * FROM `user` WHERE `userType`= 'agent' ORDER BY `lastname` ASC";
+$sql = "SELECT * FROM  user  WHERE  userType = 'agent' ORDER BY  lastname  ASC";
 $query = $dbConnect->query($sql);
 $query->execute();
 

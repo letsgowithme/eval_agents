@@ -15,14 +15,12 @@ if(!empty($_POST)){
   }
   require_once "includes/DB.php";
   //on verifie si un email existe dans DB
-  $sql = "SELECT * FROM `user` WHERE `email` = :email";
+  $sql = "SELECT * FROM  user  WHERE  email  = :email";
   $query = $dbConnect->prepare($sql);
-
   $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
-
   $query->execute();
 
-  // $user = $query->fetch();
+   $user = $query->fetch();
   // if(!$user){
   // die("L'utilisateur et/ou le mot de passe est incorrect");
   // }

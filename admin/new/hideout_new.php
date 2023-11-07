@@ -22,7 +22,7 @@ $query->bindValue(':country', $country, PDO::PARAM_STR);
 $query->bindValue(':city', $city, PDO::PARAM_STR);
 
 if(!$query->execute()){
-  die("Failed to insert INTO `hideout`");
+  die("Failed to insert INTO hideout");
 }
 $id = $dbConnect->lastInsertId();
 

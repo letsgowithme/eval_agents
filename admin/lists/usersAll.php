@@ -81,7 +81,7 @@ $count = 0;
      
       
        
-        $sql = "SELECT * FROM `person` ORDER BY id ASC";
+        $sql = "SELECT * FROM person ORDER BY id ASC";
         $query = $dbConnect->query($sql);
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) :
             $count++;

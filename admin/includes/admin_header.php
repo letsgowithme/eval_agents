@@ -1,7 +1,8 @@
 <?php 
 $admin=true;
 session_start();
- 
+
+ini_set('xdebug.show_local_vars', 1);
 $titre ="";
 ?>
 <!DOCTYPE html>

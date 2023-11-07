@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 define('DB_HOST', 'localhost');
 define('DB_USER', 'agents');
 define('DB_PASSWORD', 'root');
@@ -15,3 +17,4 @@ try {
     print "Error!: " . $e->getMessage() . "<br/>";
     die();
 }
+

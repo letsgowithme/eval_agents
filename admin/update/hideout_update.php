@@ -11,7 +11,7 @@ if(isset($_POST["submit"])){
   $city = $_POST["city"];
 
 
-    $sql = "UPDATE `hideout` SET code='$code', address='$address', hideoutType='$hideoutType', country='$country', city='$city' WHERE id='$up_id'";
+    $sql = "UPDATE hideout SET code='$code', address='$address', hideoutType='$hideoutType', country='$country', city='$city' WHERE id='$up_id'";
 
     $query = $dbConnect->query($sql); 
     $Execute = $query->execute();
@@ -35,7 +35,7 @@ include_once "../includes/admin_sidebar.php";
   <?php 
 global $dbConnect;
 // require_once "../../includes/DB.php";
-$sql = "SELECT * FROM `hideout` WHERE `id` = '$up_id'";
+$sql = "SELECT * FROM hideout WHERE id = '$up_id'";
 $query = $dbConnect->query($sql);
 
 while($row = $query->fetch()){

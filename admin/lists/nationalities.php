@@ -2,7 +2,7 @@
 require_once "includes/DB.php";
 // $nationality_id = strip_tags($_GET($nationality["id"]));
 //afficher les nationalités
-$sql = "SELECT * FROM `nationality`";
+$sql = "SELECT * FROM  nationality";
 
 $requete = $dbConnect->query($sql);
 $requete->execute();

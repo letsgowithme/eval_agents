@@ -47,10 +47,11 @@ $contacts = serialize($_POST["contacts"]);
 $targets = serialize($_POST["targets"]);
 $mis_hideouts = serialize($_POST["mis_hideouts"]);
 
+
 // ***************************************************
 
 $sql_i1 = "INSERT INTO mission(title, description, startDate, endDate, country, missionStatus, codeName) 
-VALUES(:title, :description, :startDate, :endDate, :country, :missionStatus, :codeName)";
+VALUES(:title, :description, :startDate, :endDate, :country, :missionStatus, :codeName);";
 
 $query_i1 = $dbConnect->prepare($sql_i1);
 
@@ -61,6 +62,9 @@ $query_i1->bindValue(':endDate', $endDate, PDO::PARAM_STR);
 $query_i1->bindValue(':country', $country, PDO::PARAM_STR);
 $query_i1->bindValue(':missionStatus', $missionStatus, PDO::PARAM_STR);
 $query_i1->bindValue(':codeName', $codeName, PDO::PARAM_STR);
+
+
+
 
 if(!$query_i1->execute()){
   die("Failed to insert INTO mission");
@@ -91,11 +95,11 @@ $sql_i6 = "INSERT INTO mission_targets (mt_mission_id, targets) VALUES('$mmt_mis
 $query_i6 = $dbConnect->prepare($sql_i6);
 $query_i6->execute();
 
+// var_dump(gettype($mis_hideouts));
 $sql_i7 = "INSERT INTO mission_hideouts (missionId, mis_hideouts) VALUES('$mmt_missionId', '$mis_hideouts');";
 $query_i7 = $dbConnect->prepare($sql_i7);
 $query_i7->execute();
-
-
+// var_dump(gettype($mis_hideouts));
 // header("Location: ../lists/missions_adm.php");
 echo "<p>La mission ajoutée sous le numéro ". $id."</p>";
 echo "<a href='missions_adm.php'>Retour</a>";
@@ -240,20 +244,20 @@ exit;
 
           <div class="mb-3">
             <label for="startDate" class="form-label fw-bold my-2 fs-5 tx_color">Date de debut</label>
-            <input type="date" class="form-control" style="max-width: 200px;" name="startDate" id="startDate" value="" required>
+            <input type="date" class="form-control" style="max-width: 200px;" name="startDate" id="startDate" value="" >
           </div>
         
           <!-- **************endDate************* -->
 
           <div class="mb-3">
             <label for="endDate" class="form-label fw-bold my-2 fs-5 tx_color">Date de la fin</label>
-            <input type="date" class="form-control" style="max-width: 200px;" name="endDate" id="endDate" value="" required>
+            <input type="date" class="form-control" style="max-width: 200px;" name="endDate" id="endDate" value="" >
           </div>
   <!-- <*****************status************************** -->
   <label for="status" class="form-label fw-bold my-2 fs-5 tx_color" id="status">Status</label>
           <div class="mb-3">              
               <select name="missionStatus" id="status" class="fs-5 w-25">
-              <option value=""></option>;
+              <!-- <option value=""></option>; -->
                <option value="En préparation">En préparation</option>;
                <option value="En cours">En cours</option>;
                <option value="Terminé">Terminé</option>;
@@ -261,7 +265,7 @@ exit;
               </select> 
           </div>
         
-           <!--  ***************COUNTRY****************** -->
+      <!--  ***************COUNTRY****************** -->
 
            <label for="countryList" class="form-label fw-bold my-2 fs-5 tx_color" id="pays_label">Pays</label>
           <div class="mb-3">     
@@ -278,29 +282,29 @@ exit;
               ?> 
               </select> 
           </div>
-                      <!-- **************hideouts***************** -->
+      <!-- **************hideouts***************** -->
              <?php
              $sql_s6 = "SELECT * FROM hideout";
             $query_s6 = $dbConnect->query($sql_s6);
             $query_s6->execute();
-           ?>
+           ?>  
              <label for="hideout" class="form-label fw-bold my-2 fs-5 tx_color">Planques</label>
           <div class="mb-3">     
               <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-5 w-75 h-auto">
                 <?php
-                while ($row = $query_s6->fetch(PDO::FETCH_ASSOC)):
-                $hideoutId = $row["id"];
-                $hideoutType = $row["hideoutType"];
-                $hideout_country = $row["country"];
-                $hideout_city = $row["city"];
+              //   while ($row = $query_s6->fetch(PDO::FETCH_ASSOC)):
+              //   $hideoutId = $row["id"];
+              //   $hideoutType = $row["hideoutType"];
+              //   $hideout_country = $row["country"];
+              //   $hideout_city = $row["city"];
                 
-              if($country == $hideout_country){
-                $selected="selected";
-                }else{ 
-               $selected=""; 
-               } 
+              // if($country == $hideout_country){
+              //   $selected="selected";
+              //   }else{ 
+              //  $selected=""; 
+              //  } 
                 // echo '<option id="'.$hideout_country.'" value="'.$hideout_country.'" "'.$selected." ".' name="'.$hideoutId.'">'.$hideout_country." - ".$hideout_city." - ".$hideoutType.'</option>';
-                endwhile;
+                // endwhile;
                
               ?>
               </select>
@@ -377,7 +381,7 @@ exit;
          <!-- ****************Adents******************* -->
          <div class="mb-3 d-flex mt-4">
           <label for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Agents</label>
-          <select name="agents[]" multiple="multiple" id="agents" class="fs-5 pb--2 pe-2" style="min-width: 330px;">
+          <select name="agents[]" multiple="multiple" id="agents" class="fs-5 pe-2" style="min-width: 330px;">
      
             <!-- recuperer que les agents avec ajax-->
      

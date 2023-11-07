@@ -1,9 +1,12 @@
 <?php
+$titre = "Modifier l'utilisateur'";
+include_once "../includes/admin_header.php";
+include_once "../includes/admin_sidebar.php";
 require_once "../../includes/DB.php";
-
+set_time_limit(1);
 $up_id = $_GET["id"];
 
-$sql_s2 = "SELECT * FROM `speciality` ORDER BY `title` ASC";
+$sql_s2 = "SELECT * FROM speciality ORDER BY title ASC";
 $query_s2 = $dbConnect->query($sql_s2);
 $query_s2->execute();
 
@@ -23,6 +26,13 @@ if (isset($_POST["submit"])) {
   }else{
     $userType = strip_tags($_POST["user_userType"]);
   }
+ 
+  if(isset($_POST["code_id"]) && !empty($_POST["code_id"])) {
+    $code_id = strip_tags($_POST["code_id"]);
+  }
+  // else{
+    // $specialities = serialize($_POST["user_specialities"]);
+  // }
 
   $lastname = strip_tags($_POST["lastname"]);
   $firstname = strip_tags($_POST["firstname"]);
@@ -30,41 +40,36 @@ if (isset($_POST["submit"])) {
   $nationality = strip_tags($_POST["nationality"]);
   $country = strip_tags($_POST["country"]);
   $codeName = strip_tags($_POST["codeName"]);
-
+   if(isset($_POST["specialities"]) && !empty($_POST["specialities"])) {
+    $specialities = serialize($_POST["specialities"]);
+    $sql_in_2 = "UPDATE agents SET specialities='$specialities', code_id='$code_id' WHERE id_user_agent='$up_id'";
+    $query_in_2 = $dbConnect->prepare($sql_in_2);
+    $query->bindValue(':specialities', $specialities, PDO::PARAM_INT);
+    $query_in_2->execute();
+    $query_in_2->closeCursor();
+  }
+  
+  
   $sql = "UPDATE person SET lastname='$lastname', firstname='$firstname', birthdate='$birthdate', nationality='$nationality',  country='$country',  userType='$userType', codeName='$codeName' WHERE id='$up_id'";
 
   $query = $dbConnect->prepare($sql);
   $Execute = $query->execute();
 
   // *************************************
-  if(isset($_POST["specialities"]) && !empty($_POST["specialities"])) {
-    $specialities = serialize($_POST["specialities"]);
-  }else{
-    $specialities = serialize($_POST["user_specialities"]);
-  }
 
-  if(isset($_POST["code_id"]) && !empty($_POST["code_id"])) {
-    $code_id = strip_tags($_POST["code_id"]);
-  }
-
-  $sql_in_2 = "UPDATE agents SET specialities='$specialities', code_id='$code_id' WHERE id_user_agent='$up_id'";
-  $query_in_2 = $dbConnect->prepare($sql_in_2);
-  $query->bindValue(':specialities', $specialities, PDO::PARAM_INT);
-  $query_in_2->execute();
-  $query_in_2->closeCursor();
+ 
 
 
 
   // ********************************
   if ($Execute) {
     echo "<p style=\"background: darkgrey;\" class=\"text-center fs-4 text-white p-2 ds-5\">Utilisateur modifié sous le numéro " . $up_id . "<a class=\"ms-2 fw-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
-    header("Location: ../lists/usersAll.php");
+    "<a class=\"fs-4 ms-3 text-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
+    
   }
 }
 
-$titre = "Modifier l'utilisateur'";
-include_once "../includes/admin_header.php";
-include_once "../includes/admin_sidebar.php";
+
 ?>
 <link href="../../style/style.css" rel="stylesheet" type="text/css">
 <link rel="icon" href="../logo.png">
@@ -73,7 +78,7 @@ include_once "../includes/admin_sidebar.php";
 
   <?php
   global $dbConnect;
-  $sql_s1 = "SELECT * FROM `person` WHERE id='$up_id'";
+  $sql_s1 = "SELECT * FROM person WHERE id='$up_id'";
   $query_s1 = $dbConnect->query($sql_s1);
   $query_s1->execute();
 
@@ -88,11 +93,14 @@ include_once "../includes/admin_sidebar.php";
     $codeName = $row["codeName"];
     $user_userType = $row["userType"];
   }
+  while ($row2 = $query_s3->fetch(PDO::FETCH_ASSOC)) :
+    $user_specialities = unserialize($row2["specialities"]);
+  endwhile;
   ?>
 
   <h1>Modifier l'utilisateur</h1>
   <form method="post" action="user_update.php?id=<?php echo $up_id; ?>">
-    <input type="hidden" name="up_id" value="<?php echo $row["id"] ?>">
+    <input type="hidden" name="up_id" value="<?php echo $id ?>">
     <div class="mb-3">
       <!-- ***************lastname***************** -->
       <div class="mb-3">
@@ -187,17 +195,18 @@ if($user_userType == 'agent'):
   <h5 class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Spécialité: </h5>
   <?php
   $user_specialityArr = [];
-  while ($row2 = $query_s3->fetch(PDO::FETCH_ASSOC)) :
-    $specialities = unserialize($row2["specialities"]);
-    foreach ($specialities as $user_speciality) :
+ 
+    foreach ($user_specialities as $user_spec) :
+      $user_speciality = $user_spec;
       echo "<input type=\"\" value=".$user_speciality." name=\"user_specialities[]\"><br/>";
       $user_specialityArr[] = $user_speciality;
     endforeach;
-  endwhile;
+  // endwhile;
   ?>
   <div class="specialities_list fs-4 form-control w-25">
     <?php
         while ($row1 = $query_s2->fetch(PDO::FETCH_ASSOC)):
+          $checked = "";
           $specialityId = $row1["id"];
           $speciality = $row1["title"];
             if(in_array($speciality, $user_specialityArr)){

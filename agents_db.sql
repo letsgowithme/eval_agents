@@ -54,8 +54,8 @@ CREATE TABLE mission(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 description TEXT NOT NULL,
-startDate DATETIME NOT NULL,
-endDate DATETIME NOT NULL,
+startDate DATETIME NULL,
+endDate DATETIME  NULL,
 country VARCHAR(100) NOT NULL,
 missionStatus ENUM('En préparation', 'En cours', 'Terminé', 'Échec') NOT NULL,
 codeName VARCHAR(50) NOT NULL
@@ -67,13 +67,6 @@ id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL
 ) engine=InnoDB;
 
-
-CREATE TABLE user_speciality(
-userId INT NOT NULL,
-user_specialities VARCHAR(255) NOT NULL
-) engine=InnoDB;
-
-ALTER TABLE user_speciality ADD CONSTRAINT FK_userId FOREIGN KEY (userId) REFERENCES user(id);
 
 CREATE TABLE mission_speciality(
 mission_Id INT NOT NULL,

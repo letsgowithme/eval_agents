@@ -60,7 +60,7 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
 </tr>
 <?php 
 global $dbConnect;
-$sql = "SELECT * FROM `hideout`";
+$sql = "SELECT * FROM  hideout";
 $query = $dbConnect->query($sql);
 while ($row = $query->fetch(PDO::FETCH_ASSOC)):
   $count++;

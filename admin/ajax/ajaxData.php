@@ -7,11 +7,12 @@ $query_s_s1 = $dbConnect->prepare($sql_s_s1);
 $query_s_s1->execute(["countryChoice" => $_POST["countryList"]]);
 
 while ($row = $query_s_s1->fetch(PDO::FETCH_ASSOC)):
-echo "<option value=".$row["id"]." ".$selected.">".$row["address"]." ".$row["city"]." ".$row["country"]." -  ".$row["hideoutType"]."</option>";
+  $hd_id = intval($row["id"]);
+echo "<option value=".$hd_id." ".$selected.">".$row["address"]." ".$row["city"]." ".$row["country"]." -  ".$row["hideoutType"]."</option>";
 
 
 endwhile;
-$query_s_s1->closeCursor();
+// $query_s_s1->closeCursor();
 }
 
 // *******************email unique verification********************************
@@ -34,7 +35,7 @@ if(!empty($_POST["email"])){
   }
   endwhile;
 
-  $query_s_s2->closeCursor();
+  // $query_s_s2->closeCursor();
   }
   // ********************codeName unique verification*****************************
 if(!empty($_POST["codeName"])){
@@ -56,7 +57,7 @@ if(!empty($_POST["codeName"])){
   }
   endwhile;
 
-  $query_s_s3->closeCursor();
+  // $query_s_s3->closeCursor();
   } 
 
   if(!empty($_POST["title"])){
@@ -78,7 +79,7 @@ if(!empty($_POST["codeName"])){
     }
     endwhile;
   
-    $query_s_s4->closeCursor();
+    // $query_s_s4->closeCursor();
   }
 
  ?>

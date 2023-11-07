@@ -8,7 +8,7 @@ $title = strip_tags($_POST["title"]);
 
 require_once "../../includes/DB.php";
 
-$sql = "INSERT INTO `missionType`(`title`) 
+$sql = "INSERT INTO missionType(title) 
 VALUES(:title)";
 
 $query = $dbConnect->prepare($sql);
@@ -16,7 +16,7 @@ $query = $dbConnect->prepare($sql);
 $query->bindValue(':title', $title, PDO::PARAM_STR);
 
 if(!$query->execute()){
-  die("Failed to insert INTO `missionType`");
+  die("Failed to insert INTO missionType");
 } 
 $id = $dbConnect->lastInsertId();
 

@@ -37,7 +37,7 @@
  <tbody>       
  <?php 
 global $dbConnect;
-$sql = "SELECT * FROM `mission`";
+$sql = "SELECT * FROM  mission";
 $query = $dbConnect->query($sql);
 while ($row = $query->fetch(PDO::FETCH_ASSOC)):
 $count++;

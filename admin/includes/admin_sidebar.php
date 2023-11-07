@@ -80,7 +80,19 @@ include_once "admin_header.php"; ?>
         <li><a class="dropdown-item" href="../new/mission_new.php">Créer une mission</a></li>
         <li><a class="dropdown-item" href="../new/user_new.php">Créer un utilisateur</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="../../deconnection.php">Se déconnecter</a></li>
+        <?php
+        if(isset($_SESSION["user"])){
+          ?>
+          <li><a class="dropdown-item" href="../../deconnection.php">Se déconnecter</a></li>
+          <?php
+              }else{
+?>
+ <li><a class="dropdown-item" href="../../connection.php">Se connecter</a></li>
+ <?php
+              }
+              
+              ?>
+       
       </ul>
         </div>
       </div>

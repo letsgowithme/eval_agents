@@ -7,9 +7,13 @@ if(!empty($_POST["countryList"])){
   $query_s1->execute(["countryContact" => $_POST["countryList"]]);
   
   while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)):
-  echo "<option value=".$row["id"]." ".$selected.">".$row["firstname"]." ".$row["lastname"]." (".$row["country"].")</option>";
+    $cont_id = intval($row["id"]);
+    $cont_firstname = $row["firstname"];
+    $cont_lastname = $row["lastname"];
+    $cont_country = $row["country"];
+  echo "<option value=".$cont_id." ".$selected.">".$cont_firstname." ".$cont_lastname." (".$cont_country.")</option>";
   endwhile;
-  $query_s1->closeCursor();
+  // $query_s1->closeCursor();
   }
   // *********************************************
   if(!empty($_POST["targets"])){
@@ -49,8 +53,8 @@ if(!empty($_POST["countryList"])){
       endif;
   endwhile;
 endwhile;
- $query_s2->closeCursor();
-$query_s8->closeCursor();
+//  $query_s2->closeCursor();
+// $query_s8->closeCursor();
     
     }
 
@@ -71,7 +75,7 @@ if(!empty($_POST["title"])){
     $title = strip_tags($_POST["title"]);
   }
   endwhile;
-  $query_s_s5->closeCursor();
+  // $query_s_s5->closeCursor();
   }
   // *********************Post SPeciality*************************
   if(!empty($_POST["speciality"])){
@@ -111,8 +115,8 @@ if(!empty($_POST["title"])){
     endforeach;
   endwhile;
 endwhile;
- $query6->closeCursor();
-$query7->closeCursor();
+//  $query6->closeCursor();
+// $query7->closeCursor();
     
     }
     // if(!empty($_POST["btn_submit"])){

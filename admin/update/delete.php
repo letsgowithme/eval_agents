@@ -43,7 +43,7 @@ if(!empty($_GET["idMission"])){
   $query2_6 = $dbConnect->prepare($sql2_6); 
   $Execute = $query2_6->execute(["id"=>$_GET["idMission"]]);
 
-  $sql2_1 = "DELETE FROM `mission` WHERE id=:id";
+  $sql2_1 = "DELETE FROM mission WHERE id=:id";
   $query2_1 = $dbConnect->prepare($sql2_1); 
   $Execute = $query2_1->execute(["id"=>$_GET["idMission"]]);
   $query2_1->closeCursor();
@@ -53,7 +53,7 @@ if(!empty($_GET["idHideout"])){
   $sql3 =" DELETE FROM mission_hideouts WHERE idHideout=:id";
   $query3 = $dbConnect->prepare($sql3); 
   $Execute = $query3->execute(["id"=>$_GET["idHideout"]]);
-  $sql3_1 = "DELETE FROM `hideout` WHERE id=:id";
+  $sql3_1 = "DELETE FROM hideout WHERE id=:id";
   $query3_1 = $dbConnect->prepare($sql3_1); 
   $Execute = $query3_1->execute(["id"=>$_GET["idHideout"]]);
   $query3_1->closeCursor();
@@ -63,7 +63,7 @@ if(!empty($_GET["idSpeciality"])){
   $sql4 =" DELETE FROM mission_speciality WHERE mis_spec_id=:id";
   $query4 = $dbConnect->prepare($sql4); 
   $Execute = $query4->execute(["id"=>$_GET["idSpeciality"]]);
-  $sql4_1 = "DELETE FROM `speciality` WHERE id=:id";
+  $sql4_1 = "DELETE FROM speciality WHERE id=:id";
   $query4_1 = $dbConnect->prepare($sql4_1); 
   $Execute = $query4_1->execute(["id"=>$_GET["idSpeciality"]]);
   $query4_1->closeCursor();
@@ -73,7 +73,7 @@ if(!empty($_GET["idMissionType"])){
   $sql5 =" DELETE FROM mission_missionType WHERE mmt_missionTypeId=:id";
   $query5 = $dbConnect->prepare($sql5); 
   $Execute = $query5->execute(["id"=>$_GET["idMissionType"]]);
-  $sql5_1 = "DELETE FROM `missionType` WHERE id=:id";
+  $sql5_1 = "DELETE FROM missionType WHERE id=:id";
   $query5_1 = $dbConnect->prepare($sql5_1); 
   $Execute = $query5_1->execute(["id"=>$_GET["idMissionType"]]);
   $query5_1->closeCursor();
