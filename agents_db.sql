@@ -1,6 +1,7 @@
-CREATE DATABASE agents_db CHARACTER SET utf8 COLLATE utf8_general_ci;
+DROP DATABASE IF EXISTS bd85y_agentsdb;
+CREATE DATABASE bd85y_agentsdb CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-USE agents_db;
+USE bd85y_agentsdb;
 
 CREATE TABLE person(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -10,7 +11,6 @@ birthdate DATE NOT NULL,
 nationality VARCHAR(100) NOT NULL,
 country VARCHAR(100) NOT NULL,
 codeName VARCHAR(100) NOT NULL
-UNIQUE(codeName_c)
 ) engine=InnoDB;
 
 CREATE TABLE user(
@@ -80,7 +80,7 @@ ALTER TABLE mission_speciality ADD CONSTRAINT FK_mis_spec_id FOREIGN KEY (mis_sp
 
 CREATE TABLE mission_hideouts(
 missionId INT NOT NULL,
-mis_hideouts VARCHAR(255) NOT NULL
+mis_hideouts VARCHAR(255) NULL
 ) engine=InnoDB;
 
 ALTER TABLE mission_hideouts ADD CONSTRAINT FK_missionId FOREIGN KEY (missionId) REFERENCES mission(id);
@@ -95,7 +95,7 @@ ALTER TABLE mission_agents ADD CONSTRAINT FK_ma_mission_id FOREIGN KEY (ma_missi
 
 CREATE TABLE mission_contacts(
 mc_mission_id INT NOT NULL,
-contacts VARCHAR(255) NOT NULL
+contacts VARCHAR(255) NULL
 ) engine=InnoDB;
 
 ALTER TABLE mission_contacts ADD CONSTRAINT FK_mc_mission_id FOREIGN KEY (mc_mission_id) REFERENCES mission(id);
