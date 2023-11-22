@@ -207,7 +207,7 @@ exit;
 <div class="body_page_new py-4">
  <div class="p-4" style="max-width: 1000px;">
 
-<h1>Ajouter une mission</h1>  
+<h1 class="text-light">Ajouter une mission</h1>  
  
         <form class="form" action="mission_new.php" method="post">
           <div class="mb-3">

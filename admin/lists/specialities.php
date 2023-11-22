@@ -25,9 +25,18 @@ foreach ($query1->fetchAll(PDO::FETCH_NUM) as $tabValues) {
   label {
     font-size: 1.3em;
   }
+  .body_admin{
+    background-color: #b2b2b5;
+  }
+  .col_wh,
+  span,
+  th,
+  td{
+    color: white;
+  }
 </style>
 </head>
-<div class="p-4">
+<div class="p-4 body_admin">
   <div>
     <h1>Spécialités</h1>
     <a href="../new/speciality_new.php" class="btn btn-primary mb-4">
@@ -41,7 +50,7 @@ foreach ($query1->fetchAll(PDO::FETCH_NUM) as $tabValues) {
     <table id="datatable" class="display" style="border: 3px solid black; background:  #404144;">
       <thead class="my-4">
         <tr>
-          <th class="hidden">Id</th>s
+          <th class="hidden">Id</th>
           <th class="text-center fs-4 px-4 py-2 w-25">Titre</th>
           <th class="text-center fs-4 px-4 py-2 w-25">Actions</th>
         </tr>

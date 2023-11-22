@@ -25,10 +25,19 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
   label {
     font-size: 1.3em;
   }
+  .body_admin{
+    background-color: #b2b2b5;
+  }
+  .col_wh,
+  span,
+  th,
+  td{
+    color: white;
+  }
 </style>
 </head>
 
-<div class="p-4">
+<div class="p-4 body_admin">
   <div>
     <h1>Planques</h1>
     <a href="../new/hideout_new.php" class="btn btn-primary mb-4">

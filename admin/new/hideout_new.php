@@ -43,6 +43,9 @@ include_once "../includes/admin_sidebar.php";
     color: #b2b2b5;
     padding: 5px;
   }
+  h1{
+    color:white;
+  }
 </style>
 </head>
 <div class="body_page_new">

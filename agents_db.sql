@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS bd85y_agentsdb;
-CREATE DATABASE bd85y_agentsdb CHARACTER SET utf8 COLLATE utf8_general_ci;
+DROP DATABASE IF EXISTS agents_db;
+CREATE DATABASE agents_db CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-USE bd85y_agentsdb;
+USE agents_db;
 
 CREATE TABLE person(
 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,

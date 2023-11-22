@@ -1,26 +1,38 @@
+<link rel="stylesheet" href="style/style_in_ad.css">
+<link rel="stylesheet" href="style/style.css">
+<style>
+  .body_admin{
+    background-color: #b2b2b5;
+  }
+  .col_wh{
+    color: white;
+  }
+
+</style>
+</head>
 </div>
 <!-- table missions begins -->
-<div class="p-4" style="max-width: 70%!important; min-width: 30%!important;">
+<div class="p-4 body_admin" style="max-width: 70%!important; min-width: 30%!important;">
   <div>
-    <table id="datatable" class="display" style="border: 3px solid black; background: #404144;">
+    <table id="datatable" class="display" style="border: 3px solid black; background: #b2b2b5;">
       <thead class="my-4">
         <tr>
           <?php if (isset($_SESSION["user"])) :
           ?>
-            <th class="text-center fs-4" style="min-width: 150px!important;">Id</th>
+            <th class="text-center fs-4 col_wh" style="min-width: 150px!important;">Id</th>
           <?php endif;
           if (!isset($_SESSION["user"])) :
           ?>
             <th class="hidden">Id</th>
           <?php endif;
           ?>
-          <th class="text-center fs-4" style="min-width: 150px!important;">Titre</th>
+          <th class="text-center fs-4 col_wh" style="min-width: 150px!important;">Titre</th>
           <?php if (isset($_SESSION["user"])) :
           ?>
-            <th class="text-center fs-4" style="min-width: 150px!important;">Actions</th>
+            <th class="text-center fs-4 col_wh" style="min-width: 150px!important;">Actions</th>
           <?php endif;
           ?>
-          <th class="text-center fs-4 py-3" style="min-width: 150px!important;">Détails</th>
+          <th class="text-center fs-4 py-3 col_wh" style="min-width: 150px!important;">Détails</th>
         </tr>
       </thead>
       <tbody>

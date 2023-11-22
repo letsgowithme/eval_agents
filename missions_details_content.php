@@ -48,6 +48,9 @@ $sql7_1 = "SELECT * FROM hideout";
 $query7_1 = $dbConnect->query($sql7_1);
 $query7_1->execute();
 ?>
+<link rel="stylesheet" href="style/style_in_ad.css">
+<link rel="stylesheet" href="style/style.css">
+</head>
 <div class="body_page_new py-4">
   <div>
     <h1 class="text-white">Mission <strong><?= $mission['title'] ?></strong> numéro <?= $mission['id'] ?></h1>
@@ -57,7 +60,7 @@ $query7_1->execute();
         <td class="hidden"><?= $mission['idMission'] ?></td>
       </tr>
       <tr>
-        <td class="w-25">Titre</td>
+        <td class="w-25 text-light">Titre</td>
         <td class="w-50"><?= $mission['title'] ?></td>
       </tr>
       <tr>

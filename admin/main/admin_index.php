@@ -6,10 +6,16 @@ $titre = "admin";
 ?>
 <link rel="stylesheet" href="../../style/style_in_ad.css">
 <link rel="stylesheet" href="../../style/style.css">
-</head>
-<div class="p-3">
+<style>
+  .body_admin{
+    background-color: #404144;
+  }
 
-  <h1>Page d'administration du site d'agents secrets</h1>
+</style>
+</head>
+<div class="p-3 body_admin">
+
+  <h1 class="text-light">Page d'administration du site d'agents secrets</h1>
 </div>
 <div>
 </div>
