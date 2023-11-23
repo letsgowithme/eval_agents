@@ -4,35 +4,53 @@
   .body_admin{
     background-color: #b2b2b5;
   }
-  .col_wh{
+  .col_wh, th, td{
     color: white;
   }
+  @media screen and (min-width: 375px) {
+  #datatable{
+     width: 400px;
+    margin-left: -20%;
+  }
+  th, td {
+    width: 10px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  #datatable{
+     width: 800px;
+    margin-left: 0;
+  }
+ .body_admin{
+  margin-left: -1%;
+ }
+}
 
 </style>
 </head>
 </div>
 <!-- table missions begins -->
-<div class="p-4 body_admin" style="max-width: 70%!important; min-width: 30%!important;">
+<div class="p-4 body_admin container-fluid" style="max-width: 70%!important; min-width: 30%!important;">
   <div>
-    <table id="datatable" class="display" style="border: 3px solid black; background: #b2b2b5;">
+    <table id="datatable" class="display" style="border: 3px solid black; background: #29292b;">
       <thead class="my-4">
         <tr>
           <?php if (isset($_SESSION["user"])) :
           ?>
-            <th class="text-center fs-4 col_wh" style="min-width: 150px!important;">Id</th>
+            <th class="text-center fs-4 col_wh" style="min-width: 20px!important; max-width: 200px!important;">Id</th>
           <?php endif;
           if (!isset($_SESSION["user"])) :
           ?>
             <th class="hidden">Id</th>
           <?php endif;
           ?>
-          <th class="text-center fs-4 col_wh" style="min-width: 150px!important;">Titre</th>
+          <th class="text-center fs-4 col_wh" style="min-width: 50px!important;">Titre</th>
           <?php if (isset($_SESSION["user"])) :
           ?>
-            <th class="text-center fs-4 col_wh" style="min-width: 150px!important;">Actions</th>
+            <th class="text-center fs-4 col_wh" style="min-width: 40px!important;">Actions</th>
           <?php endif;
           ?>
-          <th class="text-center fs-4 py-3 col_wh" style="min-width: 150px!important;">Détails</th>
+          <th class="text-center fs-4 py-3 col_wh" style="min-width: 30px!important;">Détails</th>
         </tr>
       </thead>
       <tbody>
@@ -75,7 +93,7 @@
             <?php endif; ?>
             <?php if (isset($_SESSION["user"])) :
             ?>
-              <td class="text-center"><a href="../details/mission_adm_details.php?id=<?php echo $id ?>">Details admin</a></td>
+              <td class="text-center" style="min-width: 40px!important;"><a href="../details/mission_adm_details.php?id=<?php echo $id ?>">Details</a></td>
             <?php endif;
             ?>
           </tr>

@@ -11,6 +11,7 @@ $count = 0;
 <style>
   .body_admin{
     background-color: #b2b2b5;
+    min-width: 400px;
   }
   .col_wh{
     color: white;

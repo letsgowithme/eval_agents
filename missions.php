@@ -1,9 +1,10 @@
 <?php
  $missions=true;
+ $titre = "Missions";
 require_once "includes/DB.php";
 include_once "includes/header.php";
 include_once "includes/navbar.php";
-$titre = "Missions";
+
 $count = 0;
 ?>
 <link rel="stylesheet" href="style/style_in_ad.css">

@@ -10,13 +10,19 @@ $titre = "admin";
   .body_admin{
     background-color: #404144;
   }
-
+  @media screen and (min-width: 375px) {
+    .body_admin{
+    min-width: 400px;
+    }
+h1{
+  word-wrap: break-word;
+}
+  }
 </style>
 </head>
 <div class="p-3 body_admin">
 
   <h1 class="text-light">Page d'administration du site d'agents secrets</h1>
 </div>
-<div>
-</div>
+
 <?php include "../includes/admin_footer.php"; ?>

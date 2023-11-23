@@ -12,7 +12,7 @@
           <a class="nav-link fs-4 <?php echo !empty($index) ? "active" : "" ?>" aria-current="page" href="index.php" id="up">Accueil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link fs-4<?php echo !empty($missions) ? "active" : "" ?>" href="missions.php">Missions</a>
+          <a class="nav-link fs-4 <?php echo !empty($missions) ? "active" : "" ?>" href="missions.php">Missions</a>
         </li>
         <?php if (isset($_SESSION["user"])) :
           if ($_SESSION["user"]["roles"] < 4) :
