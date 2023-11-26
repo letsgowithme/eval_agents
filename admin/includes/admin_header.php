@@ -1,7 +1,6 @@
 <?php
 $admin = true;
 session_start();
-ini_set('xdebug.show_local_vars', 1);
 $titre = "";
 ?>
 <!DOCTYPE html>
@@ -18,6 +17,8 @@ $titre = "";
   <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sidebars/">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link rel="icon" href="..././logo.png">
+  <link rel="stylesheet" href="../../style/style_in_ad.css">
+<link rel="stylesheet" href="../../style/style.css">
   <script src="https://getbootstrap.com//docs/5.3/assets/js/color-modes.js"></script>
   <!-- Favicons -->
   <link rel="icon" href="../../logo.png" sizes="32x32" type="image/png">

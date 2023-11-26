@@ -6,12 +6,13 @@ include_once "../includes/admin_sidebar.php";
 $titre = "Missions";
 $count = 0;
 ?>
-<link rel="stylesheet" href="../../style/style_in_ad.css">
-<link rel="stylesheet" href="../../style/style.css">
+<!-- <link rel="stylesheet" href="../../style/style_in_ad.css">
+<link rel="stylesheet" href="../../style/style.css"> -->
 <style>
   .body_admin{
     background-color: #b2b2b5;
     min-width: 400px;
+    min-height: 100vh;
   }
   .col_wh{
     color: white;
@@ -19,7 +20,7 @@ $count = 0;
 
 </style>
 </head>
-<div class="p-3 body_admin">
+<div class="p-3 body_admin ">
   <div>
     <h1 class="title_adm col_wh">Liste de missions</h1>
     <a href="../new/mission_new.php" class="btn btn-primary my-2">

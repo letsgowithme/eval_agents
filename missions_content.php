@@ -1,39 +1,48 @@
-<link rel="stylesheet" href="style/style_in_ad.css">
-<link rel="stylesheet" href="style/style.css">
+<!-- <link rel="stylesheet" href="style/style_in_ad.css">
+<link rel="stylesheet" href="style/style.css"> -->
 <style>
-  .body_admin{
+  .body_admin_block{
     background-color: #b2b2b5;
+    min-height: 100%;
+   
   }
   .col_wh, th, td{
     color: white;
   }
   @media screen and (min-width: 375px) {
-  #datatable{
-     width: 400px;
+    #datatable_wrapper{
+     min-width: 370px;
     margin-left: -20%;
+    background-color: #b2b2b5;
   }
-  th, td {
+  .id_th{
     width: 10px;
   }
+  .th_sec{
+  width: 10px;
+}
+ 
+ 
 }
 @media screen and (min-width: 1024px) {
-  #datatable{
-     width: 800px;
-    margin-left: 0;
-  }
- .body_admin{
-  margin-left: -1%;
- }
+ 
+  #datatable_wrapper{
+    margin-left: 2%!important;
+    min-width: 900px;
+
+}
+
+ 
 }
 
 </style>
 </head>
 </div>
 <!-- table missions begins -->
-<div class="p-4 body_admin container-fluid" style="max-width: 70%!important; min-width: 30%!important;">
+<div class="p-4 body_admin_block container-fluid" style="max-width: 70%!important; min-width: 30%!important;">
   <div>
     <table id="datatable" class="display" style="border: 3px solid black; background: #29292b;">
-      <thead class="my-4">
+      <thead>
         <tr>
           <?php if (isset($_SESSION["user"])) :
           ?>
@@ -41,16 +50,16 @@
           <?php endif;
           if (!isset($_SESSION["user"])) :
           ?>
-            <th class="hidden">Id</th>
+            <th class="hidden id_th">Id</th>
           <?php endif;
           ?>
           <th class="text-center fs-4 col_wh" style="min-width: 50px!important;">Titre</th>
           <?php if (isset($_SESSION["user"])) :
           ?>
-            <th class="text-center fs-4 col_wh" style="min-width: 40px!important;">Actions</th>
+            <th class="text-center fs-4 col_wh th_sec" style="min-width: 40px!important;">Actions</th>
           <?php endif;
           ?>
-          <th class="text-center fs-4 py-3 col_wh" style="min-width: 30px!important;">Détails</th>
+          <th class="text-center fs-4 py-3 col_wh th_sec" style="min-width: 30px!important;">Détails</th>
         </tr>
       </thead>
       <tbody>
@@ -122,3 +131,4 @@
   </div>
 </div>
 </div>
+<!-- </div> -->
