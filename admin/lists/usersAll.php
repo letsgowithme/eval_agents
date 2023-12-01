@@ -31,7 +31,7 @@ $count = 0;
 <!-- page users begins -->
 <div class="body_admin" style="margin-left: 0;">
   <div>
-    <h1 class="p-2">Liste d'utilisateurs</h1>
+    <h1 class="p-2 title_adm">Liste d'utilisateurs</h1>
     <div class="d-flex">
       <!-- button agents -->
       <a href="../new/agent_new.php" class="btn btn-primary mb-4 me-3">
