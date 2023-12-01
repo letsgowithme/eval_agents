@@ -51,7 +51,7 @@ $query7_1->execute();
 <link rel="stylesheet" href="style/style_in_ad.css">
 <link rel="stylesheet" href="style/style.css">
 </head>
-<div class="body_page_new py-4">
+<div class="body_page_new py-2 body_details">
   <div>
     <h1 class="text-white">Mission <strong><?= $mission['title'] ?></strong> numéro <?= $mission['id'] ?></h1>
     <table border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4 fs-5 mis_details_table">

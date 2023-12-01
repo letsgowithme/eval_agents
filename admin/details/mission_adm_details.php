@@ -1,4 +1,4 @@
-h<?php
+<?php
 $missions_admin=true;
 require_once "../../includes/DB.php";
 include_once "../includes/admin_header.php";

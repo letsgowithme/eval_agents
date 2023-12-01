@@ -4,11 +4,12 @@
 }
 
 .body_home,
-.body_page {
+.body_page,
+.body_admin {
    background-color: #b2b2b5;
   background-size: cover;
   background-attachment: fixed;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .body_page_new{
@@ -110,9 +111,8 @@ color: white;
 }
 
 #datatable_wrapper{
-  /* position: absolute!important; */
-  min-width: 200px;
-  z-index: 3!important;
+min-width: 200px; 
+z-index: 3!important;
  margin-left: -50%!important;
  padding: 10px;
 }
@@ -121,6 +121,8 @@ color: white;
 }
 #datatable_length label{
 font-size: 1.2em;
+margin-left: 20px;
+
 }
 th{
   width: 30px;
@@ -148,7 +150,7 @@ width: 8px;
   min-width: 250px;
 }
 .footer{
-  position: absolute!important; 
+  position: relative!important; 
   bottom: 0;
   background-color: #201f1f!important; 
 }
@@ -188,6 +190,23 @@ margin-top: -15%;
 #missionTypeInput{
   width: 270px; 
 }
+input[type="search"]{
+  margin-left: -10px!important;
+  width: 225px!important;
+  }
+  .body_admin{
+    min-width: 225px!important;
+  }
+
+  .mis_details_table{
+    width: 225px!important;
+  }
+  .body_details{
+    width: 284px!important;
+  }
+  .footer_block_adm{
+    width: 362px!important;
+  }
 }
 /* ******@media 768***** */
 @media screen and (min-width: 768px) {
@@ -206,7 +225,6 @@ th {
 font-size: 1.3em;
 }
 #datatable_wrapper{
-  /* position: absolute!important; */
   width: 600px!important;
  margin-left: -30%!important;
  padding: 10px;
@@ -239,17 +257,37 @@ font-size: 1.3em;
 #missionTypeInput{
   width: 370px;
 }
+input[type="search"]{
+  margin-left: 0!important;
+  width: 200px!important;
+  }
+  .body_admin{
+    min-width: 525px!important;
+  }
+
+  .mis_details_table{
+    width: 625px!important;
+  }
+  .body_details{
+    min-width: 642px!important;
+  }
+  .footer_block_adm{
+    min-width: 750px!important;
+  }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1020px) {
+  .body_admin{
+    width: 705px!important;
+    
+  }
   .side_b{
-    width: 290px;
+    width: 290px!important;
   }
 #datatable_wrapper{
-  /* position: absolute!important; */
  padding: 10px;
  margin-left: -27%!important;
- min-width: 1000px;
+ min-width: 700px;
 }
 .mis_details_table{
   width: 900px;
@@ -271,5 +309,45 @@ font-size: 1.3em;
 .specialities_list{
   margin-top: -4%;
   }
+  .footer_block_adm{
+    min-width: 1010px!important;
+  }
 }
 
+@media screen and (min-width: 1280px) {
+  .body_details{
+    min-width: 1025px!important;
+  }
+  .body_admin{
+    min-width: 965px!important;
+  }
+  .mis_details_table{
+    min-width: 925px!important;
+  }
+ 
+  .footer_block_adm{
+    min-width: 1270px!important;
+  }
+  #datatable_wrapper{
+  
+    margin-left: -20%!important;
+    min-width: 900px;
+   }
+  
+}
+@media screen and (min-width: 1400px) {
+  .body_details{
+    min-width: 1400px!important;
+  }
+  .body_admin{
+    min-width: 1383px!important;
+  }
+  .mis_details_table{
+    min-width: 925px!important;
+  }
+ 
+  .footer_block_adm{
+    min-width: 1687px!important;
+  }
+  
+}

@@ -13,7 +13,7 @@
 </head>
 </div>
 <!-- table missions begins -->
-<div class="p-4 body_admin_block container-fluid" 
+<div class="body_admin_block container-fluid" 
 style="max-width: 70%!important; min-width: 30%!important;"
 >
   <div>
@@ -51,7 +51,7 @@ style="max-width: 70%!important; min-width: 30%!important;"
           <tr>
             <?php if (isset($_SESSION["user"])) :
             ?>
-              <td class="text-center py-3"><?php echo  $id ?></td>
+              <td class="text-center py-3 w-25"><?php echo  $id ?></td>
             <?php endif;
             ?>
             <?php if (!isset($_SESSION["user"])) :
