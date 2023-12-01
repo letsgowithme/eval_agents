@@ -272,22 +272,7 @@ exit;
              <label for="hideout" class="form-label fw-bold my-2 fs-5 tx_color">Planques</label>
           <div class="mb-3">     
               <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-5 w-75 h-auto">
-                <?php
-              //   while ($row = $query_s6->fetch(PDO::FETCH_ASSOC)):
-              //   $hideoutId = $row["id"];
-              //   $hideoutType = $row["hideoutType"];
-              //   $hideout_country = $row["country"];
-              //   $hideout_city = $row["city"];
-                
-              // if($country == $hideout_country){
-              //   $selected="selected";
-              //   }else{ 
-              //  $selected=""; 
-              //  } 
-                // echo '<option id="'.$hideout_country.'" value="'.$hideout_country.'" "'.$selected." ".' name="'.$hideoutId.'">'.$hideout_country." - ".$hideout_city." - ".$hideoutType.'</option>';
-                // endwhile;
                
-              ?>
               </select>
           </div>
        <!-- ****************Contacts******************* -->
@@ -317,10 +302,6 @@ exit;
             $mt_title = $row["title"];
             echo "<option value=".$mt_id."><span>".$mt_title."</span></option>";
           }
-           // echo '<pre>';
-            // var_dump($speciality);
-            // echo '</pre>';
-
          ?>      
            </select>
   <!-- ****************Targets******************* -->
@@ -374,7 +355,12 @@ exit;
         </form>
         <button type="button" class="btn btn-primary" id="btn_reload">Réinisialiser</button>
         </div>
-   
+        <div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="#up" class="text-decoration-none btn_up">Vers le haut</a></button>
+</div>
+<div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
+</div>
 </div>
 <script>
 $(document).ready(function () {

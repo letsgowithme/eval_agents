@@ -1,14 +1,21 @@
 * {
   box-sizing: border-box;
+ 
 }
 
 .body_home,
 .body_page {
-  background-color: rgb(156, 155, 155);
+   background-color: #b2b2b5;
   background-size: cover;
   background-attachment: fixed;
   overflow-x: hidden;
 }
+
+.body_page_new{
+  background-color: rgb(156, 155, 155);
+  background-color: #b2b2b5;
+}
+
 #main_title{
   color: black;
   text-shadow: 1px 2px 2px white;
@@ -17,16 +24,18 @@
 .hidden{
   display: none;
 }
+
 .visible{
   display: block;
 }
+
 .red {
 background-color: red;
 }
+
 td,
 th {
   border: 1px solid gray;
-
 
 }
 
@@ -34,19 +43,224 @@ th {
 position: relative!important; 
 bottom: 0;  
 }
-.body_list {
-  background-color: rgb(226, 226, 226);
-}
 
 .nav-pills li a:hover {
-  background-color: blue!important;
+  background-color: rgb(11, 11, 206)!important;
 
 }
-.body_page_new {
-  background: #5a5a5d;
-}
+
 #btn_submit {
   background-color: rgb(14, 14, 52)!important;
 }
+#datatable_filter{
 
+  margin-left: 10px;
+}
+
+thead, tbody{
+  background-color: #4b4b4d;
+ 
+}
+.link_details{
+  color: white;
+}
+.btn_up,
+.btn_home{
+  background-color: rgb(59, 57, 57);
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+}
+.btn_up:hover,
+.btn_home:hover{
+  background-color: rgb(223, 217, 217);
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+@media screen and (min-width: 375px) {
+ 
+  .footer_block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #b2b2b5;
+  }
+
+  .btn_line{
+    background-color: #b2b2b5;
+  }
+
+  td,
+th {
+font-size: 12px;
+color: white;
+}
+
+.hide_xs{
+  display: none;
+}
+
+#datatable_wrapper{
+  /* position: absolute!important; */
+  min-width: 200px;
+  z-index: 3!important;
+ margin-left: -50%!important;
+ padding: 10px;
+}
+#datatable{
+  z-index: 3!important;
+}
+#datatable_length label{
+font-size: 1.2em;
+}
+th{
+  width: 30px;
+  color: white;
+}
+.id_th{
+ width: 7px;
+}
+.th_sec{
+width: 8px;
+
+}
+.action_icon{
+  font-size: 0.7em;
+}
+.footer_block_adm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.side_b{
+  width: 90px;
+}
+.mis_details_table{
+  min-width: 250px;
+}
+.footer{
+  position: absolute!important; 
+  bottom: 0;
+  background-color: #201f1f!important; 
+}
+.footer_block_adm{
+  background-color: #201f1f!important; 
+}
+.btns{
+  margin-left: -20%; 
+ 
+}
+.specialities_list,
+.country_input{
+  width: 280px;
+}
+.specialities_list{
+margin-top: -15%;
+}
+.descr_textarea{
+  width: 270px;
+}
+.date_mis_update{
+  display: flex;
+  flex-direction: column;
+  width: 270px;
+}
+#btnStartDate,
+#btnEndDate{
+  width: 270px;
+}
+#countryList{
+  width: 300px;
+}
+#hideout{
+  width: auto;
+}
+#speciality,
+#missionTypeInput{
+  width: 270px; 
+}
+}
+/* ******@media 768***** */
+@media screen and (min-width: 768px) {
+  
+  .footer_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .th_sec{
+    width: 2em;
+    
+    }
+    td,
+th {
+font-size: 1.3em;
+}
+#datatable_wrapper{
+  /* position: absolute!important; */
+  width: 600px!important;
+ margin-left: -30%!important;
+ padding: 10px;
+}
+.mis_details_table{
+  width: 600px;
+}
+.specialities_list,
+.country_input{
+  width: 500px;
+  font-size: 1.3em;
+}
+.specialities_list{
+  margin-top: -5%;
+  }
+  .descr_textarea{
+    width: 570px;
+  }
+  .date_mis_update{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+   
+  }
+  #btnStartDate,
+  #btnEndDate{
+    width: 160px;
+  }
+  #speciality,
+#missionTypeInput{
+  width: 370px;
+}
+}
+
+@media screen and (min-width: 1024px) {
+  .side_b{
+    width: 290px;
+  }
+#datatable_wrapper{
+  /* position: absolute!important; */
+ padding: 10px;
+ margin-left: -27%!important;
+ min-width: 1000px;
+}
+.mis_details_table{
+  width: 900px;
+}
+.btns{
+  margin-left: -40%; 
+ 
+}
+#datatable_length label{
+  font-size: 1.6em;
+  }
+  .specialities_list,
+.country_input{
+  width: 500px;
+  font-size: 1.6em;
+}
+.specialities_list{
+  margin-top: -4%;
+  }
+}
 

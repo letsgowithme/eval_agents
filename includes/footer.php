@@ -1,4 +1,4 @@
-<div class="d-flex flex-xs-column flex-sm-row justify-content-around">
+<div class="footer_block">
   <p class="fs-6 footer_line"><a href="legal_notice.php">Mentions légales</a></p>
 
   <p class="fs-6 footer_line">Copyright&copy;Iryna_G 2023 All rights reserved.</p>

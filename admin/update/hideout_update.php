@@ -87,7 +87,7 @@ include_once "../includes/admin_sidebar.php";
       </div>
       <button type="submit" class="btn-info my-4 fs-5 fw-bold" name="submit">Enregistrer</button>
     </form>
-  </div>
+  </div> </div>
   <script>
     let change_country_btn = document.getElementById("change_country_btn");
     let countries_list = document.getElementById("countries_list");

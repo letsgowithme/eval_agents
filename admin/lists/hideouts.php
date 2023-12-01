@@ -36,8 +36,7 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
   }
 </style>
 </head>
-
-<div class="p-4 body_admin">
+<div class="p-3 body_admin ">
   <div>
     <h1>Planques</h1>
     <a href="../new/hideout_new.php" class="btn btn-primary mb-4">
@@ -46,17 +45,20 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
       </svg>
     </a>
-  </div>
-  <div style="max-width: 80%!important;">
-    <table id="datatable" class="display" style="border: 3px solid black; background:  #404144;">
+
+  <div class="p-4 body_admin_block container-fluid" 
+style="max-width: 70%!important; min-width: 30%!important;"
+>
+  <div>
+    <table id="datatable" class="display" style="border: 3px solid black;">
       <thead class="my-4">
         <tr>
-          <th class="text-center fs-5 px-4 py-2">Id</th>
-          <th class="text-center fs-5 px-4 py-2">Code</th>
-          <th class="text-center fs-5 px-4 py-2">Adresse</th>
+          <th class="text-center fs-5 px-4 py-2 hide_xs">Id</th>
+          <th class="text-center fs-5 px-4 py-2 hide_xs">Code</th>
+          <th class="text-center fs-5 px-4 py-2 hide_xs">Adresse</th>
           <th class="text-center fs-5 px-4 py-2">Ville</th>
           <th class="text-center fs-5 px-4 py-2">Pays</th>
-          <th class="text-center fs-5 px-4 py-2">Type</th>
+          <th class="text-center fs-5 px-4 py-2 hide_xs">Type</th>
           <th class="text-center fs-5 px-4 py-2">Actions</th>
         </tr>
       </thead>
@@ -75,12 +77,12 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
         $city = $row["city"];
       ?>
         <tr>
-          <td class="text-center px-4 py-2"><?php echo $id ?></td>
-          <td class="text-center px-4 py-2"><?php echo  $code ?></td>
-          <td class="text-center px-4 py-2"><?php echo $address ?></td>
+          <td class="text-center px-4 py-2 hide_xs"><?php echo $id ?></td>
+          <td class="text-center px-4 py-2 hide_xs"><?php echo  $code ?></td>
+          <td class="text-center px-4 py-2 hide_xs"><?php echo $address ?></td>
           <td class="text-center px-4 py-2"><?php echo $city ?></td>
           <td class="text-center px-4 py-2"><?php echo $country ?></td>
-          <td class="text-center px-4 py-2"><?php echo $hideoutType ?></td>
+          <td class="text-center px-4 py-2 hide_xs"><?php echo $hideoutType ?></td>
           <td class="text-center">
             <a class="btn btn-success" href="../update/hideout_update.php?id=<?php echo $id ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                 <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
@@ -116,5 +118,11 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
     </table>
   </div>
 </div>
+<div class="text-center my-2">
+  <button type="button" class="btn"><a href="#up" class=" text-decoration-none btn_up">Vers le haut</a></button>
+      </div>
+  <div class="text-center my-2">
+    <button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
+  </div>
 </div>
 <?php include_once "../../includes/footer.php"; ?>

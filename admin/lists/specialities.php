@@ -45,9 +45,13 @@ foreach ($query1->fetchAll(PDO::FETCH_NUM) as $tabValues) {
         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
       </svg>
     </a>
-  </div>
-  <div style="max-width: 70%!important;">
-    <table id="datatable" class="display" style="border: 3px solid black; background:  #404144;">
+
+  
+    <div class="p-4 body_admin_block container-fluid" 
+style="max-width: 70%!important; min-width: 30%!important;"
+>
+  <div>
+    <table id="datatable" class="display" style="border: 3px solid black;">
       <thead class="my-4">
         <tr>
           <th class="hidden">Id</th>

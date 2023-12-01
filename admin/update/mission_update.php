@@ -238,33 +238,39 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
         <!-- ************titre****************** -->
         <div class="mb-3">
           <label for="title" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Titre</label>
-          <input type="text" class="form-control w-50" name="title" id="title" value="<?php echo $title ?>">
+          <input type="text" class="form-control w-auto" name="title" id="title" value="<?php echo $title ?>">
         </div>
         <!-- **********Description*************** -->
-        <div class="mb-3 d-flex" style="align-items: start;">
+        <div class="mb-3" style="align-items: start;">
           <label for="description" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Description</label>
-          <textarea name="description" id="description" cols="54" rows="10"><?php echo $description ?></textarea>
+          <br>
+          <textarea name="description" id="description" cols="54" rows="10" class="descr_textarea"><?php echo $description ?></textarea>
         </div>
         <!-- ***********startDate de La mission************** -->
-        <div class="mb-3 d-flex">
+        <div class="mb-3">
           <h5 for="startDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 140px;">Date de debut</h5>
+          <div class="date_mis_update">
           <input type="text" name="current_startDate" id="mis_startDate" placeholder="<?php echo $startDate ?>" value="<?php echo $startDate ?>">
           <button type="button" class="fs-6 me-4" onclick="startDateBtn()" value="" name="btnStartDate" id="btnStartDate">Change</button>
           <input type="date" style="display: none;" name="startDate" id="startDate" placeholder="<?php echo $startDate ?>" value="<?php echo   $startDate ?>">
         </div>
+        </div>
         <!-- **************endDate de La mission************ -->
-        <div class="mb-3 d-flex">
+        <div class="mb-3 ">
           <h5 for="endDate" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 140px;">Date de fin</h5>
+          <div class="date_mis_update">
           <input type="text" name="current_endDate" id="mis_endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
           <button type="button" class="fs-6 me-4" onclick="endDateBtn()" value="" name="btnEndDate" id="btnEndDate">Change</button>
           <input type="date" style="display: none;" name="endDate" id="endDate" placeholder="<?php echo $endDate ?>" value="<?php echo $endDate ?>">
         </div>
+        </div>
         <!-- *****************************STATUS****************** -->
-        <div class="mb-3 d-flex">
+        <div class="mb-3 ">
           <label for="status" class="form-label fw-bold my-2 fs-5" style="color: #01013d; width: 120px;">Status</label>
-          <button type="button" name="current_missionStatus" class="fs-5 px-2 mx-2" id="currentStatus" value="<?php echo $current_missionStatus ?>"><?php echo $current_missionStatus ?></button>
+          <br>
+          <button type="button" name="current_missionStatus" class="fs-5 px-2" id="currentStatus" value="<?php echo $current_missionStatus ?>"><?php echo $current_missionStatus ?></button>
 
-          <select name="missionStatus" id="status" class="fs-5 w-25 hidden">
+          <select name="missionStatus" id="status" class="fs-5 hidden">
             <!-- <option value=""></option>; -->
             <option value="En préparation">En préparation</option>;
             <option value="En cours">En cours</option>;
@@ -275,13 +281,15 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
         <!-- ********codeName de La mission********* -->
         <div class="mb-3">
           <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
+          <br>
           <input type="text" name="codeName" id="codeName" value="<?php echo $codeName ?>">
         </div>
         <!-- **********Type de mission*********** -->
         <div class="mb-3">
           <h5 for="missionType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type de mission</h5>
+         
           <input type="hidden" name="missionType" id="missionType" value="<?= $mission_mmt_missionTypeId ?>" />
-          <select class="form-control w-50" name="mmt_missionTypeId">
+          <select class="form-control" id="missionTypeInput" name="mmt_missionTypeId">
             <?php
             foreach ($result_s1 as $tab) {
               $mt_id = $tab['id'];
@@ -299,9 +307,10 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
         <!-- ******Pays de la mission************* -->
         <div class="mb-3">
           <label for="countryList" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>
+          <br>
           <input type="hidden" name="country" id="user_country" value="<?php echo $user_country ?>">
           <?php include_once "../lists/countries_list.php"; ?>
-          <select name="country" id="countryList" class="fs-5">
+          <select name="country" id="countryList" class="fs-5 py-1">
             <?php
             foreach ($countries as $country) {
               $country_title = $country['name'];
@@ -335,9 +344,10 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
       endforeach;
       ?>
       <!-- ****************Hideouts******************* -->
-      <div class="mb-3 d-flex mt-4">
+      <div class="mb-3  mt-4">
         <label for="hideout" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Planques</label>
-        <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-5   pe-2" style="min-width: 330px;">
+        <br>
+        <select name="mis_hideouts[]" multiple="multiple" id="hideout" class="fs-5 pe-2" >
           <?php
           while ($row = $query9_1->fetch(PDO::FETCH_ASSOC)) :
             $hideout_id = intval($row["id"]);
@@ -347,11 +357,15 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
             $country = $row["country"];
             $hideoutType = $row["hideoutType"];
             if (in_array($hideout_id, $hideoutsArr)) {
-              echo "<option class=\"fs-6\" value=" . $hideout_id . " $selected>" . $code . " " . $city . " - " . $address . " " . $country . " " . $hideoutType . "</option><hr>";
+              echo "<option class=\"fs-6\" value=" . $hideout_id . " $selected>" . $country . " - " . $address . " - " . $city .  "</option><hr>";
             }
           endwhile;
           ?>
         </select>
+        <p>Pour voir toutes les planques du pays, 
+          <br>
+          appuyez sur le nom du pays</p>
+          <button type="button" class="btn_reload">Réinitialiser</button>
       </div>
       <!-- **********Contacts OF MISSION********* -->
       <?php
@@ -364,8 +378,9 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
       endforeach;
       ?>
       <!-- ****************Contacts******************* -->
-      <div class="mb-3 d-flex mt-4">
+      <div class="mb-3  mt-4">
         <label for="contacts" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Contacts</label>
+        <br>
         <select name="contacts[]" multiple="multiple" id="contacts" class="fs-5" style="min-width: 330px;">
           <?php
           while ($row4 = $query_s4->fetch(PDO::FETCH_ASSOC)) :
@@ -380,6 +395,10 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           endwhile;
           ?>
         </select>
+        <p>Pour voir tous les contacts du pays, 
+          <br>
+          appuyez sur le nom du pays</p>
+          <button type="button" class="btn_reload">Réinitialiser</button>
       </div>
       <!-- **********TARGETS OF MISSION********* -->
       <?php
@@ -392,9 +411,10 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
       endforeach;
       ?>
       <!-- ****************Targets******************* -->
-      <div class="mb-3 d-flex mt-4">
+      <div class="mb-3  mt-4">
         <label for="targets" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Cibles</label>
-        <button type="button" class="btn btn-primary" id="change_target">Changer</button>
+        
+        <br>
         <select name="targets[]" multiple="multiple" id="targets" class="fs-5" style="min-width: 330px;">
           <?php
           while ($row = $query_s5->fetch(PDO::FETCH_ASSOC)) :
@@ -408,12 +428,14 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           endwhile;
           ?>
         </select>
+        <br>
+        <button type="button" class="btn btn-primary" id="change_target">Changer</button>
       </div>
       <!-- **********Specialité choix*********** -->
       <div class="mb-3">
         <h5 for="speciality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Spécialité</h5>
         <input type="hidden" name="mis_speciality" id="us_speciality" value="<?= $mis_spec_id ?>" />
-        <select class="form-control w-50" id="speciality" name="mis_spec_id">
+        <select class="form-control" id="speciality" name="mis_spec_id">
           <?php
           foreach ($result_s2 as $tab) {
             $ms_id = $tab['id'];
@@ -445,13 +467,13 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           $mis_ag_info = $mission_agentId . $user_special;
           $mission_agents_infoArr[] = $mis_ag_info;
       ?>
-          <input type="hidden" name="mission_agents" value="<?php echo $mis_ag_info ?>">
+          <input type="hidden" name="mission_agents" class="py-1" value="<?php echo $mis_ag_info ?>">
       <?php
         endwhile;
       endforeach;
       ?>
       <!-- *************All agents************ -->
-      <div class="mb-3 d-flex mt-4">
+      <div class="mb-3  mt-4">
         <h5 for="agents" class="form-label fw-bold mb-2 fs-5 me-2" style="color: #01013d; width: 120px;">Agents</h5>
         <select name="agents[]" multiple="multiple" id="agents" class="fs-5   pe-2" style="min-width: 330px;">
           <?php
@@ -477,6 +499,10 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
           endwhile;
           ?>
         </select>
+        <p>Pour voir tous les agents, 
+          <br>
+          confirmez d'abord le cible</p>
+          <button type="button" class="btn_reload">Réinitialiser</button>
       </div>
       <!-- *********fin d'affichage************ -->
       <?php
@@ -485,6 +511,9 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
     </form>
   </div>
 </div>
+<div class="text-center my-2 btns">
+  <button type="button" class="btn"><a href="#up" class="text-decoration-none btn_up">Vers le haut</a></button>
+      </div>
 </div>
 <script>
   function startDateBtn() {
@@ -519,6 +548,13 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
       });
     })
   });
+</script>
+<script>
+$(document).ready(function () {
+$(".btn_reload").click(function () {
+location.reload(true);
+});
+});
 </script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <?php

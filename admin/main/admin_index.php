@@ -22,7 +22,7 @@ h1{
 </head>
 <div class="p-3 body_admin">
 
-  <h1 class="text-light">Page d'administration du site d'agents secrets</h1>
+  <h1 class="text-light d-flex admin_title">Page d'administration du site d'agents secrets</h1>
 </div>
 
 <?php include "../includes/admin_footer.php"; ?>

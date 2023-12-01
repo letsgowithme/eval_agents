@@ -45,8 +45,7 @@ include_once "../includes/admin_sidebar.php";
       </div>
     </div>
   </div>
-  <div style="position: fixed; bottom: 0;">
     <?php
     include_once "../includes/admin_footer.php";
     ?>
-  </div>
+ 

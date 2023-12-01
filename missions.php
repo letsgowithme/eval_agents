@@ -9,15 +9,7 @@ $count = 0;
 ?>
 <link rel="stylesheet" href="style/style_in_ad.css">
 <link rel="stylesheet" href="style/style.css">
-<style>
-  .body_admin{
-    background-color: #b2b2b5;
-  }
-  .col_wh{
-    color: white;
-  }
 
-</style>
 </head>
 <div class="p-3 body_page_new " style="height: 100vh;">
 <div>
@@ -26,5 +18,12 @@ $count = 0;
 
 
 <?php include_once "missions_content.php"; ?>
+
+<div class="text-center btn_line mb-1">
+<button type="button" class="btn btn-primary"><a href="#up" class="text-light text-decoration-none">Vers le haut</a></button>
+</div>
+<div class="text-center btn_line mb-1">
+<button type="button" class="btn btn-primary"><a href="index.php" class="text-light text-decoration-none">Accueil</a></button>
+</div>
 
 <?php include_once "includes/footer.php"; ?>

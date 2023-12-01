@@ -75,25 +75,27 @@ if (isset($_POST["submit"])) {
       <!-- ***************lastname***************** -->
       <div class="mb-3">
         <label for="lastname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom</label>
-        <input type="text" class="form-control w-50" name="lastname" id="lastname" value="<?php echo $lastname ?>">
+        <input type="text" class="form-control  w-25" name="lastname" id="lastname" value="<?php echo $lastname ?>">
       </div>
       <!-- ***************firstname***************** -->
-      <div class="mb-3 d-flex" style="align-items: start;">
+      <div class="mb-3" style="align-items: start;">
         <label for="firstname" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Prénom</label>
-        <input type="text" class="form-control w-50" name="firstname" id="firstname" value="<?php echo $firstname ?>">
+        <input type="text" class="form-control  w-25" name="firstname" id="firstname" value="<?php echo $firstname ?>">
       </div>
       <!-- ***************birthdate***************** -->
-      <div class="mb-3 d-flex">
+      <div class="mb-3">
         <label for="birthdate" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Date de naissance</label>
+        <br>
         <input type="text" disabled name="birthdate" id="birthdate" placeholder="<?php echo $birthdate ?>" value="<?php echo $birthdate ?>">
         <input type="date" class="hidden" name="birthdate" id="birthdate" placeholder="<?php echo $birthdate ?>" value="<?php echo $birthdate ?>">
       </div>
       <!-- **************nationality************* -->
       <div class="mb-3">
         <label for="nationality" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nationalité</label>
+        <br>
         <input type="hidden" name="nationality" id="user_nationality" value="<?php echo $user_nationality ?>">
         <?php include_once "../lists/nationalities_list.php"; ?>
-        <select name="nationality" id="nationality" class="fs-5">
+        <select name="nationality" id="nationality" class="fs-5 w-auto">
           <?php
           foreach ($nationalities as $nationality) {
             $nationality_title = $nationality['name'];
@@ -112,9 +114,10 @@ if (isset($_POST["submit"])) {
     <!-- **************Pays************* -->
     <div class="mb-3">
       <label for="country" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Pays</label>
+      <br>
       <input type="hidden" name="country" id="user_country" value="<?php echo $user_country ?>">
       <?php include_once "../lists/countries_list.php"; ?>
-      <select name="country" id="country" class="fs-5">
+      <select name="country" id="country" class="fs-5 country_input">
         <?php
         foreach ($countries as $country) {
           $country_title = $country['name'];
@@ -132,35 +135,42 @@ if (isset($_POST["submit"])) {
 <!-- ***************Codename****************** -->
 <div class="mb-3">
   <label for="codeName" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
+  <br>
   <input type="text" name="codeName" id="codeName" value="<?php echo $codeName ?>">
 </div>
 <!-- ****************UserType*********************** -->
+<div class="mb-3">
 <h5 for="userType" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Type: </h5>
 <input type="text" name="user_userType" id="user_userType" value="<?php echo $user_userType ?>">
+<br>
 <button type="button" id="change_userType_btn" class="my-4">Changer</button>
+      </div>
 <!-- ******************userType****************** -->
+<div class="mb-3">
 <div id="userTypeList" class="hidden">
   <input type="radio" name="userType" value="agent" class="choices form-label fw-bold mb-2 fs-5" style="margin-left: 10px;" id="agent"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Agent</span>
   <input type="radio" name="userType" value="contact" class="choices form-label fw-bold mb-2 fs-5" style="margin-left: 10px;" id="contact"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Contact</span>
   <input type="radio" name="userType" value="cible" class="choices form-label fw-bold my-2 fs-5" style="margin-left: 10px;" id="target"><span style="font-size: 1.3em; font-weight: bold; padding-left:2px;">Cible</span>
   <hr>
 </div>
-</div>
+</div></div>
 <?php
 if ($user_userType == 'agent') :
 ?>
   <!-- ********************Specialities*********************** -->
+  <div>
   <div id="agent_speciality">
-    <h5 class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Spécialité: </h5>
+    <h5 class="form-label fw-bold fs-5" style="color: #01013d;">Spécialité: </h5>
     <?php
     $user_specialityArr = [];
     foreach ($user_specialities as $user_spec) :
       $user_speciality = $user_spec;
-      echo "<input type=\"\" value=" . $user_speciality . " name=\"user_specialities[]\"><br/>";
+      echo "<input type=\"hidden\" value=" . $user_speciality . " name=\"user_specialities[]\"><br/>";
       $user_specialityArr[] = $user_speciality;
     endforeach;
     ?>
-    <div class="specialities_list fs-4 form-control w-25">
+    
+    <div class="specialities_list form-control">
       <?php
       while ($row1 = $query_s2->fetch(PDO::FETCH_ASSOC)) :
         $checked = "";
@@ -176,14 +186,15 @@ if ($user_userType == 'agent') :
       <?php
       endwhile;
       ?>
-    </div>
-    <!-- ***************Code d'identification****************** -->
-    <div class="mb-3">
+    </div></div>
+    <!-- ********Code d'identification******** -->
+    <div class="mb-3 mt-3">
       <?php
       while ($row4 = $query_s4->fetch()) :
         $code_id = $row4["code_id"];
       ?>
         <label for="code_id" class="form-label fw-bold my-2 fs-5" style="color: #01013d;">Nom de code</label>
+        <br>
         <input type="text" name="code_id" id="code_id" value="<?php echo $code_id ?>">
       <?php
       endwhile;
@@ -192,7 +203,7 @@ if ($user_userType == 'agent') :
   </div>
 <?php endif; ?>
 <!-- </div> -->
-<button type="submit" class="my-4 fs-5 fw-bold mx-4" id="btn_submit" name="submit">Enregistrer</button>
+<button type="submit" class="my-4 fs-5 fw-bold mx-4 text-light" id="btn_submit" name="submit">Enregistrer</button>
 </form>
 </div>
 <script>

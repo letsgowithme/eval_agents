@@ -54,7 +54,7 @@ $query7_1->execute();
 <div class="body_page_new py-4">
   <div>
     <h1 class="text-white">Mission <strong><?= $mission['title'] ?></strong> numéro <?= $mission['id'] ?></h1>
-    <table width="100%" border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4 w-75 fs-5">
+    <table border="2" cellspacing="5" cellpadding="15" style="background: #1c1c22; color: #b2b2b5; padding: 10px;" class="mt-4 fs-5 mis_details_table">
       <tr>
         <td class="hidden">Id</td>
         <td class="hidden"><?= $mission['idMission'] ?></td>
@@ -69,17 +69,6 @@ $query7_1->execute();
       </tr>
       <tr>
         <td>Date de debut</td>
-        <?php
-        // $start = $mission['startDate'];
-        // $date =  new DateTime($start);
-        // $newstart =  $date->format("d-m-Y");
-        // $startDate = $newstart;
-
-        // $end = $mission['endDate'];
-        // $date2 =  new DateTime($end);
-        // $newend =  $date2->format("d-m-Y");
-        // $endDate = $newend;
-        ?>
         <td><?= $mission['startDate'] ?></td>
       </tr>
       <tr>
@@ -215,4 +204,24 @@ $query7_1->execute();
       </tr>
     </table>
   </div>
+  <div class="text-center my-2 btns">
+  <button type="button" class="btn"><a href="#up" class="text-decoration-none btn_up">Vers le haut</a></button>
+      </div>
+      <?php
+     if (!isset($_SESSION["user"])) {
+      ?>
+<div class="text-center my-2 btns">
+  <button type="button" class="btn"><a href="index.php" class=" text-decoration-none btn_home">Accueil</a></button>
+      </div>
+      <?php
+     }else {
+      ?>
+      <div class="text-center my-2 btns">
+        <button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
+            </div>
+            <?php
+
+     }
+     ?>
+      
 </div>

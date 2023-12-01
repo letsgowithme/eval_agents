@@ -30,4 +30,15 @@ $count = 0;
       </svg>
     </a>
     <?php include_once "../../missions_content.php"; ?>
+    </div>
+
+    <div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="#up" class="text-decoration-none btn_up">Vers le haut</a></button>
+</div>
+
+<div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
+</div>
+
+</div>
     <?php include_once "../includes/admin_footer.php"; ?>

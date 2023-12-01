@@ -177,6 +177,12 @@ include_once "../includes/admin_sidebar.php";
       ?>
     </form>
     <div>
+    <div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="#up" class="text-decoration-none btn_up">Vers le haut</a></button>
+</div>
+<div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="index.php" class="text-decoration-none btn_home">Accueil</a></button>
+</div>
     </div>
     <?php
     include_once "../includes/admin_footer.php";

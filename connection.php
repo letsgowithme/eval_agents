@@ -18,8 +18,6 @@ if(!empty($_POST)){
   $query->bindValue(":email", $_POST["email"], PDO::PARAM_STR);
   $query->execute();
    $user = $query->fetch(PDO::FETCH_ASSOC);
-   var_dump($user);
-   var_dump($user["password"]);
   if(!$user){
   die("L'utilisateur et/ou le mot de passe est incorrect");
   }

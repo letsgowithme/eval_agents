@@ -16,9 +16,10 @@ $count = 0;
   label {
     font-size: 1.3em;
   }
-  .body_admin{
-    background-color: #b2b2b5;
-  }
+ #datatable_wrapper{
+  position: absolute!important;
+  margin-left: 1%!important;
+ }
   .col_wh,
   span,
   th,
@@ -28,9 +29,9 @@ $count = 0;
 </style>
 </head>
 <!-- page users begins -->
-<div class="p-4 body_admin">
+<div class="body_admin" style="margin-left: 0;">
   <div>
-    <h1>Liste d'utilisateurs</h1>
+    <h1 class="p-2">Liste d'utilisateurs</h1>
     <div class="d-flex">
       <!-- button agents -->
       <a href="../new/agent_new.php" class="btn btn-primary mb-4 me-3">
@@ -62,14 +63,14 @@ $count = 0;
     <table id="datatable" class="display" style="border: 3px solid black; background:  #404144;">
       <thead class="my-4">
         <tr>
-          <th class="">Id</th>
-          <th class="text-center fs-5 px-4 py-2">Prénom</th>
-          <th class="text-center fs-5 px-4 py-2">Nom</th>
-          <th class="text-center fs-5 px-4 py-2">Nationalité</th>
-          <th class="text-center fs-5 px-4 py-2">Pays</th>
-          <th class="text-center fs-5 px-4 py-2">Type</th>
-          <th class="text-center fs-5 px-4 py-2">Actions</th>
-          <th class="text-center fs-5 px-4 py-2">Détails</th>
+          <th class="hide_xs">Id</th>
+          <th class="text-center px-4 py-2 hide_xs">Prénom</th>
+          <th class="text-center px-4 py-2">Nom</th>
+          <th class="text-center px-4 py-2 hide_xs">Nationalité</th>
+          <th class="text-center px-4 py-2 hide_xs">Pays</th>
+          <th class="text-center px-4 py-2">Type</th>
+          <th class="text-center px-4 py-2">Actions</th>
+          <th class="text-center px-4 py-2">Détails</th>
         </tr>
       </thead>
       <tbody>
@@ -87,11 +88,11 @@ $count = 0;
           $userType = $row["userType"];
         ?>
           <tr>
-            <td class=""><?php echo  $id ?></td>
-            <td class="text-center fs-5 px-4 py-2"><?php echo  $firstname ?></td>
-            <td class="text-center fs-5 px-4 py-2"><?php echo  $lastname ?></td>
-            <td class="text-center px-4 py-2"><?php echo  $nationality ?></td>
-            <td class="text-center px-4 py-2"><?php echo  $country ?></td>
+            <td class="hide_xs"><?php echo  $id ?></td>
+            <td class="text-center  px-4 py-2 hide_xs"><?php echo  $firstname ?></td>
+            <td class="text-center  px-4 py-2"><?php echo  $lastname ?></td>
+            <td class="text-center px-4 py-2 hide_xs"><?php echo  $nationality ?></td>
+            <td class="text-center px-4 py-2 hide_xs"><?php echo  $country ?></td>
             <td class="text-center px-4 py-2"><?php echo  $userType ?></td>
             <td class="text-center">
               <a class="btn btn-success" href="../update/user_update.php?id=<?php echo $id ?>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -125,8 +126,23 @@ $count = 0;
         <?php endwhile ?>
       </tbody>
     </table>
+    </div>
+
   </div>
+  
 </div>
+  
 </div>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<div class="text-center my-2">
+  <button type="button" class="btn"><a href="#up" class=" text-decoration-none btn_up">Vers le haut</a></button>
+      </div>
+  <div class="text-center my-2">
+    <button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
+  </div>
+
+</div>
+       
+
+<div class="footer mt-4">
 <?php include_once "../includes/admin_footer.php"; ?>
+</div>
