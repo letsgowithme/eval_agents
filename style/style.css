@@ -111,10 +111,13 @@ color: white;
 }
 
 #datatable_wrapper{
-min-width: 200px; 
 z-index: 3!important;
- margin-left: -50%!important;
- padding: 10px;
+ /* margin-left: -50%!important; */
+ /* padding: 10px; */
+ display: flex;
+ flex-direction: column;
+ /* align-items: center; */
+ /* min-width: 280px;  */
 }
 #datatable{
   z-index: 3!important;
@@ -125,14 +128,17 @@ margin-left: 20px;
 
 }
 th{
-  width: 30px;
+  /* width: 30px; */
+  min-width: auto;
   color: white;
 }
 .id_th{
- width: 7px;
+ /* width: 7px; */
+ min-width: auto;
 }
 .th_sec{
-width: 8px;
+/* width: 8px; */
+min-width: auto;
 
 }
 .action_icon{
@@ -144,10 +150,13 @@ width: 8px;
   align-items: center;
 }
 .side_b{
-  width: 90px;
+  /* width: 90px; */
+  min-width: auto;
 }
 .mis_details_table{
-  min-width: 250px;
+  /* min-width: 250px; */
+  min-width: auto;
+  
 }
 .footer{
   position: relative!important; 
@@ -157,56 +166,72 @@ width: 8px;
 .footer_block_adm{
   background-color: #201f1f!important; 
 }
-.btns{
+/* .btns{
   margin-left: -20%; 
  
-}
+} */
 .specialities_list,
 .country_input{
-  width: 280px;
+  /* width: 280px; */
+  min-width: auto;
 }
 .specialities_list{
 margin-top: -15%;
 }
 .descr_textarea{
-  width: 270px;
+  /* width: 270px; */
+  min-width: auto;
 }
 .date_mis_update{
   display: flex;
   flex-direction: column;
-  width: 270px;
+  /* width: 270px; */
+  min-width: auto;
 }
 #btnStartDate,
 #btnEndDate{
-  width: 270px;
+  /* width: 270px; */
+  min-width: auto;
 }
 #countryList{
-  width: 300px;
+  /* width: 300px; */
+  min-width: auto;
 }
 #hideout{
   width: auto;
 }
 #speciality,
 #missionTypeInput{
-  width: 270px; 
+  /* width: 270px;  */
+  min-width: auto;
 }
-input[type="search"]{
-  margin-left: -10px!important;
-  width: 225px!important;
-  }
-  .body_admin{
-    min-width: 225px!important;
-  }
+/* input[type="search"]{
+  margin-left: -10px!important; */
+  /* width: 225px!important; */
+  /* } */
+  input[type="search"]{
+    font-size: 1em;
+    width: 160px;
+    }
+  /* .body_admin{
+    
+    min-width: auto;
+  } */
 
   .mis_details_table{
-    width: 225px!important;
+    /* width: 225px!important; */
+    min-width: auto;
+    margin-left: 10px;
   }
   .body_details{
-    width: 284px!important;
+    /* width: 284px!important; */
+    min-width: auto;
   }
   .footer_block_adm{
-    width: 362px!important;
+    /* width: 362px!important; */
+    min-width: auto;
   }
+ 
 }
 /* ******@media 768***** */
 @media screen and (min-width: 768px) {
@@ -217,20 +242,24 @@ input[type="search"]{
     justify-content: space-around;
   }
   .th_sec{
-    width: 2em;
+    /* width: 2em; */
+    min-width: auto;
     
     }
     td,
 th {
 font-size: 1.3em;
 }
+
 #datatable_wrapper{
-  width: 600px!important;
- margin-left: -30%!important;
- padding: 10px;
-}
+   /* margin-left: -50%!important; */
+   /* padding: 10px; */
+   display: block;
+   
+  }
 .mis_details_table{
-  width: 600px;
+  /* width: 600px; */
+  min-width: auto;
 }
 .specialities_list,
 .country_input{
@@ -241,56 +270,69 @@ font-size: 1.3em;
   margin-top: -5%;
   }
   .descr_textarea{
-    width: 570px;
+    /* width: 570px; */
+    min-width: auto;
   }
   .date_mis_update{
     display: flex;
     flex-direction: row;
-    width: 100%;
+    /* width: 100%; */
+    min-width: auto;
    
   }
   #btnStartDate,
   #btnEndDate{
-    width: 160px;
+    /* width: 160px; */
+    min-width: auto;
   }
   #speciality,
 #missionTypeInput{
-  width: 370px;
+  /* width: 370px; */
+  min-width: auto;
 }
 input[type="search"]{
-  margin-left: 0!important;
-  width: 200px!important;
+  /* margin-left: 0!important;
+  width: 200px!important; */
+  min-width: auto;
   }
-  .body_admin{
-    min-width: 525px!important;
-  }
-
+  
   .mis_details_table{
-    width: 625px!important;
+    /* width: 625px!important; */
+    min-width: auto;
   }
   .body_details{
-    min-width: 642px!important;
+    /* min-width: 642px!important; */
+    min-width: auto;
   }
   .footer_block_adm{
-    min-width: 750px!important;
+    /* min-width: 750px!important; */
+    min-width: auto;
   }
 }
 
 @media screen and (min-width: 1020px) {
   .body_admin{
-    width: 705px!important;
-    
+    max-width: 790px;
+   
   }
   .side_b{
-    width: 290px!important;
+    /* width: 290px!important; */
+    min-width: auto;
   }
 #datatable_wrapper{
  padding: 10px;
- margin-left: -27%!important;
- min-width: 700px;
+ /* margin-left: -27%!important; */
+ /* min-width: 700px; */
+ min-width: auto;
 }
 .mis_details_table{
-  width: 900px;
+  /* width: 900px; */
+  /* margin-left: 10%!important; */
+  min-width: auto;
+
+}
+.mis_det_ttl{
+  margin-left: 10%!important;
 }
 .btns{
   margin-left: -40%; 
@@ -310,44 +352,45 @@ input[type="search"]{
   margin-top: -4%;
   }
   .footer_block_adm{
-    min-width: 1010px!important;
+    /* min-width: 1010px!important; */
+    min-width: auto;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .body_details{
-    min-width: 1025px!important;
+    /* min-width: 1125px!important; */
+    min-width: auto;
   }
   .body_admin{
-    min-width: 965px!important;
-  }
-  .mis_details_table{
-    min-width: 925px!important;
+    max-width: 1003px;
+   
   }
  
   .footer_block_adm{
-    min-width: 1270px!important;
+    /* min-width: 1270px!important; */
+    min-width: auto;
   }
-  #datatable_wrapper{
-  
-    margin-left: -20%!important;
-    min-width: 900px;
-   }
+ 
   
 }
 @media screen and (min-width: 1400px) {
-  .body_details{
-    min-width: 1400px!important;
-  }
   .body_admin{
-    min-width: 1383px!important;
+    max-width: 1420px;
   }
+  .body_details{
+    /* min-width: 1400px!important; */
+    min-width: auto;
+  }
+ 
   .mis_details_table{
-    min-width: 925px!important;
+    /* min-width: 925px!important; */
+    min-width: auto;
   }
  
   .footer_block_adm{
-    min-width: 1687px!important;
+    /* min-width: 1687px!important; */
+    min-width: auto;
   }
   
 }
