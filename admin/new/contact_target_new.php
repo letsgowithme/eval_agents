@@ -53,7 +53,7 @@ include_once "../includes/admin_sidebar.php";
   }
   label {
     width: 220px;
-    color: #b2b2b5;
+    color: #201f1f;
     padding: 5px;
   }
   h1{

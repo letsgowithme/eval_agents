@@ -159,9 +159,9 @@ include_once "../includes/admin_sidebar.php";
       </div>
       <!-- **************Specialities***************** -->
       <div class="mb-3" id="agent_speciality">
-        <h5 class="form-label fw-bold mb-4 fs-4 me-2 mt-4" id="speciality_title">Spécialité</h5>
+        <h5 class="form-label fw-bold mb-4 fs-4 me-2 mt-2" id="speciality_title">Spécialité</h5>
         <br>
-        <div class="specialities_list fs-4 form-control" id="specialities_list">
+        <div class="specialities_list fs-4 mt-2 form-control" id="specialities_list">
           <?php
           while ($row = $query_s1->fetch(PDO::FETCH_ASSOC)) {
             $specialityId = $row["id"];
