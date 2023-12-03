@@ -50,6 +50,7 @@ $query7_1->execute();
 ?>
 <link rel="stylesheet" href="style/style_in_ad.css">
 <link rel="stylesheet" href="style/style.css">
+<link rel="icon" href="logo.png">
 </head>
 <div class="body_page_new py-2 body_details">
   <div>
@@ -60,8 +61,8 @@ $query7_1->execute();
         <td class="hidden"><?= $mission['idMission'] ?></td>
       </tr>
       <tr>
-        <td class="w-25 text-light">Titre</td>
-        <td class="w-50"><?= $mission['title'] ?></td>
+        <td class="text-light">Titre</td>
+        <td class="corol-light"><?= $mission['title'] ?></td>
       </tr>
       <tr>
         <td>Déscription</td>

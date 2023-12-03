@@ -1,14 +1,8 @@
-<!-- <link rel="stylesheet" href="style/style_in_ad.css">
-<link rel="stylesheet" href="style/style.css"> -->
 <style>
   .body_admin_block{
-    /* background-color: #b2b2b5; */
     min-height: 100%;
    
   }
- 
-  
-
 </style>
 </head>
 </div>
@@ -35,7 +29,7 @@ style="max-width: 70%!important; min-width: 30%!important;"
             <th class="text-center col_wh th_sec" style="min-width: 40px!important;">Actions</th>
           <?php endif;
           ?>
-          <th class="text-centerpy-3 col_wh th_sec" style="min-width: 30px!important;">Détails</th>
+          <th class="text-center py-3 col_wh th_sec" style="min-width: 30px!important;">Détails</th>
         </tr>
       </thead>
       <tbody>

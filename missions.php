@@ -9,7 +9,7 @@ $count = 0;
 ?>
 <link rel="stylesheet" href="style/style_in_ad.css">
 <link rel="stylesheet" href="style/style.css">
-
+<link rel="icon" href="logo.png">
 </head>
 <div class="p-3 body_page_new " style="height: 100vh;">
 <div>
