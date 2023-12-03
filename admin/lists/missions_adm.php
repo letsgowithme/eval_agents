@@ -6,8 +6,8 @@ include_once "../includes/admin_sidebar.php";
 $titre = "Missions";
 $count = 0;
 ?>
-<!-- <link rel="stylesheet" href="../../style/style_in_ad.css">
-<link rel="stylesheet" href="../../style/style.css"> -->
+<link rel="stylesheet" href="../../style/style_in_ad.css">
+<link rel="stylesheet" href="../../style/style.css">
 <style>
   .body_admin{
     background-color: #b2b2b5;
