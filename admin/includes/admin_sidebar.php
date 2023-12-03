@@ -9,11 +9,11 @@ include_once "admin_header.php"; ?>
     <div class="row flex-nowrap">
       <div class="col-auto min-vh-100 d-flex flex-column justify-content-between side_b" style="background-color: #404144;">
         <div class="p-2" style="background-color:  #29292b;">
-          <a href="" class="d-flex text-decoration-none mt-1 align-items-center text-white px-3"><span class="fs-4 fw-bold d-none d-lg-inline " id="up">Admin</span>
+          <a href="" class="d-flex text-decoration-none mt-1 align-items-center text-white px-3"><span class="fs-4 fw-bold d-none d-lg-inline">Admin</span>
           </a>
           <ul class="nav nav-pills flex-column mt-2">
             <li class="nav-item py-2 py-lg-0">
-              <a href="../main/admin_index.php" class="nav-link text-white">
+              <a href="../main/admin_index.php"  id="up" class="nav-link text-white">
                 <i class="fs-5 fa fa-gauge"></i><span class="fs-5 d-none ms-3 d-lg-inline">Tableau de bord</span>
               </a>
             </li>

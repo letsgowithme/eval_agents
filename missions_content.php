@@ -7,10 +7,7 @@
 </head>
 </div>
 <!-- table missions begins -->
-<div class="body_admin_block container-fluid" 
-style="max-width: 70%!important; min-width: 30%!important;"
->
-  <div>
+<div style="max-width: 70%!important;">
     <table id="datatable" class="display" style="border: 3px solid black;">
       <thead>
         <tr>
@@ -99,8 +96,4 @@ style="max-width: 70%!important; min-width: 30%!important;"
       </tbody>
     </table>
   </div>
-  
 </div>
-
-</div>
-<!-- </div> -->

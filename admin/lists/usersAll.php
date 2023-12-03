@@ -12,7 +12,7 @@ $count = 0;
   input {
     margin-bottom: 10px;
   }
-
+   
   label {
     font-size: 1.3em;
   }
@@ -133,13 +133,14 @@ $count = 0;
 </div>
   
 </div>
+<div class="btns_line">
 <div class="text-center my-2">
   <button type="button" class="btn"><a href="#up" class=" text-decoration-none btn_up">Vers le haut</a></button>
       </div>
   <div class="text-center my-2">
     <button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
   </div>
-
+        </div>
 </div>
        
 

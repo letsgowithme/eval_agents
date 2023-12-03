@@ -9,11 +9,10 @@
    background-color: #b2b2b5;
   background-size: cover;
   background-attachment: fixed;
-  /* overflow-x: hidden; */
+ 
 }
 
 .body_page_new{
-  background-color: rgb(156, 155, 155);
   background-color: #b2b2b5;
 }
 
@@ -188,6 +187,9 @@ margin-top: -15%;
  
   .mis_details_table{
     margin-left: 10px;
+  }
+  .btns_line{
+    background-color: #b2b2b5;
   }
  
 }

@@ -1,4 +1,5 @@
-</div></div>
+</div>
+</div>
 <div class="d-flex flex-xs-column flex-sm-row justify-content-around  footer_block_adm" style="background: #b2b2b5; z-index: 1; width: 100%;">
   <p class="fs-6 footer_line mt-3"><a href="legal_notice.php">Mentions légales</a></p>
 

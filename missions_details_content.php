@@ -205,6 +205,7 @@ $query7_1->execute();
       </tr>
     </table>
   </div>
+  <div class="btns_line">
   <div class="text-center my-2 btns">
   <button type="button" class="btn"><a href="#up" class="text-decoration-none btn_up">Vers le haut</a></button>
       </div>
@@ -225,4 +226,4 @@ $query7_1->execute();
      }
      ?>
       
-</div>
+</div></div>

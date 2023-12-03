@@ -36,7 +36,7 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
   }
 </style>
 </head>
-<div class="p-3 body_admin ">
+<div class="body_admin" style="margin-left: 0;">
   <div>
     <h1 class="title_adm">Planques</h1>
     <a href="../new/hideout_new.php" class="btn btn-primary mb-4">
@@ -46,10 +46,7 @@ foreach ($query->fetchAll(PDO::FETCH_NUM) as $tabValues) {
       </svg>
     </a>
 
-  <div class="p-4 body_admin_block container-fluid" 
-style="max-width: 70%!important; min-width: 30%!important;"
->
-  <div>
+    <div style="max-width: 70%!important;">
     <table id="datatable" class="display" style="border: 3px solid black;">
       <thead class="my-4">
         <tr>
@@ -118,11 +115,13 @@ style="max-width: 70%!important; min-width: 30%!important;"
     </table>
   </div>
 </div>
+<div class="btns_line">
 <div class="text-center my-2">
   <button type="button" class="btn"><a href="#up" class=" text-decoration-none btn_up">Vers le haut</a></button>
       </div>
   <div class="text-center my-2">
     <button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
   </div>
+ </div>
 </div>
 <?php include_once "../../includes/footer.php"; ?>
