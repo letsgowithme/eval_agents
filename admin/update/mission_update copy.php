@@ -102,10 +102,11 @@ if (isset($_POST["submit"])) {
   $sql_u3 = "UPDATE mission_speciality SET mis_spec_id='$mis_spec_id' WHERE mission_Id='$idMission'";
   $query_u3 = $dbConnect->prepare($sql_u3);
   $query_u3->execute();
+
   if ($Execute) {
     header("Location: ../lists/missions_adm.php");
   }
- 
+
 }
 ?>
 <link href="../../style/style.css" rel="stylesheet" type="text/css">
@@ -114,7 +115,7 @@ if (isset($_POST["submit"])) {
 
 <script>
   $(document).ready(function() {
-    $("#countryList").on("input", function() {
+    $("#countryList").on("click", function() {
       var countryList = $("#countryList").val();
       var hideout = $("#hideout").val();
       if (countryList) {
@@ -132,7 +133,7 @@ if (isset($_POST["submit"])) {
       }
     });
     // ***************************************
-    $("#countryList").on("input", function() {
+    $("#countryList").on("click", function() {
       var countryList = $("#countryList").val();
       var contacts = $("#contacts").val();
       if (countryList) {
@@ -150,7 +151,7 @@ if (isset($_POST["submit"])) {
       }
     });
     //  *********************************************
-    $("#targets").on("input", function() {
+    $("#targets").on("click", function() {
       var agents = $("#agents").val();
       var targets = $("#targets").val();
       if (targets) {
@@ -169,7 +170,7 @@ if (isset($_POST["submit"])) {
     });
     // ****************************************************
     // afficher les agents avec specialité choisie
-    $("#speciality").on("input", function() {
+    $("#speciality").on("click", function() {
       var speciality = $("#speciality").val();
       var agents = $("#agents").val();
       if (speciality) {
@@ -538,7 +539,7 @@ while ($row = $query1->fetch(PDO::FETCH_ASSOC)) {
   $(document).ready(function() {
     $status = $("#status").val();
     $currentStatus = $("#currentStatus").val();
-    $("#currentStatus").on("input", function() {
+    $("#currentStatus").on("click", function() {
       $("#status").addClass("visible");
       $("#status").on("change", function() {
         $("#currentStatus").val($("#status").val());

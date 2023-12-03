@@ -40,9 +40,9 @@ if (isset($_POST["submit"])) {
   $query = $dbConnect->prepare($sql);
   $Execute = $query->execute();
   if ($Execute) {
-    echo "<p style=\"background: darkgrey;\" class=\"text-center fs-4 text-white p-2 ds-5\">Utilisateur modifié sous le numéro " . $up_id . "<a class=\"ms-2 fw-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
-    "<a class=\"fs-4 ms-3 text-bold text-dark\" href='../lists/usersAll.php'>Retour</a></p>";
+    header("Location: ../lists/usersAll.php");
   }
+ 
 }
 ?>
 <link href="../../style/style.css" rel="stylesheet" type="text/css">

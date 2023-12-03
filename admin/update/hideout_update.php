@@ -11,8 +11,7 @@ if (isset($_POST["submit"])) {
   $query = $dbConnect->query($sql);
   $Execute = $query->execute();
   if ($Execute) {
-    echo "<p style=\"background: darkgrey; color: white; font-weight: bold;\" class=\"text-center p-2 fs-4\">La planque modifiée sous le numéro " . $up_id . "</p>";
-    echo "<a href='../lists/hideouts.php'>Retour</a>";
+    header("Location: ../lists/hideouts.php");
   }
 }
 $titre = "Modifier la planque";
