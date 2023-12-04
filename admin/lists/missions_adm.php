@@ -20,7 +20,7 @@ $count = 0;
 
 </style>
 </head>
-<div class="body_admin" style="margin-left: 0;">
+<div class="body_admin" style="margin-left: 0; height: auto;">
   <div>
     <h1 class="title_adm col_wh" id="up">Liste de missions</h1>
     <a href="../new/mission_new.php" class="btn btn-primary my-2">
@@ -32,7 +32,7 @@ $count = 0;
     <?php include_once "../../missions_content.php"; ?>
     </div>
 
-    <div class="btns_line">
+    <!-- <div class="btns_line">
     <div class="text-center btn_line mb-3">
 <a href="#up" class="text-decoration-none btn_up mb-3">Vers le haut</a>
 </div>
@@ -40,6 +40,6 @@ $count = 0;
 <div class="text-center btn_line mb-1">
 <button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
 </div>
-</div>
+</div> -->
 </div>
     <?php include_once "../includes/admin_footer.php"; ?>

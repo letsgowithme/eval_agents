@@ -7,7 +7,7 @@
 </head>
 </div>
 <!-- table missions begins -->
-<div style="max-width: 70%!important;">
+<div style="max-width: 70%!important; height: auto;">
     <table id="datatable" class="display" style="border: 3px solid black;">
       <thead>
         <tr>
@@ -95,5 +95,16 @@
         <?php endwhile ?>
       </tbody>
     </table>
+    </div>
   </div>
 </div>
+<div class="btns_line">
+    <div class="text-center btn_line mb-3">
+<a href="#up" class="text-decoration-none btn_up mb-3">Vers le haut</a>
+</div>
+
+<div class="text-center btn_line mb-1">
+<button type="button" class="btn"><a href="../main/admin_index.php" class="text-decoration-none btn_home">Accueil</a></button>
+</div>
+</div>
+

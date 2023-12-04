@@ -19,11 +19,11 @@ $count = 0;
 
 <?php include_once "missions_content.php"; ?>
 
-<div class="text-center btn_line mb-1">
+<!-- <div class="text-center btn_line mb-1">
 <button type="button" class="btn btn-primary"><a href="#up" class="text-light text-decoration-none">Vers le haut</a></button>
 </div>
 <div class="text-center btn_line mb-1">
 <button type="button" class="btn btn-primary"><a href="index.php" class="text-light text-decoration-none">Accueil</a></button>
-</div>
+</div> -->
 
 <?php include_once "includes/footer.php"; ?>
